@@ -17,8 +17,29 @@
     }
     h1 {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
       font-size: 2rem;
+    }
+    .legend {
+      background: #fff;
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+    }
+    .legend h3 {
+      margin-top: 0;
+    }
+    .legend table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .legend td {
+      padding: 6px 10px;
+      font-size: 0.9rem;
+    }
+    .legend td.icon {
+      font-size: 1.2rem;
     }
     .filter-bar {
       display: flex;
@@ -83,6 +104,15 @@
   <div class="container">
     <h1>CredCheck Guru Directory</h1>
 
+    <div class="legend">
+      <h3>Score Legend</h3>
+      <table>
+        <tr><td class="icon">🟢</td><td>85–100: High Trust</td></tr>
+        <tr><td class="icon">🟡</td><td>60–84: Moderate Risk</td></tr>
+        <tr><td class="icon">🔴</td><td>0–59: High Risk</td></tr>
+      </table>
+    </div>
+
     <div class="filter-bar">
       <input type="text" id="searchInput" placeholder="Search by name...">
       <select id="nicheFilter">
@@ -100,63 +130,71 @@
       </select>
     </div>
 
-    <div class="card-grid" id="guruGrid">
-      <div class="card" data-name="tai lopez" data-niches="Mindset,Marketing,Personal Development">
-        <h2>Tai Lopez</h2>
-        <div class="niche-tags">
-          <span class="tag">Mindset</span>
-          <span class="tag">Marketing</span>
-          <span class="tag">Personal Development</span>
-        </div>
-        <p class="score">Score: 42/100</p>
-        <a href="/gurus/tai-lopez.html">View Profile</a>
-      </div>
-      <div class="card" data-name="iman gadzhi" data-niches="SMMA,Digital Marketing,Online Business">
-        <h2>Iman Gadzhi</h2>
-        <div class="niche-tags">
-          <span class="tag">SMMA</span>
-          <span class="tag">Digital Marketing</span>
-          <span class="tag">Online Business</span>
-        </div>
-        <p class="score">Score: 58/100</p>
-        <a href="/gurus/iman-gadzhi.html">View Profile</a>
-      </div>
-      <div class="card" data-name="alex hormozi" data-niches="Business,Scaling,Sales,Entrepreneurship">
-        <h2>Alex Hormozi</h2>
-        <div class="niche-tags">
-          <span class="tag">Business</span>
-          <span class="tag">Scaling</span>
-          <span class="tag">Sales</span>
-          <span class="tag">Entrepreneurship</span>
-        </div>
-        <p class="score">Score: 92/100</p>
-        <a href="/gurus/alex-hormozi.html">View Profile</a>
-      </div>
-    </div>
+    <div class="card-grid" id="guruGrid"></div>
   </div>
 
   <script>
+    const gurus = [
+      {
+        name: "Tai Lopez",
+        score: 42,
+        url: "/gurus/tai-lopez.html",
+        niches: ["Mindset", "Marketing", "Personal Development"]
+      },
+      {
+        name: "Iman Gadzhi",
+        score: 58,
+        url: "/gurus/iman-gadzhi.html",
+        niches: ["SMMA", "Digital Marketing", "Online Business"]
+      },
+      {
+        name: "Alex Hormozi",
+        score: 92,
+        url: "/gurus/alex-hormozi.html",
+        niches: ["Business", "Scaling", "Sales", "Entrepreneurship"]
+      }
+    ];
+
+    const guruGrid = document.getElementById('guruGrid');
     const searchInput = document.getElementById('searchInput');
     const nicheFilter = document.getElementById('nicheFilter');
-    const guruCards = document.querySelectorAll('.card');
+
+    function renderGurus(data) {
+      guruGrid.innerHTML = '';
+      data.forEach(guru => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.setAttribute('data-name', guru.name.toLowerCase());
+        card.setAttribute('data-niches', guru.niches.join(','));
+
+        card.innerHTML = `
+          <h2>${guru.name}</h2>
+          <div class="niche-tags">
+            ${guru.niches.map(n => `<span class="tag">${n}</span>`).join('')}
+          </div>
+          <p class="score">Score: ${guru.score}/100</p>
+          <a href="${guru.url}">View Profile</a>
+        `;
+        guruGrid.appendChild(card);
+      });
+    }
 
     function filterGurus() {
       const query = searchInput.value.toLowerCase();
       const niche = nicheFilter.value;
-
-      guruCards.forEach(card => {
-        const name = card.getAttribute('data-name');
-        const niches = card.getAttribute('data-niches').toLowerCase().split(',');
-
-        const matchesName = name.includes(query);
-        const matchesNiche = niche === 'all' || niches.includes(niche.toLowerCase());
-
-        card.style.display = (matchesName && matchesNiche) ? 'block' : 'none';
+      const filtered = gurus.filter(g => {
+        const matchesName = g.name.toLowerCase().includes(query);
+        const matchesNiche = niche === 'all' || g.niches.map(n => n.toLowerCase()).includes(niche.toLowerCase());
+        return matchesName && matchesNiche;
       });
+      renderGurus(filtered);
     }
 
     searchInput.addEventListener('input', filterGurus);
     nicheFilter.addEventListener('change', filterGurus);
+
+    // Initial render
+    renderGurus(gurus);
   </script>
 </body>
 </html>
