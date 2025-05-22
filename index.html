@@ -13,6 +13,19 @@
       background: #f5f5f5;
       color: #333;
     }
+    nav {
+      background: #111;
+      color: white;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 1rem;
+    }
     header {
       background: #111;
       color: #fff;
@@ -64,18 +77,45 @@
       padding: 1rem;
       color: #888;
     }
+    .example-cards {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: 1fr 1fr;
+      margin-top: 1rem;
+    }
+    .card {
+      background: #f9f9f9;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      padding: 1rem;
+    }
+    .card p {
+      font-size: 0.9rem;
+    }
+    .browse-button {
+      display: block;
+      text-align: center;
+      margin-top: 2rem;
+    }
+    .browse-button a {
+      background: #111;
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+    }
   </style>
 </head>
-<nav style="background: #111; color: white; padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
-  <div style="font-weight: bold;">CredCheck</div>
-  <div style="display: flex; gap: 1rem;">
-    <a href="/index.html" style="color: white; text-decoration: none;">Home</a>
-    <a href="/directory.html" style="color: white; text-decoration: none;">Directory</a>
-    <a href="/profile.html?guru=alex-hormozi" style="color: white; text-decoration: none;">Example Profile</a>
-  </div>
-</nav>
-
 <body>
+  <nav>
+    <div style="font-weight: bold;">CredCheck</div>
+    <div>
+      <a href="/index.html">Home</a>
+      <a href="/directory.html">Directory</a>
+      <a href="/profile.html?guru=alex-hormozi">Profile</a>
+    </div>
+  </nav>
   <header>
     <h1>CredCheck</h1>
     <p>Stop getting scammed. Start verifying your gurus.</p>
@@ -99,34 +139,25 @@
       <button type="submit">Notify Me</button>
     </form>
 
-<h3>Example Guru Profiles:</h3>
-<div style="display: grid; gap: 1.5rem; grid-template-columns: 1fr 1fr; margin-top: 1rem;">
-  <div style="background: #f9f9f9; border: 1px solid #ccc; border-radius: 12px; padding: 1rem;">
-    <h4>John “Crypto King” Doe</h4>
-    <p><strong>CredCheck Score:</strong> 38/100 ❌</p>
-    <ul style="font-size: 0.9rem; padding-left: 1.2rem;">
-      <li>Red flags: No refund policy, fake testimonials</li>
-      <li>Reports of price-gouging and misleading ads</li>
-      <li>High negative review ratio on Reddit</li>
-    </ul>
-  </div>
+    <h3>Example Guru Profiles:</h3>
+    <div class="example-cards">
+      <div class="card">
+        <h4>Tai Lopez</h4>
+        <p><strong>CredCheck Score:</strong> 42/100 ❌</p>
+        <p>Known for upsells and hype-based marketing.</p>
+        <a href="/profile.html?guru=tai-lopez">View Profile</a>
+      </div>
+      <div class="card">
+        <h4>Alex Hormozi</h4>
+        <p><strong>CredCheck Score:</strong> 92/100 ✅</p>
+        <p>Transparent, proven entrepreneur focused on scaling.</p>
+        <a href="/profile.html?guru=alex-hormozi">View Profile</a>
+      </div>
+    </div>
 
-  <div style="background: #f9f9f9; border: 1px solid #ccc; border-radius: 12px; padding: 1rem;">
-    <h4>Sara “Side Hustle Pro” Lee</h4>
-    <p><strong>CredCheck Score:</strong> 86/100 ✅</p>
-    <ul style="font-size: 0.9rem; padding-left: 1.2rem;">
-      <li>Transparent income reports and refund policy</li>
-      <li>Positive reviews across Reddit and YouTube</li>
-      <li>Verified student success stories</li>
-    </ul>
-  </div>
-</div>
-<div style="text-align: center; margin-top: 2rem;">
-  <a href="/directory.html" style="background: #111; color: #fff; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600;">
-    Browse All Gurus
-  </a>
-</div>
-
+    <div class="browse-button">
+      <a href="/directory.html">Browse All Gurus</a>
+    </div>
   </section>
 
   <footer>
