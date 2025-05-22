@@ -228,9 +228,12 @@
     let gurus = [];
 
     async function fetchGurus() {
-      const res = await fetch("/gurus/data.json");
-      gurus = await res.json();
-      fetchGurus();
+  const res = await fetch("/gurus/data.json");
+  gurus = await res.json();
+  renderGurus(gurus);
+}
+
+fetchGurus();
     }
 
     const guruGrid = document.getElementById('guruGrid');
