@@ -166,6 +166,10 @@
     .submit-form button:hover {
       background: #2563eb;
     }
+      @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
   </style>
 </head>
 <body>
@@ -211,7 +215,11 @@
       </select>
     </div>
 
-    <div class="card-grid" id="guruGrid"></div>
+    <div id="loadingMessage" style="text-align:center; padding: 2rem; font-weight: bold;">
+  <span style="display: inline-block; width: 1em; height: 1em; border: 3px solid var(--primary-color); border-top: 3px solid transparent; border-radius: 50%; animation: spin 1s linear infinite; margin-right: 0.5em;"></span>
+  Loading gurus...
+</div>
+<div class="card-grid" id="guruGrid"></div>
 
     <div class="submit-form">
       <h3>Request a Guru Review</h3>
@@ -230,7 +238,7 @@
     async function fetchGurus() {
   const res = await fetch("/gurus/data.json");
   gurus = await res.json();
-  // initial call removed to avoid race condition
+  renderGurus(gurus);
 }
 
 fetchGurus();
@@ -246,7 +254,8 @@ fetchGurus();
     }
 
     function renderGurus(data) {
-      guruGrid.innerHTML = '';
+      document.getElementById('loadingMessage')?.remove();
+guruGrid.innerHTML = '';
       data.forEach(guru => {
         const card = document.createElement('div');
         card.className = 'card';
