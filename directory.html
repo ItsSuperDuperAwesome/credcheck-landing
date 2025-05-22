@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -7,23 +7,23 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-  --bg-color: #F2F2F2;
-  --card-bg: #FFFFFF;
-  --text-color: #828586;
-  --primary-color: #2B6777;
-  --accent-color: #68A1CA;
-  --tag-bg: #2B6777;
-  --tag-text: #FFFFFF;
-}
+      --bg-color: #F2F2F2;
+      --card-bg: #FFFFFF;
+      --text-color: #828586;
+      --primary-color: #2B6777;
+      --accent-color: #68A1CA;
+      --tag-bg: #2B6777;
+      --tag-text: #FFFFFF;
+    }
     body.dark {
-  --bg-color: #000000;
-  --text-color: #E5E5E5;
-  --card-bg: #1A1A1A;
-  --tag-bg: #2B2B2B;
-  --tag-text: #FFFFFF;
-  --accent-color: #444444;
-  --primary-color: #DDDDDD;
-}
+      --bg-color: #000000;
+      --text-color: #E5E5E5;
+      --card-bg: #1A1A1A;
+      --tag-bg: #2B2B2B;
+      --tag-text: #FFFFFF;
+      --accent-color: #444444;
+      --primary-color: #DDDDDD;
+    }
     body {
       font-family: 'Inter', sans-serif;
       margin: 0;
@@ -31,6 +31,22 @@
       padding: 20px;
       color: var(--text-color);
       transition: background 0.3s ease, color 0.3s ease;
+    }
+    nav {
+      background: #111;
+      color: white;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 1rem;
     }
     .container {
       max-width: 1000px;
@@ -153,6 +169,15 @@
   </style>
 </head>
 <body>
+  <nav>
+    <div style="font-weight: bold;">CredCheck</div>
+    <div>
+      <a href="/index.html">Home</a>
+      <a href="/directory.html">Directory</a>
+      <a href="/profile.html?guru=alex-hormozi">Profile</a>
+    </div>
+  </nav>
+
   <script>
     const theme = localStorage.getItem('theme');
     if (
@@ -200,31 +225,26 @@
   </div>
 
   <script>
-   const gurus = [
-  {
-    name: "Tai Lopez",
-    score: 42,
-    url: "/profile.html?guru=tai-lopez",
-    niches: ["Mindset", "Marketing", "Personal Development"],
-   
-  },
-  {
-    name: "Iman Gadzhi",
-    score: 58,
-    url: "/profile.html?guru=iman-gadzhi",
-    niches: ["SMMA", "Digital Marketing", "Online Business"],
-   
-  },
-  {
-    name: "Alex Hormozi",
-    score: 92,
-    url: "/profile.html?guru=alex-hormozi",
-    niches: ["Business", "Scaling", "Sales", "Entrepreneurship"],
-   
-  }
-];
-
-
+    const gurus = [
+      {
+        name: "Tai Lopez",
+        score: 42,
+        url: "/profile.html?guru=tai-lopez",
+        niches: ["Mindset", "Marketing", "Personal Development"]
+      },
+      {
+        name: "Iman Gadzhi",
+        score: 58,
+        url: "/profile.html?guru=iman-gadzhi",
+        niches: ["SMMA", "Digital Marketing", "Online Business"]
+      },
+      {
+        name: "Alex Hormozi",
+        score: 92,
+        url: "/profile.html?guru=alex-hormozi",
+        niches: ["Business", "Scaling", "Sales", "Entrepreneurship"]
+      }
+    ];
 
     const guruGrid = document.getElementById('guruGrid');
     const searchInput = document.getElementById('searchInput');
@@ -246,23 +266,13 @@
         card.style.borderLeftColor = getScoreColor(guru.score);
 
         card.innerHTML = `
-  <h2>${guru.name}</h2>
-  <div class="niche-tags">
-    ${guru.niches.map(n => `<span class="tag">${n}</span>`).join('')}
-  </div>
-  <p class="score">Score: ${guru.score}/100</p>
-  <a href="${guru.url}">View Profile</a>
-`;
-
-<nav style="background: #111; color: white; padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
-  <div style="font-weight: bold;">CredCheck</div>
-  <div style="display: flex; gap: 1rem;">
-    <a href="/index.html" style="color: white; text-decoration: none;">Home</a>
-    <a href="/directory.html" style="color: white; text-decoration: none;">Directory</a>
-    <a href="/profile.html?guru=alex-hormozi" style="color: white; text-decoration: none;">Example Profile</a>
-  </div>
-</nav>
-
+          <h2>${guru.name}</h2>
+          <div class="niche-tags">
+            ${guru.niches.map(n => `<span class="tag">${n}</span>`).join('')}
+          </div>
+          <p class="score">Score: ${guru.score}/100</p>
+          <a href="${guru.url}">View Profile</a>
+        `;
 
         guruGrid.appendChild(card);
       });
