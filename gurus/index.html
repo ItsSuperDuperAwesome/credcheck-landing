@@ -19,6 +19,18 @@
       text-align: center;
       margin-bottom: 30px;
     }
+    .filter-bar {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .filter-bar input, .filter-bar select {
+      padding: 10px;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
     .card-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -47,28 +59,68 @@
       margin-top: 5px;
       color: #555;
     }
+    .niche {
+      font-size: 0.9em;
+      color: #777;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>CredCheck Guru Directory</h1>
-    <div class="card-grid">
-      <div class="card">
+
+    <div class="filter-bar">
+      <input type="text" id="searchInput" placeholder="Search by name...">
+      <select id="nicheFilter">
+        <option value="all">All Niches</option>
+        <option value="Mindset / Marketing">Mindset / Marketing</option>
+        <option value="SMMA / Biz">SMMA / Biz</option>
+        <option value="Business / Scaling">Business / Scaling</option>
+      </select>
+    </div>
+
+    <div class="card-grid" id="guruGrid">
+      <div class="card" data-name="tai lopez" data-niche="Mindset / Marketing">
         <h2>Tai Lopez</h2>
+        <p class="niche">Mindset / Marketing</p>
         <p class="score">Score: 42/100</p>
         <a href="/gurus/tai-lopez.html">View Profile</a>
       </div>
-      <div class="card">
+      <div class="card" data-name="iman gadzhi" data-niche="SMMA / Biz">
         <h2>Iman Gadzhi</h2>
+        <p class="niche">SMMA / Biz</p>
         <p class="score">Score: 58/100</p>
         <a href="/gurus/iman-gadzhi.html">View Profile</a>
       </div>
-      <div class="card">
+      <div class="card" data-name="alex hormozi" data-niche="Business / Scaling">
         <h2>Alex Hormozi</h2>
+        <p class="niche">Business / Scaling</p>
         <p class="score">Score: 92/100</p>
         <a href="/gurus/alex-hormozi.html">View Profile</a>
       </div>
     </div>
   </div>
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const nicheFilter = document.getElementById('nicheFilter');
+    const guruCards = document.querySelectorAll('.card');
+
+    function filterGurus() {
+      const query = searchInput.value.toLowerCase();
+      const niche = nicheFilter.value;
+
+      guruCards.forEach(card => {
+        const name = card.getAttribute('data-name');
+        const guruNiche = card.getAttribute('data-niche');
+        const matchesName = name.includes(query);
+        const matchesNiche = niche === 'all' || guruNiche === niche;
+        card.style.display = (matchesName && matchesNiche) ? 'block' : 'none';
+      });
+    }
+
+    searchInput.addEventListener('input', filterGurus);
+    nicheFilter.addEventListener('change', filterGurus);
+  </script>
 </body>
 </html>
