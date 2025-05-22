@@ -200,26 +200,30 @@
   </div>
 
   <script>
-    const gurus = [
+   const gurus = [
   {
     name: "Tai Lopez",
     score: 42,
     url: "/profile.html?guru=tai-lopez",
-    niches: ["Mindset", "Marketing", "Personal Development"]
+    niches: ["Mindset", "Marketing", "Personal Development"],
+    summary: "❌ Frequently criticized for upsells and vague value."
   },
   {
     name: "Iman Gadzhi",
     score: 58,
     url: "/profile.html?guru=iman-gadzhi",
-    niches: ["SMMA", "Digital Marketing", "Online Business"]
+    niches: ["SMMA", "Digital Marketing", "Online Business"],
+    summary: "⚠️ Mixed results reported by students and high price points."
   },
   {
     name: "Alex Hormozi",
     score: 92,
     url: "/profile.html?guru=alex-hormozi",
-    niches: ["Business", "Scaling", "Sales", "Entrepreneurship"]
+    niches: ["Business", "Scaling", "Sales", "Entrepreneurship"],
+    summary: "✅ Transparent, value-driven, highly rated by business owners."
   }
 ];
+
 
 
     const guruGrid = document.getElementById('guruGrid');
@@ -242,13 +246,15 @@
         card.style.borderLeftColor = getScoreColor(guru.score);
 
         card.innerHTML = `
-          <h2>${guru.name}</h2>
-          <div class="niche-tags">
-            ${guru.niches.map(n => `<span class="tag">${n}</span>`).join('')}
-          </div>
-          <p class="score">Score: ${guru.score}/100</p>
-          <a href="${guru.url}">View Profile</a>
-        `;
+  <h2>${guru.name}</h2>
+  <div class="niche-tags">
+    ${guru.niches.map(n => `<span class="tag">${n}</span>`).join('')}
+  </div>
+  <p class="score">Score: ${guru.score}/100</p>
+  <p class="summary">${guru.summary}</p>
+  <a href="${guru.url}">View Profile</a>
+`;
+
         guruGrid.appendChild(card);
       });
     }
