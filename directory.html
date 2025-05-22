@@ -199,21 +199,26 @@
     </div>
 
     <div class="filter-bar">
-      <input type="text" id="searchInput" placeholder="Search by name...">
-      <select id="nicheFilter">
-        <option value="all">All Niches</option>
-        <option value="Mindset">Mindset</option>
-        <option value="Marketing">Marketing</option>
-        <option value="Personal Development">Personal Development</option>
-        <option value="SMMA">SMMA</option>
-        <option value="Digital Marketing">Digital Marketing</option>
-        <option value="Online Business">Online Business</option>
-        <option value="Business">Business</option>
-        <option value="Scaling">Scaling</option>
-        <option value="Sales">Sales</option>
-        <option value="Entrepreneurship">Entrepreneurship</option>
-      </select>
-    </div>
+  <input type="text" id="searchInput" placeholder="Search by name...">
+  <select id="nicheFilter">
+    <option value="all">All Niches</option>
+    <option value="Mindset">Mindset</option>
+    <option value="Marketing">Marketing</option>
+    <option value="Personal Development">Personal Development</option>
+    <option value="SMMA">SMMA</option>
+    <option value="Digital Marketing">Digital Marketing</option>
+    <option value="Online Business">Online Business</option>
+    <option value="Business">Business</option>
+    <option value="Scaling">Scaling</option>
+    <option value="Sales">Sales</option>
+    <option value="Entrepreneurship">Entrepreneurship</option>
+  </select>
+  <select id="sortFilter">
+    <option value="default">Sort by: Default</option>
+    <option value="high">Sort by: Score (High → Low)</option>
+    <option value="low">Sort by: Score (Low → High)</option>
+  </select>
+</div>
 
     <div id="loadingMessage" style="text-align:center; padding: 2rem; font-weight: bold;">
   <span style="display: inline-block; width: 1em; height: 1em; border: 3px solid var(--primary-color); border-top: 3px solid transparent; border-radius: 50%; animation: spin 1s linear infinite; margin-right: 0.5em;"></span>
@@ -234,6 +239,7 @@
 
   <script>
     let gurus = [];
+// Data now fully managed in data.json
 
     async function fetchGurus() {
   const res = await fetch("/gurus/data.json");
@@ -286,14 +292,20 @@ guruGrid.innerHTML = '';
     }
 
     function filterGurus() {
-      const query = searchInput.value.toLowerCase();
-      const niche = nicheFilter.value;
-      const filtered = gurus.filter(g => {
-        const matchesName = g.name.toLowerCase().includes(query);
-        const matchesNiche = niche === 'all' || g.niches.map(n => n.toLowerCase()).includes(niche.toLowerCase());
-        return matchesName && matchesNiche;
-      });
-      renderGurus(filtered);
+  const query = searchInput.value.toLowerCase();
+  const niche = nicheFilter.value;
+  const sort = document.getElementById('sortFilter').value;
+
+  let filtered = gurus.filter(g => {
+    const matchesName = g.name.toLowerCase().includes(query);
+    const matchesNiche = niche === 'all' || g.niches.map(n => n.toLowerCase()).includes(niche.toLowerCase());
+    return matchesName && matchesNiche;
+  });
+
+  if (sort === 'high') filtered.sort((a, b) => b.score - a.score);
+  if (sort === 'low') filtered.sort((a, b) => a.score - b.score);
+
+  renderGurus(filtered);
     }
 
     function toggleTheme() {
@@ -304,6 +316,7 @@ guruGrid.innerHTML = '';
 
     searchInput.addEventListener('input', filterGurus);
     nicheFilter.addEventListener('change', filterGurus);
+document.getElementById('sortFilter').addEventListener('change', filterGurus);
 
     fetchGurus();
   </script>
