@@ -1,0 +1,23 @@
+[
+  {
+    "slug": "tai-lopez",
+    "name": "Tai Lopez",
+    "score": 42,
+    "niches": ["Mindset", "Marketing", "Personal Development"],
+    "description": "Tai Lopez became well-known for his 'here in my garage' ads and philosophy-based wealth videos. While he has a large following, his CredCheck score reflects concerns about product quality and aggressive upsells."
+  },
+  {
+    "slug": "iman-gadzhi",
+    "name": "Iman Gadzhi",
+    "score": 58,
+    "niches": ["SMMA", "Digital Marketing", "Online Business"],
+    "description": "Iman Gadzhi is a digital entrepreneur focused on teaching SMMA strategies. While successful, student outcomes are mixed and critiques focus on course repetition and overpricing."
+  },
+  {
+    "slug": "alex-hormozi",
+    "name": "Alex Hormozi",
+    "score": 92,
+    "niches": ["Business", "Scaling", "Sales", "Entrepreneurship"],
+    "description": "Alex Hormozi is known for his practical, no-BS approach to scaling businesses through Acquisition.com. Highly rated by entrepreneurs, his CredCheck score reflects high transparency and consistent value."
+  }
+]
