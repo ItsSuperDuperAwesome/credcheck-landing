@@ -17,7 +17,46 @@
     "slug": "alex-hormozi",
     "name": "Alex Hormozi",
     "score": 92,
+    "verified": true,
     "niches": ["Business", "Scaling", "Sales", "Entrepreneurship"],
     "description": "Alex Hormozi is known for his practical, no-BS approach to scaling businesses through Acquisition.com. Highly rated by entrepreneurs, his CredCheck score reflects high transparency and consistent value."
+  },
+  {
+    "slug": "grant-cardone",
+    "name": "Grant Cardone",
+    "score": 65,
+    "niches": ["Sales", "Real Estate", "Motivation"],
+    "description": "Grant Cardone is a real estate mogul and sales coach known for his 10X philosophy. Reviews are mixed with praise for energy and results but criticism over upsells and aggressiveness."
+  },
+  {
+    "slug": "dan-lok",
+    "name": "Dan Lok",
+    "score": 50,
+    "niches": ["High Ticket Closing", "Sales", "Mindset"],
+    "description": "Dan Lok promotes high-ticket sales and financial independence. Criticized for expensive upsells and marketing tactics, but praised for presentation and branding."
+  },
+  {
+    "slug": "vanessa-lau",
+    "name": "Vanessa Lau",
+    "score": 74,
+    "verified": true,
+    "niches": ["Instagram Marketing", "Online Coaching", "Branding"],
+    "description": "Vanessa Lau teaches content creators and coaches how to grow on social media. Her CredCheck score reflects solid content and community trust, especially among early-stage entrepreneurs."
+  },
+  {
+    "slug": "sam-ovens",
+    "name": "Sam Ovens",
+    "score": 61,
+    "niches": ["Consulting", "Entrepreneurship", "Online Business"],
+    "description": "Founder of Consulting.com, Sam Ovens built his reputation through direct-response marketing. CredCheck score reflects high income claims and heavy marketing."
+  },
+  {
+    "slug": "ali-abdaal",
+    "name": "Ali Abdaal",
+    "score": 89,
+    "verified": true,
+    "niches": ["Productivity", "YouTube", "Online Courses"],
+    "description": "Ali Abdaal creates content on productivity and learning. Known for transparent income reports and free YouTube education, his CredCheck score reflects high trust and value."
   }
 ]
+

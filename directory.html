@@ -233,64 +233,7 @@
   </div>
 
   <script>
-    let gurus = [
-  {
-    name: "Tai Lopez",
-    slug: "tai-lopez",
-    score: 42,
-    verified: false,
-    niches: ["Mindset", "Marketing", "Personal Development"]
-  },
-  {
-    name: "Iman Gadzhi",
-    slug: "iman-gadzhi",
-    score: 58,
-    verified: false,
-    niches: ["SMMA", "Digital Marketing", "Online Business"]
-  },
-  {
-    name: "Alex Hormozi",
-    slug: "alex-hormozi",
-    score: 92,
-    verified: true,
-    niches: ["Business", "Scaling", "Sales", "Entrepreneurship"]
-  },
-  {
-    name: "Grant Cardone",
-    slug: "grant-cardone",
-    score: 65,
-    verified: false,
-    niches: ["Sales", "Real Estate", "Motivation"]
-  },
-  {
-    name: "Dan Lok",
-    slug: "dan-lok",
-    score: 50,
-    verified: false,
-    niches: ["High Ticket Closing", "Sales", "Mindset"]
-  },
-  {
-    name: "Vanessa Lau",
-    slug: "vanessa-lau",
-    score: 74,
-    verified: true,
-    niches: ["Instagram Marketing", "Online Coaching", "Branding"]
-  },
-  {
-    name: "Sam Ovens",
-    slug: "sam-ovens",
-    score: 61,
-    verified: false,
-    niches: ["Consulting", "Entrepreneurship", "Online Business"]
-  },
-  {
-    name: "Ali Abdaal",
-    slug: "ali-abdaal",
-    score: 89,
-    verified: true,
-    niches: ["Productivity", "YouTube", "Online Courses"]
-  }
-];
+    let gurus = [];
 
     async function fetchGurus() {
   const res = await fetch("/gurus/data.json");
