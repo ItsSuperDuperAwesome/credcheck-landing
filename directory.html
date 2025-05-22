@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -225,26 +225,13 @@
   </div>
 
   <script>
-    const gurus = [
-      {
-        name: "Tai Lopez",
-        score: 42,
-        url: "/profile.html?guru=tai-lopez",
-        niches: ["Mindset", "Marketing", "Personal Development"]
-      },
-      {
-        name: "Iman Gadzhi",
-        score: 58,
-        url: "/profile.html?guru=iman-gadzhi",
-        niches: ["SMMA", "Digital Marketing", "Online Business"]
-      },
-      {
-        name: "Alex Hormozi",
-        score: 92,
-        url: "/profile.html?guru=alex-hormozi",
-        niches: ["Business", "Scaling", "Sales", "Entrepreneurship"]
-      }
-    ];
+    let gurus = [];
+
+    async function fetchGurus() {
+      const res = await fetch("/gurus/data.json");
+      gurus = await res.json();
+      fetchGurus();
+    }
 
     const guruGrid = document.getElementById('guruGrid');
     const searchInput = document.getElementById('searchInput');
