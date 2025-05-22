@@ -37,6 +37,7 @@
       margin-bottom: 20px;
       font-size: 2.2rem;
       font-weight: 700;
+      color: var(--text-color);
     }
     .toggle {
       display: flex;
@@ -51,29 +52,6 @@
       border: none;
       border-radius: 6px;
       cursor: pointer;
-    }
-    .legend {
-      background: var(--card-bg);
-      border-radius: 10px;
-      padding: 15px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-      margin-bottom: 30px;
-    }
-    .legend h3 {
-      margin-top: 0;
-      font-size: 1.1rem;
-      margin-bottom: 10px;
-    }
-    .legend table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    .legend td {
-      padding: 6px 10px;
-      font-size: 0.9rem;
-    }
-    .legend td.icon {
-      font-size: 1.2rem;
     }
     .filter-bar {
       display: flex;
@@ -137,6 +115,36 @@
     .card a:hover {
       text-decoration: underline;
     }
+    .submit-form {
+      background: var(--card-bg);
+      padding: 20px;
+      margin-top: 40px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .submit-form h3 {
+      margin-top: 0;
+    }
+    .submit-form input, .submit-form textarea {
+      width: 100%;
+      margin-bottom: 12px;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-family: 'Inter', sans-serif;
+    }
+    .submit-form button {
+      background: #3b82f6;
+      color: #fff;
+      padding: 10px 16px;
+      font-size: 0.95rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .submit-form button:hover {
+      background: #2563eb;
+    }
   </style>
 </head>
 <body>
@@ -144,15 +152,6 @@
     <h1>CredCheck Guru Directory</h1>
     <div class="toggle">
       <button onclick="document.body.classList.toggle('dark')">🌙 Toggle Dark Mode</button>
-    </div>
-
-    <div class="legend">
-      <h3>Score Legend</h3>
-      <table>
-        <tr><td class="icon">🟢</td><td>85–100: High Trust</td></tr>
-        <tr><td class="icon">🟡</td><td>60–84: Moderate Risk</td></tr>
-        <tr><td class="icon">🔴</td><td>0–59: High Risk</td></tr>
-      </table>
     </div>
 
     <div class="filter-bar">
@@ -173,6 +172,16 @@
     </div>
 
     <div class="card-grid" id="guruGrid"></div>
+
+    <div class="submit-form">
+      <h3>Request a Guru Review</h3>
+      <form action="https://formspree.io/f/mnndyzyo" method="POST">
+        <input type="text" name="name" placeholder="Guru or course name" required />
+        <input type="text" name="niche" placeholder="Niche (e.g. SMMA, Mindset, Dropshipping)" required />
+        <textarea name="reason" placeholder="Why should we review this person?" rows="4" required></textarea>
+        <button type="submit">Submit Request</button>
+      </form>
+    </div>
   </div>
 
   <script>
