@@ -264,13 +264,21 @@ guruGrid.innerHTML = '';
         card.style.borderLeftColor = getScoreColor(guru.score);
 
         card.innerHTML = `
-          <h2>${guru.name}</h2>
-          <div class="niche-tags">
-            ${guru.niches.map(n => `<span class="tag">${n}</span>`).join('')}
-          </div>
-          <p class="score">Score: ${guru.score}/100</p>
-          <a href="${guru.url}">View Profile</a>
-        `;
+  <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+    <div style="font-size: 2rem; background: var(--accent-color); color: white; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 50%;">
+      ${guru.name.split(' ').map(w => w[0]).join('').toUpperCase()}
+    </div>
+    <div>
+      <h2 style="margin: 0;">${guru.name} ${guru.verified ? '<span title="Verified" style="color: #10b981;">✔️</span>' : ''}</h2>
+      <p class="score" style="margin: 4px 0;">Score: ${guru.score}/100</p>
+    </div>
+  </div>
+  <div class="niche-tags">
+    ${guru.niches.map(n => `<span class="tag">${n}</span>`).join('')}
+  </div>
+  <a href="${guru.url}">View Profile</a>
+`;
+
 
         guruGrid.appendChild(card);
       });
