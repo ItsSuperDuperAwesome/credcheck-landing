@@ -278,7 +278,7 @@ guruGrid.innerHTML = '';
   <div class="niche-tags">
     ${guru.niches.map(n => `<span class="tag">${n}</span>`).join('')}
   </div>
-  <a href="${guru.url}" style="display: inline-block; margin-top: 12px; color: var(--accent-color); text-decoration: none; font-weight: 600;">View Profile</a>
+  <a href="/profile.html?guru=${guru.slug}" style="display: inline-block; margin-top: 12px; color: var(--accent-color); text-decoration: none; font-weight: 600;">View Profile</a>
 `;
 
         guruGrid.appendChild(card);
