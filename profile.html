@@ -32,6 +32,20 @@
       margin: 0;
       transition: background 0.3s ease, color 0.3s ease;
     }
+    nav {
+      background: #111;
+      color: white;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: -20px -20px 20px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 1rem;
+    }
     .container {
       max-width: 800px;
       margin: auto;
@@ -76,6 +90,14 @@
   </style>
 </head>
 <body>
+  <nav>
+    <div style="font-weight: bold;">CredCheck</div>
+    <div>
+      <a href="/index.html">Home</a>
+      <a href="/directory.html">Directory</a>
+      <a href="/profile.html?guru=alex-hormozi">Profile</a>
+    </div>
+  </nav>
   <script>
     const theme = localStorage.getItem('theme');
     if (
@@ -102,29 +124,20 @@
       document.title = `${guru.name} | CredCheck`;
 
       document.getElementById('profile').innerHTML = `
-  <h1>${guru.name}</h1>
-  <p class="score">CredCheck Score: ${guru.score}/100</p>
-  <div class="tags">
-    ${guru.niches.map(n => `<span class="tag">${n}</span>`).join('')}
-  </div>
-  <div class="description">
-    <p>${guru.description}</p>
-    ${guru.summary ? `<p class="summary">${guru.summary}</p>` : ''}
-  </div>
-  <a class="back-link" href="/index.html">← Back to Directory</a>
-`;
+        <h1>${guru.name}</h1>
+        <p class="score">CredCheck Score: ${guru.score}/100</p>
+        <div class="tags">
+          ${guru.niches.map(n => `<span class="tag">${n}</span>`).join('')}
+        </div>
+        <div class="description">
+          <p>${guru.description}</p>
+          ${guru.summary ? `<p class="summary">${guru.summary}</p>` : ''}
+        </div>
+        <a class="back-link" href="/directory.html">← Back to Directory</a>
+      `;
     }
 
     loadGuru();
   </script>
-  <nav style="background: #111; color: white; padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
-  <div style="font-weight: bold;">CredCheck</div>
-  <div style="display: flex; gap: 1rem;">
-    <a href="/index.html" style="color: white; text-decoration: none;">Home</a>
-    <a href="/directory.html" style="color: white; text-decoration: none;">Directory</a>
-    <a href="/profile.html?guru=alex-hormozi" style="color: white; text-decoration: none;">Example Profile</a>
-  </div>
-</nav>
-
 </body>
 </html>
