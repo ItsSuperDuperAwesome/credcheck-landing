@@ -102,16 +102,17 @@
       document.title = `${guru.name} | CredCheck`;
 
       document.getElementById('profile').innerHTML = `
-        <h1>${guru.name}</h1>
-        <p class="score">CredCheck Score: ${guru.score}/100</p>
-        <div class="tags">
-          ${guru.niches.map(n => `<span class="tag">${n}</span>`).join('')}
-        </div>
-        <div class="description">
-          <p>${guru.description}</p>
-        </div>
-        <a class="back-link" href="/index.html">← Back to Directory</a>
-      `;
+  <h1>${guru.name}</h1>
+  <p class="score">CredCheck Score: ${guru.score}/100</p>
+  <div class="tags">
+    ${guru.niches.map(n => `<span class="tag">${n}</span>`).join('')}
+  </div>
+  <div class="description">
+    <p>${guru.description}</p>
+    ${guru.summary ? `<p class="summary">${guru.summary}</p>` : ''}
+  </div>
+  <a class="back-link" href="/index.html">← Back to Directory</a>
+`;
     }
 
     loadGuru();
