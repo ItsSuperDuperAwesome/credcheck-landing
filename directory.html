@@ -7,23 +7,23 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-  --bg-color: #F2F2F2;
-  --card-bg: #FFFFFF;
-  --text-color: #828586;
-  --primary-color: #2B6777;
-  --accent-color: #68A1CA;
-  --tag-bg: #2B6777;
-  --tag-text: #FFFFFF;
-}
+      --bg-color: #F2F2F2;
+      --card-bg: #FFFFFF;
+      --text-color: #828586;
+      --primary-color: #2B6777;
+      --accent-color: #68A1CA;
+      --tag-bg: #2B6777;
+      --tag-text: #FFFFFF;
+    }
     body.dark {
-  --bg-color: #000000;
-  --text-color: #E5E5E5;
-  --card-bg: #1A1A1A;
-  --tag-bg: #2B2B2B;
-  --tag-text: #FFFFFF;
-  --accent-color: #444444;
-  --primary-color: #DDDDDD;
-}
+      --bg-color: #000000;
+      --text-color: #E5E5E5;
+      --card-bg: #1A1A1A;
+      --tag-bg: #2B2B2B;
+      --tag-text: #FFFFFF;
+      --accent-color: #444444;
+      --primary-color: #DDDDDD;
+    }
     body {
       font-family: 'Inter', sans-serif;
       margin: 0;
@@ -32,127 +32,80 @@
       color: var(--text-color);
       transition: background 0.3s ease, color 0.3s ease;
     }
+    nav {
+      background: #111;
+      color: white;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: -20px -20px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 1rem;
+    }
     .container {
       max-width: 1000px;
       margin: auto;
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
     }
     h1 {
       text-align: center;
-      margin-bottom: 20px;
-      font-size: 2.2rem;
-      font-weight: 700;
+      font-size: 2rem;
+      margin-bottom: 1rem;
       color: var(--primary-color);
     }
-    .toggle {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
-    .toggle button {
-      background: var(--accent-color);
-      color: white;
-      padding: 8px 16px;
-      font-size: 0.9rem;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    .filter-bar {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 30px;
-    }
-    .filter-bar input, .filter-bar select {
-      border: 1px solid var(--primary-color);
-      padding: 12px;
-      font-size: 1rem;
-      border-radius: 8px;
-      border: 1px solid #d1d5db;
-    }
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
-    }
-    .card {
-      background: var(--card-bg);
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-      transition: transform 0.2s ease;
-      border-left: 6px solid #ccc;
-    }
-    .card:hover {
-      transform: translateY(-4px);
-    }
-    .card h2 {
-      margin: 0;
-      font-size: 1.2rem;
-      font-weight: 600;
-    }
     .score {
-      font-weight: 600;
-      margin: 10px 0;
-      font-size: 0.95rem;
+      font-weight: bold;
+      margin: 1rem 0;
     }
-    .niche-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 10px;
+    .tags {
+      margin-bottom: 1rem;
     }
     .tag {
+      display: inline-block;
       background: var(--tag-bg);
       color: var(--tag-text);
-      padding: 4px 10px;
+      padding: 5px 10px;
       border-radius: 999px;
-      font-size: 0.75rem;
-      font-weight: 500;
+      font-size: 0.8rem;
+      margin: 0 5px 5px 0;
     }
-    .card a {
+    .description {
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+    .summary {
+      font-style: italic;
+      color: var(--text-color);
+      margin-top: 1rem;
+    }
+    .back-link {
       display: inline-block;
-      margin-top: 12px;
+      margin-top: 2rem;
       color: var(--accent-color);
       text-decoration: none;
       font-weight: 600;
     }
-    .card a:hover {
-      text-decoration: underline;
-    }
-    .submit-form {
-      background: var(--card-bg);
-      padding: 20px;
-      margin-top: 40px;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
-    .submit-form h3 {
-      margin-top: 0;
-    }
-    .submit-form input, .submit-form textarea {
-      width: 100%;
-      margin-bottom: 12px;
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      font-family: 'Inter', sans-serif;
-    }
-    .submit-form button {
-      background: var(--accent-color);
-      color: #fff;
-      padding: 10px 16px;
-      font-size: 0.95rem;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    .submit-form button:hover {
-      background: #2563eb;
-    }
   </style>
 </head>
 <body>
+  <nav>
+    <div style="font-weight: bold;">CredCheck</div>
+    <div>
+      <a href="/index.html">Home</a>
+      <a href="/directory.html">Directory</a>
+      <a href="/profile.html?guru=alex-hormozi">Profile</a>
+    </div>
+  </nav>
   <script>
     const theme = localStorage.getItem('theme');
     if (
@@ -162,125 +115,35 @@
       document.body.classList.add('dark');
     }
   </script>
-
-  <div class="container">
-    <h1>CredCheck Guru Directory</h1>
-    <div class="toggle">
-      <button onclick="toggleTheme()">🌙 Toggle Dark Mode</button>
-    </div>
-
-    <div class="filter-bar">
-      <input type="text" id="searchInput" placeholder="Search by name...">
-      <select id="nicheFilter">
-        <option value="all">All Niches</option>
-        <option value="Mindset">Mindset</option>
-        <option value="Marketing">Marketing</option>
-        <option value="Personal Development">Personal Development</option>
-        <option value="SMMA">SMMA</option>
-        <option value="Digital Marketing">Digital Marketing</option>
-        <option value="Online Business">Online Business</option>
-        <option value="Business">Business</option>
-        <option value="Scaling">Scaling</option>
-        <option value="Sales">Sales</option>
-        <option value="Entrepreneurship">Entrepreneurship</option>
-      </select>
-    </div>
-
-    <div class="card-grid" id="guruGrid"></div>
-
-    <div class="submit-form">
-      <h3>Request a Guru Review</h3>
-      <form action="https://formspree.io/f/mnndyzyo" method="POST">
-        <input type="text" name="name" placeholder="Guru or course name" required />
-        <input type="text" name="niche" placeholder="Niche (e.g. SMMA, Mindset, Dropshipping)" required />
-        <textarea name="reason" placeholder="Why should we review this person?" rows="4" required></textarea>
-        <button type="submit">Submit Request</button>
-      </form>
-    </div>
-  </div>
-
+  <div class="container" id="directory"></div>
   <script>
-   const gurus = [
-  {
-    name: "Tai Lopez",
-    score: 42,
-    url: "/profile.html?guru=tai-lopez",
-    niches: ["Mindset", "Marketing", "Personal Development"],
-   
-  },
-  {
-    name: "Iman Gadzhi",
-    score: 58,
-    url: "/profile.html?guru=iman-gadzhi",
-    niches: ["SMMA", "Digital Marketing", "Online Business"],
-   
-  },
-  {
-    name: "Alex Hormozi",
-    score: 92,
-    url: "/profile.html?guru=alex-hormozi",
-    niches: ["Business", "Scaling", "Sales", "Entrepreneurship"],
-   
-  }
-];
+    async function loadGuru() {
+      const params = new URLSearchParams(window.location.search);
+      const slug = params.get('guru');
+      if (!slug) return document.getElementById('directory').innerHTML = '<p>No guru specified.</p>';
 
+      const res = await fetch('/gurus/data.json');
+      const gurus = await res.json();
+      const guru = gurus.find(g => g.slug === slug);
+      if (!guru) return document.getElementById('directory').innerHTML = '<p>Guru not found.</p>';
 
+      document.title = `${guru.name} | CredCheck`;
 
-    const guruGrid = document.getElementById('guruGrid');
-    const searchInput = document.getElementById('searchInput');
-    const nicheFilter = document.getElementById('nicheFilter');
-
-    function getScoreColor(score) {
-      if (score >= 85) return '#10b981';
-      if (score >= 60) return '#f59e0b';
-      return '#ef4444';
+      document.getElementById('directory').innerHTML = `
+        <h1>${guru.name}</h1>
+        <p class="score">CredCheck Score: ${guru.score}/100</p>
+        <div class="tags">
+          ${guru.niches.map(n => `<span class="tag">${n}</span>`).join('')}
+        </div>
+        <div class="description">
+          <p>${guru.description}</p>
+          ${guru.summary ? `<p class="summary">${guru.summary}</p>` : ''}
+        </div>
+        <a class="back-link" href="/directory.html">← Back to Directory</a>
+      `;
     }
 
-    function renderGurus(data) {
-      guruGrid.innerHTML = '';
-      data.forEach(guru => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.setAttribute('data-name', guru.name.toLowerCase());
-        card.setAttribute('data-niches', guru.niches.join(','));
-        card.style.borderLeftColor = getScoreColor(guru.score);
-
-        card.innerHTML = `
-  <h2>${guru.name}</h2>
-  <div class="niche-tags">
-    ${guru.niches.map(n => `<span class="tag">${n}</span>`).join('')}
-  </div>
-  <p class="score">Score: ${guru.score}/100</p>
-  <a href="${guru.url}">View Profile</a>
-`;
-
-
-
-        guruGrid.appendChild(card);
-      });
-    }
-
-    function filterGurus() {
-      const query = searchInput.value.toLowerCase();
-      const niche = nicheFilter.value;
-      const filtered = gurus.filter(g => {
-        const matchesName = g.name.toLowerCase().includes(query);
-        const matchesNiche = niche === 'all' || g.niches.map(n => n.toLowerCase()).includes(niche.toLowerCase());
-        return matchesName && matchesNiche;
-      });
-      renderGurus(filtered);
-    }
-
-    function toggleTheme() {
-      const body = document.body;
-      const isDark = body.classList.toggle('dark');
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    }
-
-    searchInput.addEventListener('input', filterGurus);
-    nicheFilter.addEventListener('change', filterGurus);
-
-    renderGurus(gurus);
+    loadGuru();
   </script>
 </body>
 </html>
