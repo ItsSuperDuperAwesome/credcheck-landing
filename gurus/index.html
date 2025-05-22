@@ -4,12 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CredCheck Guru Directory</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Inter', sans-serif;
       margin: 0;
-      background: #f0f2f5;
+      background: #f7f9fc;
       padding: 20px;
+      color: #333;
     }
     .container {
       max-width: 1000px;
@@ -18,17 +20,21 @@
     h1 {
       text-align: center;
       margin-bottom: 20px;
-      font-size: 2rem;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #1f2937;
     }
     .legend {
-      background: #fff;
-      border-radius: 8px;
+      background: #ffffff;
+      border-radius: 10px;
       padding: 15px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
       margin-bottom: 30px;
     }
     .legend h3 {
       margin-top: 0;
+      font-size: 1.1rem;
+      margin-bottom: 10px;
     }
     .legend table {
       width: 100%;
@@ -51,7 +57,7 @@
       padding: 12px;
       font-size: 1rem;
       border-radius: 8px;
-      border: 1px solid #ccc;
+      border: 1px solid #d1d5db;
     }
     .card-grid {
       display: grid;
@@ -59,41 +65,46 @@
       gap: 20px;
     }
     .card {
-      background: white;
-      border-radius: 10px;
+      background: #ffffff;
+      border-radius: 12px;
       padding: 20px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      transition: all 0.2s ease;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+      transition: transform 0.2s ease;
+      border-left: 6px solid #ccc;
     }
     .card:hover {
-      transform: translateY(-5px);
+      transform: translateY(-4px);
     }
     .card h2 {
-      margin-top: 0;
+      margin: 0;
+      font-size: 1.2rem;
+      font-weight: 600;
     }
     .score {
-      font-weight: bold;
+      font-weight: 600;
       margin: 10px 0;
+      font-size: 0.95rem;
     }
     .niche-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 5px;
-      margin-bottom: 10px;
+      gap: 6px;
+      margin-top: 10px;
     }
     .tag {
-      background: #e0e0e0;
-      color: #333;
-      padding: 5px 10px;
-      border-radius: 50px;
-      font-size: 0.8rem;
+      background: #e5e7eb;
+      color: #374151;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 500;
     }
     .card a {
       display: inline-block;
-      margin-top: 10px;
-      color: #007bff;
+      margin-top: 12px;
+      color: #3b82f6;
       text-decoration: none;
-      font-weight: 500;
+      font-weight: 600;
     }
     .card a:hover {
       text-decoration: underline;
@@ -159,6 +170,12 @@
     const searchInput = document.getElementById('searchInput');
     const nicheFilter = document.getElementById('nicheFilter');
 
+    function getScoreColor(score) {
+      if (score >= 85) return '#10b981';
+      if (score >= 60) return '#f59e0b';
+      return '#ef4444';
+    }
+
     function renderGurus(data) {
       guruGrid.innerHTML = '';
       data.forEach(guru => {
@@ -166,6 +183,7 @@
         card.className = 'card';
         card.setAttribute('data-name', guru.name.toLowerCase());
         card.setAttribute('data-niches', guru.niches.join(','));
+        card.style.borderLeftColor = getScoreColor(guru.score);
 
         card.innerHTML = `
           <h2>${guru.name}</h2>
@@ -193,7 +211,6 @@
     searchInput.addEventListener('input', filterGurus);
     nicheFilter.addEventListener('change', filterGurus);
 
-    // Initial render
     renderGurus(gurus);
   </script>
 </body>
