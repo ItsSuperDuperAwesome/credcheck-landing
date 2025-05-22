@@ -6,12 +6,27 @@
   <title>CredCheck Guru Directory</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg-color: #f7f9fc;
+      --text-color: #333;
+      --card-bg: #fff;
+      --tag-bg: #e5e7eb;
+      --tag-text: #374151;
+    }
+    body.dark {
+      --bg-color: #111827;
+      --text-color: #e5e7eb;
+      --card-bg: #1f2937;
+      --tag-bg: #374151;
+      --tag-text: #d1d5db;
+    }
     body {
       font-family: 'Inter', sans-serif;
       margin: 0;
-      background: #f7f9fc;
+      background: var(--bg-color);
       padding: 20px;
-      color: #333;
+      color: var(--text-color);
+      transition: background 0.3s ease, color 0.3s ease;
     }
     .container {
       max-width: 1000px;
@@ -22,10 +37,23 @@
       margin-bottom: 20px;
       font-size: 2.2rem;
       font-weight: 700;
-      color: #1f2937;
+    }
+    .toggle {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .toggle button {
+      background: #3b82f6;
+      color: white;
+      padding: 8px 16px;
+      font-size: 0.9rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
     }
     .legend {
-      background: #ffffff;
+      background: var(--card-bg);
       border-radius: 10px;
       padding: 15px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -65,7 +93,7 @@
       gap: 20px;
     }
     .card {
-      background: #ffffff;
+      background: var(--card-bg);
       border-radius: 12px;
       padding: 20px;
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
@@ -92,8 +120,8 @@
       margin-top: 10px;
     }
     .tag {
-      background: #e5e7eb;
-      color: #374151;
+      background: var(--tag-bg);
+      color: var(--tag-text);
       padding: 4px 10px;
       border-radius: 999px;
       font-size: 0.75rem;
@@ -114,6 +142,9 @@
 <body>
   <div class="container">
     <h1>CredCheck Guru Directory</h1>
+    <div class="toggle">
+      <button onclick="document.body.classList.toggle('dark')">🌙 Toggle Dark Mode</button>
+    </div>
 
     <div class="legend">
       <h3>Score Legend</h3>
