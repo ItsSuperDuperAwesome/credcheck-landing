@@ -7,23 +7,23 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-color: #F2F2F2;
-      --card-bg: #FFFFFF;
-      --text-color: #828586;
-      --primary-color: #2B6777;
-      --accent-color: #68A1CA;
-      --tag-bg: #2B6777;
-      --tag-text: #FFFFFF;
-    }
+  --bg-color: #f3f4f6;
+  --card-bg: #ffffff;
+  --text-color: #4b5563;
+  --primary-color: #1f2937;
+  --accent-color: #3b82f6;
+  --tag-bg: #e0e7ff;
+  --tag-text: #1e40af;
+}
     body.dark {
-      --bg-color: #000000;
-      --text-color: #E5E5E5;
-      --card-bg: #1A1A1A;
-      --tag-bg: #2B2B2B;
-      --tag-text: #FFFFFF;
-      --accent-color: #444444;
-      --primary-color: #DDDDDD;
-    }
+  --bg-color: #0f172a;
+  --text-color: #d1d5db;
+  --card-bg: #1e293b;
+  --tag-bg: #334155;
+  --tag-text: #cbd5e1;
+  --accent-color: #3b82f6;
+  --primary-color: #facc15;
+}
     body {
       font-family: 'Inter', sans-serif;
       margin: 0;
@@ -269,16 +269,16 @@ guruGrid.innerHTML = '';
       ${guru.name.split(' ').map(w => w[0]).join('').toUpperCase()}
     </div>
     <div>
-      <h2 style="margin: 0;">
+      <h2 style="margin: 0 0 4px; font-size: 1.3rem; font-weight: 700;">
         ${guru.name} ${guru.verified ? '<span title="Verified" style="color: #10b981;">✔️</span>' : ''}
       </h2>
-      <p class="score" style="margin: 4px 0;">Score: ${guru.score}/100</p>
+      <p class="score" style="margin: 0 0 10px; font-size: 0.9rem; color: var(--text-color);">Score: ${guru.score}/100</p>
     </div>
   </div>
-  <div class="niche-tags">
+  <div class="niche-tags" style="margin-bottom: 10px;">
     ${guru.niches.map(n => `<span class="tag">${n}</span>`).join('')}
   </div>
-  <a href="${guru.url}" style="display: inline-block; margin-top: 12px; color: var(--accent-color); text-decoration: none; font-weight: 600;">View Profile</a>
+  <a href="/profile.html?guru=${guru.slug}" style="display: inline-block; margin-top: 8px; color: var(--accent-color); text-decoration: none; font-weight: 600;">View Profile</a>
 `;
 
         guruGrid.appendChild(card);
