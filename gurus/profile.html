@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Loading... | CredCheck</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #F2F2F2;
+      --card-bg: #FFFFFF;
+      --text-color: #828586;
+      --primary-color: #2B6777;
+      --accent-color: #68A1CA;
+      --tag-bg: #2B6777;
+      --tag-text: #FFFFFF;
+    }
+    body.dark {
+      --bg-color: #000000;
+      --text-color: #E5E5E5;
+      --card-bg: #1A1A1A;
+      --tag-bg: #2B2B2B;
+      --tag-text: #FFFFFF;
+      --accent-color: #444444;
+      --primary-color: #DDDDDD;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      padding: 20px;
+      margin: 0;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    }
+    h1 {
+      margin-top: 0;
+      color: var(--primary-color);
+    }
+    .score {
+      font-size: 1rem;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .tags {
+      margin: 1rem 0;
+    }
+    .tag {
+      display: inline-block;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+    .description {
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 2rem;
+      color: var(--accent-color);
+      text-decoration: none;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    const theme = localStorage.getItem('theme');
+    if (
+      theme === 'dark' ||
+      (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ) {
+      document.body.classList.add('dark');
+    }
+  </script>
+
+  <div class="container" id="profile"></div>
+
+  <script>
+    async function loadGuru() {
+      const params = new URLSearchParams(window.location.search);
+      const slug = params.get('guru');
+      if (!slug) return document.getElementById('profile').innerHTML = '<p>No guru specified.</p>';
+
+      const res = await fetch('/gurus/data.json');
+      const gurus = await res.json();
+      const guru = gurus.find(g => g.slug === slug);
+      if (!guru) return document.getElementById('profile').innerHTML = '<p>Guru not found.</p>';
+
+      document.title = `${guru.name} | CredCheck`;
+
+      document.getElementById('profile').innerHTML = `
+        <h1>${guru.name}</h1>
+        <p class="score">CredCheck Score: ${guru.score}/100</p>
+        <div class="tags">
+          ${guru.niches.map(n => `<span class="tag">${n}</span>`).join('')}
+        </div>
+        <div class="description">
+          <p>${guru.description}</p>
+        </div>
+        <a class="back-link" href="/index.html">← Back to Directory</a>
+      `;
+    }
+
+    loadGuru();
+  </script>
+</body>
+</html>
