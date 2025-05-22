@@ -1,126 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CredCheck Guru Directory</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f8f9fa;
-      margin: 0;
-      padding: 20px;
-    }
-    .container {
-      max-width: 1000px;
-      margin: auto;
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    .filter-bar {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-    .filter-bar input, .filter-bar select {
-      padding: 10px;
-      font-size: 1em;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 20px;
-    }
-    .card {
-      background: white;
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      text-align: center;
-      transition: transform 0.2s ease;
-    }
-    .card:hover {
-      transform: translateY(-5px);
-    }
-    .card a {
-      text-decoration: none;
-      color: #007bff;
-      font-weight: bold;
-      display: block;
-      margin-top: 10px;
-    }
-    .score {
-      font-size: 1.1em;
-      margin-top: 5px;
-      color: #555;
-    }
-    .niche {
-      font-size: 0.9em;
-      color: #777;
-    }
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.5">
+  <style type="text/css">
+    body {background-color: #f6f7f9}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Helvetica Neue'; -webkit-text-stroke: #000000; background-color: #ffffff; min-height: 15.0px}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000; background-color: #ffffff}
+    p.p5 {margin: 0.0px 0.0px 10.8px 0.0px; text-align: center; font: 10.8px Arial; color: #646464; -webkit-text-stroke: #646464}
+    p.p6 {margin: 0.0px 0.0px 13.2px 0.0px; text-align: center; font: 13.2px Arial; color: #434343; -webkit-text-stroke: #434343}
+    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 12.0px Arial; color: #0b61ff; -webkit-text-stroke: #0b61ff}
+    span.s1 {font-kerning: none}
+    span.s2 {font: 12.0px 'Helvetica Neue'; font-kerning: none}
+    span.s3 {font-kerning: none; background-color: #ffffff}
+    span.s4 {font: 12.0px Arial; font-kerning: none; -webkit-text-stroke: 0px #0b61ff}
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>CredCheck Guru Directory</h1>
-
-    <div class="filter-bar">
-      <input type="text" id="searchInput" placeholder="Search by name...">
-      <select id="nicheFilter">
-        <option value="all">All Niches</option>
-        <option value="Mindset / Marketing">Mindset / Marketing</option>
-        <option value="SMMA / Biz">SMMA / Biz</option>
-        <option value="Business / Scaling">Business / Scaling</option>
-      </select>
-    </div>
-
-    <div class="card-grid" id="guruGrid">
-      <div class="card" data-name="tai lopez" data-niche="Mindset / Marketing">
-        <h2>Tai Lopez</h2>
-        <p class="niche">Mindset / Marketing</p>
-        <p class="score">Score: 42/100</p>
-        <a href="/gurus/tai-lopez.html">View Profile</a>
-      </div>
-      <div class="card" data-name="iman gadzhi" data-niche="SMMA / Biz">
-        <h2>Iman Gadzhi</h2>
-        <p class="niche">SMMA / Biz</p>
-        <p class="score">Score: 58/100</p>
-        <a href="/gurus/iman-gadzhi.html">View Profile</a>
-      </div>
-      <div class="card" data-name="alex hormozi" data-niche="Business / Scaling">
-        <h2>Alex Hormozi</h2>
-        <p class="niche">Business / Scaling</p>
-        <p class="score">Score: 92/100</p>
-        <a href="/gurus/alex-hormozi.html">View Profile</a>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    const searchInput = document.getElementById('searchInput');
-    const nicheFilter = document.getElementById('nicheFilter');
-    const guruCards = document.querySelectorAll('.card');
-
-    function filterGurus() {
-      const query = searchInput.value.toLowerCase();
-      const niche = nicheFilter.value;
-
-      guruCards.forEach(card => {
-        const name = card.getAttribute('data-name');
-        const guruNiche = card.getAttribute('data-niche');
-        const matchesName = name.includes(query);
-        const matchesNiche = niche === 'all' || guruNiche === niche;
-        card.style.display = (matchesName && matchesNiche) ? 'block' : 'none';
-      });
-    }
-
-    searchInput.addEventListener('input', filterGurus);
-    nicheFilter.addEventListener('change', filterGurus);
-  </script>
+<h1 style="margin: 0.0px 0.0px 30.0px 0.0px; text-align: center; font: 24.0px Arial; -webkit-text-stroke: #000000"><span class="s1"><b>CredCheck Guru Directory</b></span></h1>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p3"><span class="s2"><span class="Apple-converted-space">        </span></span><span class="s1">All Niches</span></p>
+<p class="p3"><span class="s2"><span class="Apple-converted-space">        </span></span><span class="s1">Mindset / Marketing</span></p>
+<p class="p3"><span class="s2"><span class="Apple-converted-space">        </span></span><span class="s1">SMMA / Biz</span></p>
+<p class="p3"><span class="s2"><span class="Apple-converted-space">        </span></span><span class="s1">Business / Scaling</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; text-align: center; font: 18.0px Arial; -webkit-text-stroke: #000000"><span class="s3"><b>Tai Lopez</b><b></b></span></h2>
+<p class="p5"><span class="s3">Mindset / Marketing</span></p>
+<p class="p6"><span class="s3">Score: 42/100</span></p>
+<p class="p7"><span class="s3"><a href="file:///gurus/tai-lopez.html"><b>View Profile</b><span class="s4"><b></b></span></a></span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; text-align: center; font: 18.0px Arial; -webkit-text-stroke: #000000"><span class="s3"><b>Iman Gadzhi</b><b></b></span></h2>
+<p class="p5"><span class="s3">SMMA / Biz</span></p>
+<p class="p6"><span class="s3">Score: 58/100</span></p>
+<p class="p7"><span class="s3"><a href="file:///gurus/iman-gadzhi.html"><b>View Profile</b><span class="s4"><b></b></span></a></span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; text-align: center; font: 18.0px Arial; -webkit-text-stroke: #000000"><span class="s3"><b>Alex Hormozi</b><b></b></span></h2>
+<p class="p5"><span class="s3">Business / Scaling</span></p>
+<p class="p6"><span class="s3">Score: 92/100</span></p>
+<p class="p7"><span class="s3"><a href="file:///gurus/alex-hormozi.html"><b>View Profile</b><span class="s4"><b></b></span></a></span></p>
 </body>
 </html>
