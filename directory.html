@@ -230,11 +230,10 @@
     async function fetchGurus() {
   const res = await fetch("/gurus/data.json");
   gurus = await res.json();
-  renderGurus(gurus);
+  // initial call removed to avoid race condition
 }
 
 fetchGurus();
-    }
 
     const guruGrid = document.getElementById('guruGrid');
     const searchInput = document.getElementById('searchInput');
@@ -292,3 +291,4 @@ fetchGurus();
   </script>
 </body>
 </html>
+sti
