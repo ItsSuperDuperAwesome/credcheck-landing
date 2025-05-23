@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CredCheck Guru Directory</title>
+  <title>CredCheck Course Directory</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -30,7 +30,6 @@
       background: var(--bg-color);
       padding: 20px;
       color: var(--text-color);
-      transition: background 0.3s ease, color 0.3s ease;
     }
     nav {
       background: var(--card-bg);
@@ -43,22 +42,16 @@
       top: 0;
       z-index: 1000;
       box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-      transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
     }
     nav a {
       color: var(--text-color);
       text-decoration: none;
       margin-left: 1rem;
       font-weight: 500;
-      transition: color 0.3s ease;
     }
     nav a:hover {
       color: var(--accent-color);
       text-decoration: underline;
-    }
-    .container {
-      max-width: 1000px;
-      margin: auto;
     }
     h1 {
       text-align: center;
@@ -66,6 +59,10 @@
       font-size: 2.2rem;
       font-weight: 700;
       color: var(--primary-color);
+    }
+    .container {
+      max-width: 1000px;
+      margin: auto;
     }
     .toggle {
       display: flex;
@@ -92,9 +89,6 @@
       font-size: 1rem;
       border-radius: 10px;
       border: 1px solid #ccc;
-      background: #fff;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-      transition: all 0.2s ease;
     }
     .card-grid {
       display: grid;
@@ -106,12 +100,8 @@
       border-radius: 16px;
       padding: 24px;
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-      transition: transform 0.2s ease;
       border-left: 6px solid #ccc;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      animation: fadeIn 0.4s ease forwards;
+      transition: transform 0.2s ease;
     }
     .card:hover {
       transform: translateY(-6px);
@@ -124,51 +114,65 @@
       border-radius: 999px;
       font-size: 0.75rem;
       font-weight: 600;
-      letter-spacing: 0.3px;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+    .submit-form {
+      background: var(--card-bg);
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      margin-top: 40px;
+    }
+    .submit-form h3 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+    .submit-form form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .submit-form input, .submit-form textarea {
+      padding: 12px;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    .submit-form button {
+      padding: 12px;
+      background: var(--accent-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
   <nav>
-    <div style="font-weight: bold; font-size: 1.3rem; letter-spacing: 0.5px;">CredCheck</div>
-    <div style="display: flex; gap: 1.5rem; align-items: center;">
+    <div style="font-weight: bold; font-size: 1.3rem;">CredCheck</div>
+    <div>
       <a href="/index.html">Home</a>
       <a href="/directory.html">Directory</a>
-      <a href="/profile.html?guru=alex-hormozi">Profile</a>
+      <a href="/profile.html">Profile</a>
     </div>
   </nav>
-
-  <script>
-    const theme = localStorage.getItem('theme');
-    if (
-      theme === 'dark' ||
-      (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)
-    ) {
-      document.body.classList.add('dark');
-    }
-  </script>
-
   <div class="container">
-    <h1>CredCheck Guru & Course Directory</h1>
+    <h1>CredCheck Course Directory</h1>
     <div class="toggle">
       <button onclick="toggleTheme()">🌙 Toggle Dark Mode</button>
     </div>
-
     <div class="filter-bar">
-      <input type="text" id="searchInput" placeholder="Search by name...">
+      <input type="text" id="searchInput" placeholder="Search by course title...">
       <select id="nicheFilter">
         <option value="all">All Niches</option>
-        <option value="Mindset">Mindset</option>
-        <option value="Marketing">Marketing</option>
-        <option value="Personal Development">Personal Development</option>
         <option value="SMMA">SMMA</option>
-        <option value="Digital Marketing">Digital Marketing</option>
-        <option value="Online Business">Online Business</option>
-        <option value="Business">Business</option>
-        <option value="Scaling">Scaling</option>
+        <option value="Marketing">Marketing</option>
+        <option value="Mindset">Mindset</option>
         <option value="Sales">Sales</option>
-        <option value="Entrepreneurship">Entrepreneurship</option>
+        <option value="Productivity">Productivity</option>
+        <option value="YouTube">YouTube</option>
       </select>
       <select id="sortFilter">
         <option value="default">Sort by: Default</option>
@@ -176,97 +180,28 @@
         <option value="low">Sort by: Score (Low → High)</option>
       </select>
     </div>
-
     <div class="card-grid" id="guruGrid"></div>
-
     <div class="submit-form">
-      <h3>Request a Guru or Course Review</h3>
+      <h3>Request a Course Review</h3>
       <form action="https://formspree.io/f/mnndyzyo" method="POST">
-        <input type="text" name="name" placeholder="Guru or course name" required />
-        <input type="text" name="niche" placeholder="Niche (e.g. SMMA, Mindset, Dropshipping)" required />
-        <textarea name="reason" placeholder="Why should we review this?" rows="4" required></textarea>
+        <input type="text" name="name" placeholder="Course name" required />
+        <input type="text" name="niche" placeholder="Niche (e.g. SMMA, Marketing)" required />
+        <textarea name="reason" placeholder="Why should we review this course?" rows="4" required></textarea>
         <button type="submit">Submit Request</button>
       </form>
     </div>
   </div>
-
   <script>
-    let entries = [];
-    const guruGrid = document.getElementById('guruGrid');
-    const searchInput = document.getElementById('searchInput');
-    const nicheFilter = document.getElementById('nicheFilter');
-    const sortFilter = document.getElementById('sortFilter');
-
-    async function fetchEntries() {
-      const courseRes = await fetch("/gurus/courses.json");
-      const courseData = await courseRes.json();
-      const guruRes = await fetch("/gurus/data.json");
-      const guruData = await guruRes.json();
-      entries = [...courseData, ...guruData];
-      renderEntries(entries);
-    }
-
-    function getScoreColor(score) {
-      if (score >= 85) return '#10b981';
-      if (score >= 60) return '#f59e0b';
-      return '#ef4444';
-    }
-
-    function renderEntries(data) {
-      guruGrid.innerHTML = '';
-      data.forEach(entry => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.style.borderLeftColor = getScoreColor(entry.score || entry.rating);
-        card.innerHTML = `
-          <h2 style="margin: 0 0 10px; font-size: 1.3rem; font-weight: 700;">
-            ${(entry.title || entry.name)} ${entry.verified ? '<span title="Verified" style="background: #10b981; color: white; font-size: 0.65rem; padding: 2px 6px; border-radius: 999px; margin-left: 8px; font-weight: 600; white-space: nowrap;">✔ VERIFIED</span>' : ''}
-          </h2>
-          <p style="margin: 0 0 6px; font-size: 0.9rem; color: var(--text-color);">
-            ${entry.creator ? 'by ' + entry.creator : ''}
-          </p>
-          <p style="margin: 0 0 6px; font-size: 0.85rem; color: var(--text-color);">
-            Score: ${(entry.score || entry.rating)}/100
-          </p>
-          ${entry.price ? `<p style="margin: 0 0 6px; font-size: 0.85rem; color: var(--text-color);">Price: $${entry.price}</p>` : ''}
-          <div class="niche-tags" style="margin-bottom: 10px;">
-            ${entry.niches.map(n => `<span class="tag">${n}</span>`).join('')}
-          </div>
-          <p style="font-size: 0.85rem; line-height: 1.4; margin-bottom: 10px;">${entry.description || ''}</p>
-          <a href="${entry.link || '/profile.html?guru=' + (entry.slug || '')}" target="_blank" style="color: var(--accent-color); text-decoration: none; font-weight: 600;">View ${entry.creator ? 'Course' : 'Profile'}</a>
-        `;
-        guruGrid.appendChild(card);
-      });
-    }
-
-    function filterEntries() {
-      const query = searchInput.value.toLowerCase();
-      const niche = nicheFilter.value;
-      const sort = sortFilter.value;
-
-      let filtered = entries.filter(e => {
-        const name = (e.name || e.title || '').toLowerCase();
-        const matchesName = name.includes(query);
-        const matchesNiche = niche === 'all' || e.niches.map(n => n.toLowerCase()).includes(niche.toLowerCase());
-        return matchesName && matchesNiche;
-      });
-
-      if (sort === 'high') filtered.sort((a, b) => (b.score || b.rating) - (a.score || a.rating));
-      if (sort === 'low') filtered.sort((a, b) => (a.score || a.rating) - (b.score || b.rating));
-
-      renderEntries(filtered);
-    }
-
     function toggleTheme() {
-      const isDark = document.body.classList.toggle('dark');
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      document.body.classList.toggle('dark');
+      localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
     }
-
-    searchInput.addEventListener('input', filterEntries);
-    nicheFilter.addEventListener('change', filterEntries);
-    sortFilter.addEventListener('change', filterEntries);
-
-    fetchEntries();
+    if (
+      localStorage.getItem('theme') === 'dark' ||
+      (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ) {
+      document.body.classList.add('dark');
+    }
   </script>
 </body>
 </html>
