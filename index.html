@@ -6,6 +6,9 @@
   <title>CredCheck - Course Truth Made Simple</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
+    * {
+      box-sizing: border-box;
+    }
     body {
       font-family: 'Inter', sans-serif;
       margin: 0;
@@ -20,6 +23,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      animation: fadeIn 1s ease-in;
     }
     nav a {
       color: #2b6777;
@@ -35,6 +39,7 @@
       color: white;
       padding: 4rem 2rem;
       text-align: center;
+      animation: slideDown 0.9s ease-out;
     }
     header h1 {
       font-size: 3rem;
@@ -61,7 +66,14 @@
       padding: 1.5rem;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      transform: translateY(20px);
+      opacity: 0;
+      animation: fadeUp 0.8s forwards;
     }
+    .feature-box:nth-child(2) { animation-delay: 0.2s; }
+    .feature-box:nth-child(3) { animation-delay: 0.4s; }
+    .feature-box:nth-child(4) { animation-delay: 0.6s; }
+
     .feature-box h4 {
       margin-top: 0;
       color: #2b6777;
@@ -75,6 +87,7 @@
       max-width: 600px;
       margin-left: auto;
       margin-right: auto;
+      animation: fadeIn 1s ease-in;
     }
     .email-form input[type="email"] {
       padding: 1rem;
@@ -98,6 +111,21 @@
       text-align: center;
       padding: 2rem;
       color: #999;
+      animation: fadeIn 1.2s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
