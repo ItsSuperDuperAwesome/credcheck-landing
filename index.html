@@ -3,165 +3,149 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CredCheck - Verify Online Gurus</title>
+  <title>CredCheck - Course Truth Made Simple</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Inter', sans-serif;
       margin: 0;
       padding: 0;
-      background: #f5f5f5;
-      color: #333;
+      background: #f9fafb;
+      color: #1a1a1a;
     }
     nav {
-      background: #111;
-      color: white;
-      padding: 1rem;
+      background: #fff;
+      border-bottom: 1px solid #eaeaea;
+      padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
     nav a {
-      color: white;
+      color: #2b6777;
       text-decoration: none;
-      margin-left: 1rem;
+      margin-left: 1.5rem;
+      font-weight: 600;
+    }
+    nav a:hover {
+      text-decoration: underline;
     }
     header {
-      background: #111;
-      color: #fff;
-      padding: 2rem;
+      background: linear-gradient(to right, #2b6777, #68a1ca);
+      color: white;
+      padding: 4rem 2rem;
       text-align: center;
     }
     header h1 {
-      margin: 0;
-      font-size: 2rem;
+      font-size: 3rem;
+      margin: 0 0 1rem 0;
+    }
+    header p {
+      font-size: 1.25rem;
+      max-width: 600px;
+      margin: 0 auto;
     }
     section {
-      padding: 2rem;
-      max-width: 800px;
+      padding: 3rem 2rem;
+      max-width: 1000px;
       margin: auto;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     }
-    .feature-list {
-      margin-top: 1rem;
-      padding-left: 1rem;
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .feature-box {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    }
+    .feature-box h4 {
+      margin-top: 0;
+      color: #2b6777;
     }
     .email-form {
-      margin-top: 2rem;
-      display: flex;
-      flex-direction: column;
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      margin-top: 3rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
     .email-form input[type="email"] {
-      padding: 0.75rem;
-      font-size: 1rem;
-      border: 1px solid #ccc;
+      padding: 1rem;
+      width: 100%;
       border-radius: 8px;
+      border: 1px solid #ccc;
       margin-bottom: 1rem;
+      font-size: 1rem;
     }
     .email-form button {
-      padding: 0.75rem;
+      width: 100%;
+      padding: 1rem;
       font-size: 1rem;
-      background: #111;
+      background: #2b6777;
       color: #fff;
       border: none;
       border-radius: 8px;
       cursor: pointer;
     }
-    .email-form button:hover {
-      background: #333;
-    }
     footer {
       text-align: center;
-      padding: 1rem;
-      color: #888;
-    }
-    .example-cards {
-      display: grid;
-      gap: 1.5rem;
-      grid-template-columns: 1fr 1fr;
-      margin-top: 1rem;
-    }
-    .card {
-      background: #f9f9f9;
-      border: 1px solid #ccc;
-      border-radius: 12px;
-      padding: 1rem;
-    }
-    .card p {
-      font-size: 0.9rem;
-    }
-    .browse-button {
-      display: block;
-      text-align: center;
-      margin-top: 2rem;
-    }
-    .browse-button a {
-      background: #111;
-      color: #fff;
-      padding: 0.75rem 1.5rem;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 600;
+      padding: 2rem;
+      color: #999;
     }
   </style>
 </head>
 <body>
   <nav>
-    <div style="font-weight: bold;">CredCheck</div>
+    <div style="font-weight: bold; font-size: 1.2rem;">CredCheck</div>
     <div>
       <a href="/index.html">Home</a>
       <a href="/directory.html">Directory</a>
-      <a href="/profile.html?guru=alex-hormozi">Profile</a>
     </div>
   </nav>
   <header>
-    <h1>CredCheck</h1>
-    <p>Stop getting scammed. Start verifying your gurus.</p>
+    <h1>Cut Through the Noise</h1>
+    <p>CredCheck helps you find the most trusted, impactful, and real online courses — no hype, no BS.</p>
   </header>
 
   <section>
-    <h2>Why CredCheck?</h2>
-    <p>We rate online gurus and course sellers based on real data, user reviews, and AI-powered analysis. No more hype. Just the facts.</p>
-
-    <h3>Top Features:</h3>
-    <ul class="feature-list">
-      <li>Credibility score based on refund rates and reviews</li>
-      <li>Community-driven scam flags</li>
-      <li>AI-powered red flag detection</li>
-      <li>Browser extension for instant insight</li>
-    </ul>
-
-    <form action="https://formspree.io/f/mnndyzyo" method="POST" class="email-form">
-      <label for="email"><strong>Join the beta launch:</strong></label>
-      <input type="email" id="email" name="email" placeholder="Enter your email" required />
-      <button type="submit">Notify Me</button>
-    </form>
-
-    <h3>Example Guru Profiles:</h3>
-    <div class="example-cards">
-      <div class="card">
-        <h4>Tai Lopez</h4>
-        <p><strong>CredCheck Score:</strong> 42/100 ❌</p>
-        <p>Known for upsells and hype-based marketing.</p>
-        <a href="/profile.html?guru=tai-lopez">View Profile</a>
+    <h2 style="text-align:center; font-size: 2rem;">What We Offer</h2>
+    <div class="features">
+      <div class="feature-box">
+        <h4>Course Credibility Scores</h4>
+        <p>We rate courses based on refund rates, user sentiment, and real impact — not marketing fluff.</p>
       </div>
-      <div class="card">
-        <h4>Alex Hormozi</h4>
-        <p><strong>CredCheck Score:</strong> 92/100 ✅</p>
-        <p>Transparent, proven entrepreneur focused on scaling.</p>
-        <a href="/profile.html?guru=alex-hormozi">View Profile</a>
+      <div class="feature-box">
+        <h4>Community-Powered Reviews</h4>
+        <p>Tap into thousands of user reports to quickly spot scams and misleading claims.</p>
       </div>
-    </div>
-
-    <div class="browse-button">
-      <a href="/directory.html">Browse All Gurus</a>
+      <div class="feature-box">
+        <h4>AI-Powered Analysis</h4>
+        <p>We use smart detection tools to flag red flags, false promises, and sales tactics.</p>
+      </div>
+      <div class="feature-box">
+        <h4>Browser Companion</h4>
+        <p>Install our extension to get instant insight when browsing any course sales page online.</p>
+      </div>
     </div>
   </section>
 
+  <section class="email-form">
+    <form action="https://formspree.io/f/mnndyzyo" method="POST">
+      <label for="email"><strong>Join Our Beta Waitlist</strong></label>
+      <input type="email" id="email" name="email" placeholder="Enter your email" required />
+      <button type="submit">Notify Me</button>
+    </form>
+  </section>
+
   <footer>
-    &copy; 2025 CredCheck. All rights reserved.
+    &copy; 2025 CredCheck. Empowering smarter education decisions.
   </footer>
 </body>
 </html>
