@@ -13,127 +13,116 @@
       font-family: 'Inter', sans-serif;
       margin: 0;
       padding: 0;
-      background: #f2f2f6;
-      color: #1a1a1a;
+      background: #f3f4f6;
+      color: #111827;
     }
     nav {
-      background: #1e1e2f;
+      background: #0f172a;
       color: white;
       padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      animation: fadeIn 1s ease-in;
-    }
-    nav a {
-      color: #ffffff;
-      text-decoration: none;
-      margin-left: 1.5rem;
       font-weight: 600;
     }
+    nav a {
+      color: #e2e8f0;
+      text-decoration: none;
+      margin-left: 2rem;
+      transition: color 0.3s ease;
+    }
     nav a:hover {
-      text-decoration: underline;
-      color: #68c4c4;
+      color: #3b82f6;
     }
     header {
-      background: linear-gradient(to right, #111827, #2563eb);
+      background: #0f172a;
       color: white;
-      padding: 4rem 2rem;
+      padding: 5rem 2rem 3rem;
       text-align: center;
-      animation: slideDown 0.9s ease-out;
     }
     header h1 {
-      font-size: 3.5rem;
-      margin: 0 0 1rem 0;
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
     }
     header p {
-      font-size: 1.25rem;
-      max-width: 600px;
+      font-size: 1.2rem;
+      max-width: 640px;
       margin: 0 auto;
+      color: #cbd5e1;
     }
     section {
-      padding: 3rem 2rem;
-      max-width: 1000px;
+      padding: 4rem 2rem;
+      max-width: 1200px;
       margin: auto;
     }
     .features {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 2rem;
-      margin-top: 2rem;
     }
     .feature-box {
       background: #ffffff;
-      padding: 1.5rem;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      transform: translateY(20px);
-      opacity: 0;
-      animation: fadeUp 0.8s forwards;
+      border: 1px solid #e5e7eb;
+      padding: 1.75rem;
+      border-radius: 8px;
+      transition: box-shadow 0.3s ease;
     }
-    .feature-box:nth-child(2) { animation-delay: 0.2s; }
-    .feature-box:nth-child(3) { animation-delay: 0.4s; }
-    .feature-box:nth-child(4) { animation-delay: 0.6s; }
-
+    .feature-box:hover {
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
+    }
     .feature-box h4 {
-      margin-top: 0;
-      color: #2563eb;
+      color: #1e3a8a;
+      margin-bottom: 0.75rem;
+    }
+    .feature-box p {
+      line-height: 1.6;
     }
     .email-form {
-      background: #1e1e2f;
-      border-radius: 16px;
+      background: #1e293b;
+      border-radius: 8px;
       padding: 2rem;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-      margin-top: 3rem;
+      margin-top: 4rem;
+      color: white;
       max-width: 600px;
       margin-left: auto;
       margin-right: auto;
-      animation: fadeIn 1s ease-in;
-      color: #ffffff;
     }
     .email-form input[type="email"] {
       padding: 1rem;
       width: 100%;
-      border-radius: 8px;
-      border: none;
+      border-radius: 4px;
+      border: 1px solid #94a3b8;
       margin-bottom: 1rem;
       font-size: 1rem;
+      background: #f8fafc;
+      color: #111827;
     }
     .email-form button {
       width: 100%;
       padding: 1rem;
       font-size: 1rem;
-      background: #2563eb;
+      background: #3b82f6;
       color: #fff;
       border: none;
-      border-radius: 8px;
+      border-radius: 4px;
       cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .email-form button:hover {
+      background: #2563eb;
     }
     footer {
       text-align: center;
       padding: 2rem;
-      color: #999;
-      animation: fadeIn 1.2s ease-in;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      color: #6b7280;
+      font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
   <nav>
-    <div style="font-weight: bold; font-size: 1.2rem;">CredCheck</div>
+    <div style="font-size: 1.25rem;">CredCheck</div>
     <div>
       <a href="/index.html">Home</a>
       <a href="/directory.html">Directory</a>
@@ -141,27 +130,27 @@
   </nav>
   <header>
     <h1>Cut Through the Noise</h1>
-    <p>CredCheck helps you find the most trusted, impactful, and real online courses — no hype, no BS.</p>
+    <p>CredCheck helps you identify the most reputable, effective online courses — built on trust, not trends.</p>
   </header>
 
   <section>
-    <h2 style="text-align:center; font-size: 2rem;">What We Offer</h2>
+    <h2 style="text-align:center; font-size: 2rem; margin-bottom: 2rem;">What We Offer</h2>
     <div class="features">
       <div class="feature-box">
         <h4>Course Credibility Scores</h4>
-        <p>We rate courses based on refund rates, user sentiment, and real impact — not marketing fluff.</p>
+        <p>We evaluate courses based on verified outcomes, refund rates, and community feedback.</p>
       </div>
       <div class="feature-box">
         <h4>Community-Powered Reviews</h4>
-        <p>Tap into thousands of user reports to quickly spot scams and misleading claims.</p>
+        <p>Insights from real learners help flag scams, low-value content, and misleading tactics.</p>
       </div>
       <div class="feature-box">
-        <h4>AI-Powered Analysis</h4>
-        <p>We use smart detection tools to flag red flags, false promises, and sales tactics.</p>
+        <h4>AI-Powered Detection</h4>
+        <p>Our system identifies red flags and patterns in course content, claims, and sales strategies.</p>
       </div>
       <div class="feature-box">
-        <h4>Browser Companion</h4>
-        <p>Install our extension to get instant insight when browsing any course sales page online.</p>
+        <h4>Browser Extension</h4>
+        <p>Evaluate any course instantly as you browse. Get ratings, warnings, and verified insights in real-time.</p>
       </div>
     </div>
   </section>
@@ -175,7 +164,7 @@
   </section>
 
   <footer>
-    &copy; 2025 CredCheck. Empowering smarter education decisions.
+    &copy; 2025 CredCheck. Built to make online education safer, smarter, and more honest.
   </footer>
 </body>
 </html>
