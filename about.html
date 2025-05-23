@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CredCheck - Course Truth Made Simple</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f3f4f6;
+      color: #111827;
+    }
+    nav {
+      background: #0f172a;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+    }
+    nav a {
+      color: #e2e8f0;
+      text-decoration: none;
+      margin-left: 2rem;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #3b82f6;
+    }
+    header {
+      background: #0f172a;
+      color: white;
+      padding: 5rem 2rem 3rem;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s ease-out 0.2s forwards;
+    }
+    header p {
+      font-size: 1.2rem;
+      max-width: 640px;
+      margin: 0 auto;
+      color: #cbd5e1;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s ease-out 0.4s forwards;
+    }
+    section {
+      padding: 4rem 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+    .feature-box {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      padding: 1.75rem;
+      border-radius: 8px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    .feature-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
+    }
+    .feature-box h4 {
+      color: #1e3a8a;
+      margin-bottom: 0.75rem;
+      transition: color 0.3s;
+    }
+    .feature-box p {
+      line-height: 1.6;
+      opacity: 0.85;
+    }
+    .feature-box:active h4 {
+      color: #3b82f6;
+    }
+    .email-form {
+      background: #1e293b;
+      border-radius: 8px;
+      padding: 2rem;
+      margin-top: 4rem;
+      color: white;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s ease-out 0.6s forwards;
+    }
+    .email-form input[type="email"] {
+      padding: 1rem;
+      width: 100%;
+      border-radius: 4px;
+      border: 1px solid #94a3b8;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      background: #f8fafc;
+      color: #111827;
+    }
+    .email-form button {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1rem;
+      background: #3b82f6;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    .email-form button:hover {
+      background: #2563eb;
+      transform: translateY(-2px);
+    }
+    .email-form button:active {
+      transform: translateY(0);
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #6b7280;
+      font-size: 0.9rem;
+      opacity: 0;
+      animation: fadeIn 1s ease-out 0.8s forwards;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+ <nav>
+  <div style="font-size: 1.25rem; font-weight: 600;">CredCheck</div>
+
+  <form id="homepageSearchForm" style="flex: 1; max-width: 600px; margin: 0 1rem 0 3rem; display: flex; justify-content: center;">
+  <input
+    type="text"
+    id="searchQuery"
+    placeholder="Search courses or creators..."
+    style="width: 100%; max-width: 600px; padding: 0.65rem 1.25rem; border: none; border-radius: 6px; font-size: 0.95rem; background: #1e293b; color: #f1f5f9;"
+  />
+</form>
+
+
+  <div>
+    <a href="/index.html">Home</a>
+    <a href="/directory.html">Directory</a>
+  </div>
+</nav>
+
+<script>
+  document.getElementById("homepageSearchForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const query = document.getElementById("searchQuery").value.trim();
+    if (query) {
+      window.location.href = "/directory.html?q=" + encodeURIComponent(query);
+    }
+  });
+</script>
+  <header>
+  <script>
+    document.getElementById("homepageSearchForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const query = document.getElementById("searchQuery").value.trim();
+      if (query) {
+        window.location.href = "/directory.html?q=" + encodeURIComponent(query);
+      }
+    });
+  </script>
+  <h1>Find Trusted Courses Fast</h1>
+  <p>CredCheck helps you identify the most reputable, effective online courses — built on trust, not trends.</p>
+</header>
+
+
+
+  <section>
+    <h2 style="text-align:center; font-size: 2rem; margin-bottom: 2rem;">What We Offer</h2>
+    <div class="features">
+      <div class="feature-box" onclick="alert('Credibility Scores use real student feedback and refund data.')">
+        <h4>Course Credibility Scores</h4>
+        <p>We evaluate courses based on verified outcomes, refund rates, and community feedback.</p>
+      </div>
+      <div class="feature-box" onclick="alert('Our reviews come from a vetted community of real learners.')">
+        <h4>Community-Powered Reviews</h4>
+        <p>Insights from real learners help flag scams, low-value content, and misleading tactics.</p>
+      </div>
+      <div class="feature-box" onclick="alert('AI detection flags risky claims and manipulative marketing.')">
+        <h4>AI-Powered Detection</h4>
+        <p>Our system identifies red flags and patterns in course content, claims, and sales strategies.</p>
+      </div>
+      <div class="feature-box" onclick="alert('The CredCheck browser extension rates any course you visit.')">
+        <h4>Browser Extension</h4>
+        <p>Evaluate any course instantly as you browse. Get ratings, warnings, and verified insights in real-time.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="email-form">
+    <form action="https://formspree.io/f/mnndyzyo" method="POST">
+      <label for="email"><strong>Join Our Beta Waitlist</strong></label>
+      <input type="email" id="email" name="email" placeholder="Enter your email" required />
+      <button type="submit">Notify Me</button>
+    </form>
+  </section>
+
+  <footer>
+    &copy; 2025 CredCheck. Built to make online education safer, smarter, and more honest.
+  </footer>
+</body>
+</html>
