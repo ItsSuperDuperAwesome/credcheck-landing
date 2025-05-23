@@ -3,15 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CredCheck Course Directory</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>CredCheck Directory</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0e0e0e;
-      --card: #1a1a1a;
-      --text: #f4f4f4;
+      --bg: #121212;
+      --text: #f5f5f5;
+      --card: #1e1e1e;
+      --sidebar: #1a1a1a;
       --accent: #3b82f6;
-      --tag: #333;
+      --tag-bg: #2e2e2e;
     }
 
     * {
@@ -24,271 +25,209 @@
       background: var(--bg);
       color: var(--text);
       display: flex;
+      flex-direction: column;
+      height: 100vh;
     }
 
     nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: #111;
+      background: var(--card);
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       padding: 1rem 2rem;
-      z-index: 1000;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
 
-    nav .logo {
-      font-weight: 700;
-      font-size: 1.4rem;
-    }
-
-    nav input[type="text"] {
-      background: #222;
-      border: 1px solid #444;
+    nav input {
       padding: 0.5rem 1rem;
-      border-radius: 8px;
-      color: #f4f4f4;
-      width: 250px;
+      background: #1a1a1a;
+      border: 1px solid #444;
+      border-radius: 6px;
+      color: var(--text);
+      width: 240px;
     }
 
-    nav a {
-      color: var(--text);
-      margin-left: 1.5rem;
-      text-decoration: none;
-      font-weight: 500;
+    .main {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
     }
 
     .sidebar {
-      width: 250px;
-      background: #121212;
-      padding: 100px 20px 20px;
-      height: 100vh;
-      position: fixed;
-      top: 0;
-      left: 0;
+      background: var(--sidebar);
+      width: 220px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
     }
 
-    .sidebar h3 {
-      margin-top: 0;
-      font-size: 1rem;
-      text-transform: uppercase;
-      margin-bottom: 0.5rem;
-      color: #aaa;
+    .sidebar label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
     }
 
     .sidebar select {
-      width: 100%;
-      margin-bottom: 1rem;
       padding: 0.5rem;
-      border-radius: 8px;
-      background: #1f1f1f;
-      color: #fff;
-      border: 1px solid #333;
+      border-radius: 6px;
+      border: 1px solid #444;
+      background: #1a1a1a;
+      color: var(--text);
     }
 
-    main {
-      margin-left: 250px;
-      padding: 120px 2rem 2rem;
+    .content {
       flex: 1;
+      padding: 2rem;
+      overflow-x: hidden;
     }
 
-    .course-list {
+    .carousel {
       display: flex;
-      flex-direction: column;
-      gap: 2rem;
+      gap: 1.5rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 1rem;
     }
 
     .course-card {
+      flex: 0 0 calc(33.333% - 1rem);
       background: var(--card);
       border-radius: 12px;
       display: flex;
+      gap: 1rem;
       padding: 1rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      scroll-snap-align: start;
     }
 
-    .course-thumb {
-      width: 200px;
-      height: 120px;
-      border-radius: 10px;
+    .course-card img {
+      width: 160px;
+      height: 100px;
       object-fit: cover;
-      margin-right: 1.5rem;
+      border-radius: 8px;
     }
 
-    .course-info {
+    .info {
       flex: 1;
+      display: flex;
+      flex-direction: column;
     }
 
-    .course-info h2 {
-      margin: 0 0 0.5rem;
-      font-size: 1.2rem;
+    .info h3 {
+      margin: 0;
+      font-size: 1rem;
+      color: #fff;
     }
 
-    .course-info .creator {
-      font-size: 0.9rem;
-      color: #999;
+    .info p {
+      font-size: 0.85rem;
+      margin: 0.25rem 0;
+      color: #bbb;
     }
 
     .tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
       margin: 0.5rem 0;
     }
 
     .tags span {
-      background: var(--tag);
-      color: #fff;
+      background: var(--tag-bg);
       padding: 3px 10px;
       border-radius: 999px;
-      margin-right: 6px;
       font-size: 0.75rem;
     }
 
-    .course-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 0.75rem;
-    }
-
     .price {
-      font-weight: bold;
       color: var(--accent);
+      font-weight: 600;
+      margin-top: auto;
     }
 
     .btn {
+      margin-top: 0.5rem;
       background: var(--accent);
-      color: #fff;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
+      color: white;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 500;
       text-decoration: none;
-      font-weight: 600;
+      text-align: center;
+      width: fit-content;
     }
   </style>
 </head>
 <body>
-
   <nav>
-    <div class="logo">CredCheck</div>
-    <input type="text" id="searchBar" placeholder="Search courses..." />
+    <div style="font-weight: 700; font-size: 1.2rem;">CredCheck</div>
+    <input type="text" placeholder="Search courses..." />
     <div>
-      <a href="/index.html">Home</a>
-      <a href="/about.html">About</a>
+      <a href="#" style="margin-right: 1rem; color: #f5f5f5;">Home</a>
+      <a href="#" style="color: #f5f5f5;">About</a>
     </div>
   </nav>
 
-  <div class="sidebar">
-    <h3>Filter</h3>
-    <select id="nicheFilter">
-      <option value="all">All Niches</option>
-      <option value="SMMA">SMMA</option>
-      <option value="Marketing">Marketing</option>
-      <option value="Mindset">Mindset</option>
-    </select>
-    <h3>Sort</h3>
-    <select id="sortPrice">
-      <option value="default">Sort by Price</option>
-      <option value="low">Low to High</option>
-      <option value="high">High to Low</option>
-    </select>
-  </div>
+  <div class="main">
+    <aside class="sidebar">
+      <div>
+        <label for="niche">FILTER</label>
+        <select id="niche">
+          <option>All Niches</option>
+          <option>Marketing</option>
+          <option>SMMA</option>
+        </select>
+      </div>
+      <div>
+        <label for="sort">SORT</label>
+        <select id="sort">
+          <option>Sort by Price</option>
+          <option>Low to High</option>
+          <option>High to Low</option>
+        </select>
+      </div>
+    </aside>
 
-  <main>
-    <div class="course-list" id="courseList">
-      <!-- Courses will render here -->
-    </div>
-  </main>
-
-  <script>
-    const data = [
-      {
-        title: "The $100M Offers Course",
-        creator: "Alex Hormozi",
-        rating: 93,
-        price: 0,
-        niches: ["Business", "Offers", "Marketing"],
-        image: "https://i.ytimg.com/vi/0giY9E1N3UU/hqdefault.jpg",
-        slug: "100m-offers"
-      },
-      {
-        title: "Agency Navigator",
-        creator: "Iman Gadzhi",
-        rating: 88,
-        price: 1497,
-        niches: ["SMMA", "Entrepreneurship"],
-        image: "https://i.ytimg.com/vi/E4kjqZStW2Y/hqdefault.jpg",
-        slug: "agency-navigator"
-      },
-      {
-        title: "The SMMA Blueprint",
-        creator: "Aiden Frazier",
-        rating: 92,
-        price: 497,
-        niches: ["SMMA", "Digital Marketing"],
-        image: "https://i.ytimg.com/vi/NBUEvMBfZfE/hqdefault.jpg",
-        slug: "smma-blueprint"
-      }
-    ];
-
-    const courseList = document.getElementById("courseList");
-    const searchBar = document.getElementById("searchBar");
-    const nicheFilter = document.getElementById("nicheFilter");
-    const sortPrice = document.getElementById("sortPrice");
-
-    function renderCourses(courses) {
-      courseList.innerHTML = "";
-      courses.forEach(c => {
-        const card = document.createElement("div");
-        card.className = "course-card";
-        card.innerHTML = `
-          <img src="${c.image}" class="course-thumb" />
-          <div class="course-info">
-            <h2>${c.title}</h2>
-            <p class="creator">by ${c.creator}</p>
-            <div class="tags">${c.niches.map(tag => `<span>${tag}</span>`).join(' ')}</div>
-            <div class="course-footer">
-              <span class="price">$${c.price}</span>
-              <a href="/profile.html?course=${c.slug}" class="btn">View</a>
+    <section class="content">
+      <div class="carousel">
+        <div class="course-card">
+          <img src="https://via.placeholder.com/160x100" alt="Course" />
+          <div class="info">
+            <h3>The $100M Offers Course</h3>
+            <p>by Alex Hormozi</p>
+            <div class="tags">
+              <span>Business</span><span>Marketing</span><span>Offers</span>
             </div>
+            <p class="price">$0</p>
+            <a href="#" class="btn">View</a>
           </div>
-        `;
-        courseList.appendChild(card);
-      });
-    }
-
-    function filterAndSort() {
-      let filtered = data;
-
-      const search = searchBar.value.toLowerCase();
-      const niche = nicheFilter.value;
-      const sort = sortPrice.value;
-
-      if (search) {
-        filtered = filtered.filter(c =>
-          c.title.toLowerCase().includes(search) ||
-          c.creator.toLowerCase().includes(search)
-        );
-      }
-
-      if (niche !== "all") {
-        filtered = filtered.filter(c => c.niches.includes(niche));
-      }
-
-      if (sort === "low") {
-        filtered.sort((a, b) => a.price - b.price);
-      } else if (sort === "high") {
-        filtered.sort((a, b) => b.price - a.price);
-      }
-
-      renderCourses(filtered);
-    }
-
-    searchBar.addEventListener("input", filterAndSort);
-    nicheFilter.addEventListener("change", filterAndSort);
-    sortPrice.addEventListener("change", filterAndSort);
-
-    renderCourses(data);
-  </script>
-
+        </div>
+        <div class="course-card">
+          <img src="https://via.placeholder.com/160x100" alt="Course" />
+          <div class="info">
+            <h3>Agency Navigator</h3>
+            <p>by Iman Gadzhi</p>
+            <div class="tags">
+              <span>SMMA</span><span>Entrepreneurship</span>
+            </div>
+            <p class="price">$1497</p>
+            <a href="#" class="btn">View</a>
+          </div>
+        </div>
+        <div class="course-card">
+          <img src="https://via.placeholder.com/160x100" alt="Course" />
+          <div class="info">
+            <h3>The SMMA Blueprint</h3>
+            <p>by Aiden Frazier</p>
+            <div class="tags">
+              <span>SMMA</span><span>Digital Marketing</span>
+            </div>
+            <p class="price">$497</p>
+            <a href="#" class="btn">View</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 </body>
 </html>
