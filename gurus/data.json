@@ -4,95 +4,82 @@
     "name": "Alex Hormozi",
     "score": 92,
     "verified": true,
-    "niches": ["Business", "Scaling", "Sales", "Entrepreneurship"],
-    "description": "Alex Hormozi is known for his practical, no-BS approach to scaling businesses through Acquisition.com. Highly rated by entrepreneurs, his CredCheck score reflects high transparency and consistent value."
+    "niches": ["Entrepreneurship", "Business", "Sales", "Scaling"]
   },
   {
     "slug": "ali-abdaal",
     "name": "Ali Abdaal",
     "score": 89,
     "verified": true,
-    "niches": ["Productivity", "YouTube", "Online Courses"],
-    "description": "Ali Abdaal creates content on productivity and learning. Known for transparent income reports and free YouTube education, his CredCheck score reflects high trust and value."
+    "niches": ["Online Business", "Digital Marketing", "Personal Development"]
   },
   {
     "slug": "stephan-georgi",
     "name": "Stephan Georgi",
     "score": 88,
     "verified": true,
-    "niches": ["Copywriting", "Funnels", "High Ticket"],
-    "description": "Stephan is one of the top direct-response copywriters online. His coaching and copy breakdowns are highly regarded in the marketing and writing space."
-  },
-  {
-    "slug": "vanessa-lau",
-    "name": "Vanessa Lau",
-    "score": 74,
-    "verified": true,
-    "niches": ["Instagram Marketing", "Online Coaching", "Branding"],
-    "description": "Vanessa Lau teaches content creators and coaches how to grow on social media. Her CredCheck score reflects solid content and community trust, especially among early-stage entrepreneurs."
-  },
-  {
-    "slug": "gracie-ryan",
-    "name": "Gracie Ryan",
-    "score": 72,
-    "niches": ["Freelancing", "SMMA", "Remote Work"],
-    "description": "Known for teaching freelancing and VA work to Gen Z, Gracie Ryan focuses on realistic work-from-anywhere strategies and content repurposing tips."
-  },
-  {
-    "slug": "grant-cardone",
-    "name": "Grant Cardone",
-    "score": 65,
-    "niches": ["Sales", "Real Estate", "Motivation"],
-    "description": "Grant Cardone is a real estate mogul and sales coach known for his 10X philosophy. Reviews are mixed with praise for energy and results but criticism over upsells and aggressiveness."
-  },
-  {
-    "slug": "sam-ovens",
-    "name": "Sam Ovens",
-    "score": 61,
-    "niches": ["Consulting", "Entrepreneurship", "Online Business"],
-    "description": "Founder of Consulting.com, Sam Ovens built his reputation through direct-response marketing. CredCheck score reflects high income claims and heavy marketing."
-  },
-  {
-    "slug": "iman-gadzhi",
-    "name": "Iman Gadzhi",
-    "score": 58,
-    "niches": ["SMMA", "Digital Marketing", "Online Business"],
-    "description": "Iman Gadzhi is a digital entrepreneur focused on teaching SMMA strategies. While successful, student outcomes are mixed and critiques focus on course repetition and overpricing."
-  },
-  {
-    "slug": "sebastian-ghiorghiu",
-    "name": "Sebastian Ghiorghiu",
-    "score": 47,
-    "niches": ["Dropshipping", "YouTube", "Online Business"],
-    "description": "YouTuber turned course seller, Sebastian promotes Shopify success stories. Some claim overhyped success metrics, while others find his free content motivating."
-  },
-  {
-    "slug": "dan-lok",
-    "name": "Dan Lok",
-    "score": 50,
-    "niches": ["High Ticket Closing", "Sales", "Mindset"],
-    "description": "Dan Lok promotes high-ticket sales and financial independence. Criticized for expensive upsells and marketing tactics, but praised for presentation and branding."
-  },
-  {
-    "slug": "tai-lopez",
-    "name": "Tai Lopez",
-    "score": 42,
-    "niches": ["Mindset", "Marketing", "Personal Development"],
-    "description": "Tai Lopez became well-known for his 'here in my garage' ads and philosophy-based wealth videos. While he has a large following, his CredCheck score reflects concerns about product quality and aggressive upsells."
-  },
-  {
-    "slug": "andrew-tate",
-    "name": "Andrew Tate",
-    "score": 39,
-    "niches": ["Mindset", "Masculinity", "Business"],
-    "description": "A polarizing figure in the online self-help world, Andrew Tate markets aggressive masculinity and luxury wealth. His courses and personality attract both intense loyalty and sharp criticism."
+    "niches": ["Digital Marketing", "Marketing", "Sales"]
   },
   {
     "slug": "courtney-foster-donahue",
     "name": "Courtney Foster-Donahue",
     "score": 83,
     "verified": true,
-    "niches": ["Branding", "Funnels", "Online Courses"],
-    "description": "Courtney is known for her high-converting funnel strategies and content marketing advice. Her materials are praised for quality and clarity, especially by female entrepreneurs."
+    "niches": ["Online Business", "Digital Marketing", "Marketing"]
+  },
+  {
+    "slug": "vanessa-lau",
+    "name": "Vanessa Lau",
+    "score": 74,
+    "verified": true,
+    "niches": ["Marketing", "Digital Marketing", "Personal Development"]
+  },
+  {
+    "slug": "gracie-ryan",
+    "name": "Gracie Ryan",
+    "score": 72,
+    "niches": ["Online Business", "SMMA"]
+  },
+  {
+    "slug": "grant-cardone",
+    "name": "Grant Cardone",
+    "score": 65,
+    "niches": ["Business", "Mindset", "Sales"]
+  },
+  {
+    "slug": "sam-ovens",
+    "name": "Sam Ovens",
+    "score": 61,
+    "niches": ["Online Business", "Entrepreneurship", "Business"]
+  },
+  {
+    "slug": "iman-gadzhi",
+    "name": "Iman Gadzhi",
+    "score": 58,
+    "niches": ["Online Business", "Digital Marketing", "SMMA"]
+  },
+  {
+    "slug": "dan-lok",
+    "name": "Dan Lok",
+    "score": 50,
+    "niches": ["Mindset", "Sales"]
+  },
+  {
+    "slug": "sebastian-ghiorghiu",
+    "name": "Sebastian Ghiorghiu",
+    "score": 47,
+    "niches": ["Online Business", "Digital Marketing"]
+  },
+  {
+    "slug": "tai-lopez",
+    "name": "Tai Lopez",
+    "score": 42,
+    "niches": ["Marketing", "Mindset", "Personal Development"]
+  },
+  {
+    "slug": "andrew-tate",
+    "name": "Andrew Tate",
+    "score": 39,
+    "niches": ["Business", "Mindset"]
   }
 ]
