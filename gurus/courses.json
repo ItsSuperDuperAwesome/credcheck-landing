@@ -9,7 +9,7 @@
     "price": 0,
     "verified": true,
     "link": "https://www.acquisition.com/training",
-    "image": "https://i.ytimg.com/vi/pkq2A0rZJ6o/maxresdefault.jpg"
+    "image": "https://via.placeholder.com/600x340.png?text=Course+Image"
   },
   {
     "title": "Agency Navigator",
@@ -21,7 +21,7 @@
     "price": 1497,
     "verified": true,
     "link": "https://www.agencynavigator.com/",
-    "image": "https://www.trustpilot.com/images/company/logo/iman-gadzhi.svg"
+    "image": "https://via.placeholder.com/600x340.png?text=Course+Image"
   },
   {
     "title": "The SMMA Blueprint",
@@ -33,7 +33,7 @@
     "price": 497,
     "verified": true,
     "link": "https://go.thesmmablueprint.com",
-    "image": "https://example.com/smma-blueprint.jpg"
+    "image": "https://via.placeholder.com/600x340.png?text=Course+Image"
   },
   {
     "title": "Proven Amazon Course",
@@ -45,7 +45,7 @@
     "price": 499,
     "verified": true,
     "link": "https://www.dreamgrow.com/best-amazon-fba-courses/",
-    "image": "https://example.com/proven-amazon-course.jpg"
+    "image": "https://via.placeholder.com/600x340.png?text=Course+Image"
   },
   {
     "title": "Copy School",
@@ -57,7 +57,7 @@
     "price": 2997,
     "verified": true,
     "link": "https://copyhackers.com/copy-school/",
-    "image": "https://example.com/copy-school.jpg"
+    "image": "https://via.placeholder.com/600x340.png?text=Course+Image"
   },
   {
     "title": "Hustlers University",
@@ -69,6 +69,7 @@
     "price": 49,
     "verified": false,
     "link": "https://www.hustlersuniversity.live/",
-    "image": "https://uploads-ssl.webflow.com/6275532125bb6e62fcff7c5e/62fe839fdd07e0fa64a3b893_HU2%20logo-p-500.png"
+    "image": "https://via.placeholder.com/600x340.png?text=Course+Image"
+"
   }
 ]
