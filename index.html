@@ -94,7 +94,10 @@ body.dark {
       font-size: 1rem;
       border-radius: 10px;
       border: 1px solid #ccc;
-      background: #fff;
+      background: var(--input-bg);
+color: var(--text-color);
+border: 1px solid #999;
+
     }
     .card-grid {
   display: grid;
@@ -145,10 +148,11 @@ body.dark {
       cursor: pointer;
     }
     .course-card {
-  background: #1e1e2f;
+  background: var(--card-bg);
+  border: 1px solid rgba(255,255,255,0.05);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
   transition: transform 0.2s ease;
   display: flex;
   flex-direction: column;
@@ -171,6 +175,7 @@ body.dark {
 }
 
 .course-info h3 {
+  color: var(--text-color);
   font-size: 1.1rem;
   margin: 0.5rem 0 0.25rem;
 }
@@ -195,18 +200,14 @@ body.dark {
 }
 
 .tags span {
-  background: #334155;
-  color: white;
-  padding: 4px 10px;
-  margin: 2px;
-  border-radius: 20px;
-  font-size: 0.7rem;
-  display: inline-block;
+  background: var(--tag-bg);
+  color: var(--tag-text);
 }
 
 .price {
   font-weight: 600;
-  color: #38bdf8;
+  color: var(--text-color);
+;
 }
 
 .view-btn {
