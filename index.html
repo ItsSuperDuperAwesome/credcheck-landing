@@ -74,6 +74,51 @@
       background: #1a1a1a;
       color: var(--text);
     }
+.carousel-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  margin-top: 2rem;
+}
+
+.carousel {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 1.5rem;
+  padding: 1rem 0;
+}
+
+.course-card {
+  flex: 0 0 300px;
+  background: var(--card);
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  scroll-snap-align: start;
+}
+
+.carousel-nav {
+  position: absolute;
+  top: 40%;
+  background: var(--accent);
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+}
+.carousel-nav.left {
+  left: 0;
+}
+.carousel-nav.right {
+  right: 0;
+}
 
     .content {
       flex: 1;
@@ -189,45 +234,55 @@
     </aside>
 
     <section class="content">
-      <div class="carousel">
-        <div class="course-card">
-          <img src="https://via.placeholder.com/160x100" alt="Course" />
-          <div class="info">
-            <h3>The $100M Offers Course</h3>
-            <p>by Alex Hormozi</p>
-            <div class="tags">
-              <span>Business</span><span>Marketing</span><span>Offers</span>
-            </div>
-            <p class="price">$0</p>
-            <a href="#" class="btn">View</a>
-          </div>
-        </div>
-        <div class="course-card">
-          <img src="https://via.placeholder.com/160x100" alt="Course" />
-          <div class="info">
-            <h3>Agency Navigator</h3>
-            <p>by Iman Gadzhi</p>
-            <div class="tags">
-              <span>SMMA</span><span>Entrepreneurship</span>
-            </div>
-            <p class="price">$1497</p>
-            <a href="#" class="btn">View</a>
-          </div>
-        </div>
-        <div class="course-card">
-          <img src="https://via.placeholder.com/160x100" alt="Course" />
-          <div class="info">
-            <h3>The SMMA Blueprint</h3>
-            <p>by Aiden Frazier</p>
-            <div class="tags">
-              <span>SMMA</span><span>Digital Marketing</span>
-            </div>
-            <p class="price">$497</p>
-            <a href="#" class="btn">View</a>
-          </div>
+  <div class="carousel-wrapper">
+    <button class="carousel-nav left" onclick="scrollLeft()">←</button>
+    <div class="carousel" id="carousel">
+      <!-- Each course card -->
+      <div class="course-card">
+        <img src="https://via.placeholder.com/160x100" />
+        <div class="info">
+          <h3>The $100M Offers Course</h3>
+          <p>by Alex Hormozi</p>
+          <div class="tags"><span>Business</span><span>Marketing</span></div>
+          <p class="price">$0</p>
+          <a href="#" class="btn">View</a>
         </div>
       </div>
-    </section>
+      <div class="course-card">
+        <img src="https://via.placeholder.com/160x100" />
+        <div class="info">
+          <h3>Agency Navigator</h3>
+          <p>by Iman Gadzhi</p>
+          <div class="tags"><span>SMMA</span><span>Entrepreneurship</span></div>
+          <p class="price">$1497</p>
+          <a href="#" class="btn">View</a>
+        </div>
+      </div>
+      <div class="course-card">
+        <img src="https://via.placeholder.com/160x100" />
+        <div class="info">
+          <h3>The SMMA Blueprint</h3>
+          <p>by Aiden Frazier</p>
+          <div class="tags"><span>SMMA</span><span>Digital Marketing</span></div>
+          <p class="price">$497</p>
+          <a href="#" class="btn">View</a>
+        </div>
+      </div>
+      <!-- Add more cards here -->
+    </div>
+    <button class="carousel-nav right" onclick="scrollRight()">→</button>
   </div>
+</section>
+
+  </div>
+  <script>
+function scrollLeft() {
+  document.getElementById('carousel').scrollBy({ left: -320, behavior: 'smooth' });
+}
+function scrollRight() {
+  document.getElementById('carousel').scrollBy({ left: 320, behavior: 'smooth' });
+}
+</script>
+
 </body>
 </html>
