@@ -180,38 +180,67 @@
   </div>
 
   <script>
-    let courses = [];
-    const guruGrid = document.getElementById('guruGrid');
+  let courses = [];
+  const guruGrid = document.getElementById('guruGrid');
+  const searchInput = document.getElementById('searchInput');
+  const nicheFilter = document.getElementById('nicheFilter');
 
-    async function fetchCourses() {
+  async function fetchCourses() {
+    try {
       const res = await fetch("/gurus/courses.json");
-      courses = await res.json();
-      renderCourses(courses);
+      const data = await res.json();
+      courses = data;
+      renderCourses(data);
+    } catch (err) {
+      console.error("Failed to load courses:", err);
+      guruGrid.innerHTML = '<p style="color:red;">Failed to load courses.</p>';
     }
+  }
 
-    function renderCourses(data) {
-      guruGrid.innerHTML = '';
-      data.forEach(course => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-          <h2>${course.title}</h2>
-          <p><strong>Creator:</strong> ${course.creator}</p>
-          <p><strong>Rating:</strong> ${course.rating}/100</p>
-          <p><strong>Price:</strong> $${course.price}</p>
-          <div class="niche-tags">${course.niches.map(n => `<span class="tag">${n}</span>`).join('')}</div>
-          <p>${course.description}</p>
-          <a href="${course.link}" target="_blank">View Course</a>
-        `;
-        guruGrid.appendChild(card);
-      });
-    }
+  function renderCourses(data) {
+    guruGrid.innerHTML = '';
+    data.forEach(course => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <h2>${course.title}</h2>
+        <p><strong>Creator:</strong> ${course.creator}</p>
+        <p><strong>Rating:</strong> ${course.rating}/100</p>
+        <p><strong>Price:</strong> $${course.price}</p>
+        <div class="niche-tags">${course.niches.map(n => `<span class="tag">${n}</span>`).join('')}</div>
+        <p>${course.description}</p>
+        <a href="${course.link}" target="_blank">View Course</a>
+      `;
+      guruGrid.appendChild(card);
+    });
+  }
 
-    function toggleTheme() {
-      document.body.classList.toggle('dark');
-    }
+  function toggleTheme() {
+    document.body.classList.toggle('dark');
+    localStorage.setItem('credTheme', document.body.classList.contains('dark') ? 'dark' : 'light');
+  }
 
-    fetchCourses();
+  function applySavedTheme() {
+    const saved = localStorage.getItem('credTheme');
+    if (saved === 'dark') document.body.classList.add('dark');
+  }
+
+  function filterCourses() {
+    const searchTerm = searchInput.value.toLowerCase();
+    const selectedNiche = nicheFilter.value;
+    let filtered = courses.filter(course => {
+      const matchesSearch = course.title.toLowerCase().includes(searchTerm) || course.creator.toLowerCase().includes(searchTerm);
+      const matchesNiche = selectedNiche === 'all' || course.niches.includes(selectedNiche);
+      return matchesSearch && matchesNiche;
+    });
+    renderCourses(filtered);
+  }
+
+  searchInput.addEventListener('input', filterCourses);
+  nicheFilter.addEventListener('change', filterCourses);
+
+  applySavedTheme();
+  fetchCourses();
   </script>
 </body>
 </html>
