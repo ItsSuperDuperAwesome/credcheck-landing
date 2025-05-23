@@ -58,5 +58,45 @@
     "niches": ["Productivity", "YouTube", "Online Courses"],
     "description": "Ali Abdaal creates content on productivity and learning. Known for transparent income reports and free YouTube education, his CredCheck score reflects high trust and value."
   }
+  [
+  {
+    "slug": "andrew-tate",
+    "name": "Andrew Tate",
+    "score": 39,
+    "niches": ["Mindset", "Masculinity", "Business"],
+    "description": "A polarizing figure in the online self-help world, Andrew Tate markets aggressive masculinity and luxury wealth. His courses and personality attract both intense loyalty and sharp criticism."
+  },
+  {
+    "slug": "courtney-foster-donahue",
+    "name": "Courtney Foster-Donahue",
+    "score": 83,
+    "verified": true,
+    "niches": ["Branding", "Funnels", "Online Courses"],
+    "description": "Courtney is known for her high-converting funnel strategies and content marketing advice. Her materials are praised for quality and clarity, especially by female entrepreneurs."
+  },
+  {
+    "slug": "sebastian-ghiorghiu",
+    "name": "Sebastian Ghiorghiu",
+    "score": 47,
+    "niches": ["Dropshipping", "YouTube", "Online Business"],
+    "description": "YouTuber turned course seller, Sebastian promotes Shopify success stories. Some claim overhyped success metrics, while others find his free content motivating."
+  },
+  {
+    "slug": "stephan-georgi",
+    "name": "Stephan Georgi",
+    "score": 88,
+    "verified": true,
+    "niches": ["Copywriting", "Funnels", "High Ticket"],
+    "description": "Stephan is one of the top direct-response copywriters online. His coaching and copy breakdowns are highly regarded in the marketing and writing space."
+  },
+  {
+    "slug": "gracie-ryan",
+    "name": "Gracie Ryan",
+    "score": 72,
+    "niches": ["Freelancing", "SMMA", "Remote Work"],
+    "description": "Known for teaching freelancing and VA work to Gen Z, Gracie Ryan focuses on realistic work-from-anywhere strategies and content repurposing tips."
+  }
+]
+
 ]
 
