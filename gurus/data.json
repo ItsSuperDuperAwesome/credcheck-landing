@@ -4,82 +4,95 @@
     "name": "Alex Hormozi",
     "score": 92,
     "verified": true,
-    "niches": ["Entrepreneurship", "Business", "Sales", "Scaling"]
+    "niches": ["Entrepreneurship", "Business", "Sales", "Scaling"],
+    "image": "https://yt3.googleusercontent.com/ytc/AGIKgqPzKzH1N6eG1XQ1E8u3Z2e6f1A2B3C4D5E6F7G8=s176-c-k-c0x00ffffff-no-rj"
   },
   {
     "slug": "ali-abdaal",
     "name": "Ali Abdaal",
     "score": 89,
     "verified": true,
-    "niches": ["Online Business", "Digital Marketing", "Personal Development"]
+    "niches": ["Online Business", "Digital Marketing", "Personal Development"],
+    "image": "https://yt3.googleusercontent.com/ytc/AGIKgqPzKzH1N6eG1XQ1E8u3Z2e6f1A2B3C4D5E6F7G8=s176-c-k-c0x00ffffff-no-rj"
   },
   {
     "slug": "stephan-georgi",
     "name": "Stephan Georgi",
     "score": 88,
     "verified": true,
-    "niches": ["Digital Marketing", "Marketing", "Sales"]
+    "niches": ["Digital Marketing", "Marketing", "Sales"],
+    "image": null
   },
   {
     "slug": "courtney-foster-donahue",
     "name": "Courtney Foster-Donahue",
     "score": 83,
     "verified": true,
-    "niches": ["Online Business", "Digital Marketing", "Marketing"]
+    "niches": ["Online Business", "Digital Marketing", "Marketing"],
+    "image": null
   },
   {
     "slug": "vanessa-lau",
     "name": "Vanessa Lau",
     "score": 74,
     "verified": true,
-    "niches": ["Marketing", "Digital Marketing", "Personal Development"]
+    "niches": ["Marketing", "Digital Marketing", "Personal Development"],
+    "image": "https://yt3.googleusercontent.com/ytc/AGIKgqPzKzH1N6eG1XQ1E8u3Z2e6f1A2B3C4D5E6F7G8=s176-c-k-c0x00ffffff-no-rj"
   },
   {
     "slug": "gracie-ryan",
     "name": "Gracie Ryan",
     "score": 72,
-    "niches": ["Online Business", "SMMA"]
+    "niches": ["Online Business", "SMMA"],
+    "image": null
   },
   {
     "slug": "grant-cardone",
     "name": "Grant Cardone",
     "score": 65,
-    "niches": ["Business", "Mindset", "Sales"]
+    "niches": ["Business", "Mindset", "Sales"],
+    "image": null
   },
   {
     "slug": "sam-ovens",
     "name": "Sam Ovens",
     "score": 61,
-    "niches": ["Online Business", "Entrepreneurship", "Business"]
+    "niches": ["Online Business", "Entrepreneurship", "Business"],
+    "image": "https://yt3.googleusercontent.com/ytc/AGIKgqPzKzH1N6eG1XQ1E8u3Z2e6f1A2B3C4D5E6F7G8=s176-c-k-c0x00ffffff-no-rj"
   },
   {
     "slug": "iman-gadzhi",
     "name": "Iman Gadzhi",
     "score": 58,
-    "niches": ["Online Business", "Digital Marketing", "SMMA"]
+    "niches": ["Online Business", "Digital Marketing", "SMMA"],
+    "image": "https://yt3.googleusercontent.com/ytc/AGIKgqPzKzH1N6eG1XQ1E8u3Z2e6f1A2B3C4D5E6F7G8=s176-c-k-c0x00ffffff-no-rj"
   },
   {
     "slug": "dan-lok",
     "name": "Dan Lok",
     "score": 50,
-    "niches": ["Mindset", "Sales"]
+    "niches": ["Mindset", "Sales"],
+    "image": null
   },
   {
     "slug": "sebastian-ghiorghiu",
     "name": "Sebastian Ghiorghiu",
     "score": 47,
-    "niches": ["Online Business", "Digital Marketing"]
+    "niches": ["Online Business", "Digital Marketing"],
+    "image": null
   },
   {
     "slug": "tai-lopez",
     "name": "Tai Lopez",
     "score": 42,
-    "niches": ["Marketing", "Mindset", "Personal Development"]
+    "niches": ["Marketing", "Mindset", "Personal Development"],
+    "image": null
   },
   {
     "slug": "andrew-tate",
     "name": "Andrew Tate",
     "score": 39,
-    "niches": ["Business", "Mindset"]
+    "niches": ["Business", "Mindset"],
+    "image": null
   }
 ]
