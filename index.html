@@ -152,15 +152,9 @@
 </head>
 <body>
   <nav>
-    <div style="font-size: 1.25rem;">CredCheck</div>
-    <div>
-      <a href="/index.html">Home</a>
-      <a href="/directory.html">Directory</a>
-    </div>
-  </nav>
-  <header>
-  <form id="homepageSearchForm" style="max-width: 500px; margin: 0 auto 2rem auto;">
-    <input list="searchSuggestions" type="text" id="searchQuery" placeholder="Search by course or creator name..." style="width: 100%; padding: 1rem; font-size: 1rem; border: 1px solid #d1d5db; border-radius: 6px;">
+  <div style="font-size: 1.25rem;">CredCheck</div>
+  <form id="homepageSearchForm" style="flex: 1; max-width: 500px; margin: 0 2rem;">
+    <input list="searchSuggestions" type="text" id="searchQuery" placeholder="Search by course or creator name..." style="width: 100%; padding: 0.6rem 1rem; font-size: 1rem; border: 1px solid #d1d5db; border-radius: 6px;">
     <datalist id="searchSuggestions">
       <option value="Alex Hormozi">
       <option value="Iman Gadzhi">
@@ -169,10 +163,23 @@
       <option value="100M Offers">
       <option value="Dropshipping Masterclass">
     </datalist>
-    <button type="submit" style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: #3b82f6; color: white; border: none; border-radius: 6px; font-size: 1rem; cursor: pointer; transition: background 0.3s;">
-      Search
-    </button>
   </form>
+  <div>
+    <a href="/index.html">Home</a>
+    <a href="/directory.html">Directory</a>
+  </div>
+</nav>
+<script>
+  document.getElementById("homepageSearchForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const query = document.getElementById("searchQuery").value.trim();
+    if (query) {
+      window.location.href = "/directory.html?q=" + encodeURIComponent(query);
+    }
+  });
+</script>
+  <header>
+  
   <script>
     document.getElementById("homepageSearchForm").addEventListener("submit", function(e) {
       e.preventDefault();
