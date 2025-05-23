@@ -194,7 +194,25 @@ nav a:hover {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+.guru-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
 
+.guru-initials {
+  font-size: 1.2rem;
+  background: var(--accent-color);
+  color: white;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: bold;
+}
 .card {
   background: var(--card-bg);
   border-radius: 16px;
@@ -312,9 +330,10 @@ guruGrid.innerHTML = '';
 
         card.innerHTML = `
   <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-    <div style="font-size: 2rem; background: var(--accent-color); color: white; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 50%;">
-      ${guru.name.split(' ').map(w => w[0]).join('').toUpperCase()}
-    </div>
+    ${guru.image
+  ? `<img src="${guru.image}" alt="${guru.name}" class="guru-avatar">`
+  : `<div class="guru-initials">${guru.name.split(' ').map(w => w[0]).join('').toUpperCase()}</div>`}
+
     <div>
       <h2 style="margin: 0 0 4px; font-size: 1.3rem; font-weight: 700;">
         ${guru.name} ${guru.verified ? '<span title="Verified" style="background: #10b981; color: white; font-size: 0.65rem; padding: 2px 6px; border-radius: 999px; margin-left: 8px; font-weight: 600; white-space: nowrap;">✔ VERIFIED</span>' : ''}
