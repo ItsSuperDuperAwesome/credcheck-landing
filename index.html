@@ -159,14 +159,21 @@
     </div>
   </nav>
   <header>
-  <h1>Cut Through the Noise</h1>
+  <h1>Find Trusted Courses Fast</h1>
   <p>CredCheck helps you identify the most reputable, effective online courses — built on trust, not trends.</p>
 </header>
 
-<section style="padding: 2rem; text-align: center;">
-  <h2 style="font-size: 1.75rem; margin-bottom: 1rem;">Search Courses</h2>
+<section style="padding: 2rem 2rem 0; text-align: center;">
   <form id="homepageSearchForm" style="max-width: 500px; margin: auto;">
-    <input type="text" id="searchQuery" placeholder="Search by course or creator name..." style="width: 100%; padding: 1rem; font-size: 1rem; border: 1px solid #d1d5db; border-radius: 6px;">
+    <input list="searchSuggestions" type="text" id="searchQuery" placeholder="Search by course or creator name..." style="width: 100%; padding: 1rem; font-size: 1rem; border: 1px solid #d1d5db; border-radius: 6px;">
+    <datalist id="searchSuggestions">
+      <option value="Alex Hormozi">
+      <option value="Iman Gadzhi">
+      <option value="Agency Navigator">
+      <option value="Hustlers University">
+      <option value="100M Offers">
+      <option value="Dropshipping Masterclass">
+    </datalist>
     <button type="submit" style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: #3b82f6; color: white; border: none; border-radius: 6px; font-size: 1rem; cursor: pointer; transition: background 0.3s;">
       Search
     </button>
