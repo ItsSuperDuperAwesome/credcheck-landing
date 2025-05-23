@@ -6,277 +6,289 @@
   <title>CredCheck Course Directory</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-  :root {
-    --bg-color: #f4f4f5;
-    --card-bg: #ffffff;
-    --text-color: #1f1f1f;
-    --primary-color: #111111;
-    --accent-color: #3b82f6;
-    --tag-bg: #d4d4d8;
-    --tag-text: #1f1f1f;
-    --input-bg: #ffffff;
-  }
+    :root {
+      --bg: #0e0e0e;
+      --card: #1a1a1a;
+      --text: #f4f4f4;
+      --accent: #3b82f6;
+      --tag: #333;
+    }
 
-  body.dark {
-    --bg-color: #0f0f0f;
-    --card-bg: #1a1a1a;
-    --text-color: #f4f4f5;
-    --primary-color: #ffffff;
-    --accent-color: #3b82f6;
-    --tag-bg: #2e2e2e;
-    --tag-text: #f4f4f5;
-    --input-bg: #111111;
-  }
+    * {
+      box-sizing: border-box;
+    }
 
-  body,
-  nav,
-  .course-card,
-  .course-info,
-  .tags span,
-  .filter-bar input,
-  .filter-bar select,
-  .view-btn {
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-  }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+    }
 
-  /* ...your other styles go here like .nav, .container, .card-grid etc. */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      z-index: 1000;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
 
-  .course-card.horizontal {
-    background: var(--card-bg);
-    display: flex;
-    align-items: center;
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 12px;
-    overflow: hidden;
-    padding: 0;
-    transition: box-shadow 0.2s ease;
-    gap: 2rem;
-  }
+    nav .logo {
+      font-weight: 700;
+      font-size: 1.4rem;
+    }
 
-  .course-card.horizontal:hover {
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-  }
+    nav input[type="text"] {
+      background: #222;
+      border: 1px solid #444;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      color: #f4f4f4;
+      width: 250px;
+    }
 
-  .course-thumb-horizontal {
-    width: 220px;
-    height: 140px;
-    object-fit: cover;
-  }
+    nav a {
+      color: var(--text);
+      margin-left: 1.5rem;
+      text-decoration: none;
+      font-weight: 500;
+    }
 
-  .course-info {
-    flex: 1;
-    padding: 1.5rem 1rem 1.5rem 0;
-  }
+    .sidebar {
+      width: 250px;
+      background: #121212;
+      padding: 100px 20px 20px;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
 
-  .course-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+    .sidebar h3 {
+      margin-top: 0;
+      font-size: 1rem;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      color: #aaa;
+    }
 
-  .course-info h3 {
-    font-size: 1.1rem;
-    margin: 0;
-    color: var(--text-color);
-  }
+    .sidebar select {
+      width: 100%;
+      margin-bottom: 1rem;
+      padding: 0.5rem;
+      border-radius: 8px;
+      background: #1f1f1f;
+      color: #fff;
+      border: 1px solid #333;
+    }
 
-  .price {
-    font-weight: 600;
-    font-size: 1rem;
-    color: var(--text-color);
-  }
+    main {
+      margin-left: 250px;
+      padding: 120px 2rem 2rem;
+      flex: 1;
+    }
 
-  .tags {
-    margin: 0.5rem 0;
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
+    .course-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
 
-  .tags span {
-    background: var(--tag-bg);
-    color: var(--tag-text);
-    padding: 4px 10px;
-    font-size: 0.75rem;
-    border-radius: 999px;
-  }
+    .course-card {
+      background: var(--card);
+      border-radius: 12px;
+      display: flex;
+      padding: 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
 
-  .view-btn {
-    display: inline-block;
-    margin-top: 0.5rem;
-    padding: 0.5rem 1.25rem;
-    background: var(--accent-color);
-    color: white;
-    font-weight: 600;
-    border-radius: 6px;
-    text-decoration: none;
-    transition: background 0.2s ease;
-  }
+    .course-thumb {
+      width: 200px;
+      height: 120px;
+      border-radius: 10px;
+      object-fit: cover;
+      margin-right: 1.5rem;
+    }
 
-  .view-btn:hover {
-    background: #2563eb;
-  }
-</style>
+    .course-info {
+      flex: 1;
+    }
 
+    .course-info h2 {
+      margin: 0 0 0.5rem;
+      font-size: 1.2rem;
+    }
+
+    .course-info .creator {
+      font-size: 0.9rem;
+      color: #999;
+    }
+
+    .tags {
+      margin: 0.5rem 0;
+    }
+
+    .tags span {
+      background: var(--tag);
+      color: #fff;
+      padding: 3px 10px;
+      border-radius: 999px;
+      margin-right: 6px;
+      font-size: 0.75rem;
+    }
+
+    .course-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.75rem;
+    }
+
+    .price {
+      font-weight: bold;
+      color: var(--accent);
+    }
+
+    .btn {
+      background: var(--accent);
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+  </style>
 </head>
 <body>
-  
+
   <nav>
-  <div style="font-weight: bold; font-size: 1.3rem;">CredCheck</div>
-  <div>
-    <a href="/index.html">Home</a> <!-- now the directory -->
-    <a href="/about.html">About</a> <!-- new page -->
+    <div class="logo">CredCheck</div>
+    <input type="text" id="searchBar" placeholder="Search courses..." />
+    <div>
+      <a href="/index.html">Home</a>
+      <a href="/about.html">About</a>
+    </div>
+  </nav>
+
+  <div class="sidebar">
+    <h3>Filter</h3>
+    <select id="nicheFilter">
+      <option value="all">All Niches</option>
+      <option value="SMMA">SMMA</option>
+      <option value="Marketing">Marketing</option>
+      <option value="Mindset">Mindset</option>
+    </select>
+    <h3>Sort</h3>
+    <select id="sortPrice">
+      <option value="default">Sort by Price</option>
+      <option value="low">Low to High</option>
+      <option value="high">High to Low</option>
+    </select>
   </div>
-</nav>
 
-  <div class="container">
-    <h1>CredCheck Course Directory</h1>
-    <div class="toggle">
-      <button onclick="toggleTheme()">🌙 Toggle Dark Mode</button>
+  <main>
+    <div class="course-list" id="courseList">
+      <!-- Courses will render here -->
     </div>
-
-    <div class="filter-bar">
-      <input type="text" id="searchInput" placeholder="Search by course or creator name...">
-      <select id="nicheFilter">
-        <option value="all">All Niches</option>
-        <option value="Mindset">Mindset</option>
-        <option value="Marketing">Marketing</option>
-        <option value="SMMA">SMMA</option>
-        <option value="Dropshipping">Dropshipping</option>
-      </select>
-    </div>
-
-    <div class="card-grid" id="guruGrid"></div>
-
-    <div class="course-card horizontal">
-  <img src="course-thumb.jpg" class="course-thumb-horizontal" alt="Course" />
-  <div class="course-info">
-    <div class="course-head">
-      <h3>Course Title</h3>
-      <p class="price">$997</p>
-    </div>
-    <p class="creator">by Iman Gadzhi</p>
-    <div class="tags">
-      <span>Marketing</span><span>SMMA</span>
-    </div>
-    <p class="rating">⭐ 87/100</p>
-    <a href="#" class="view-btn">View Course</a>
-  </div>
-</div>
-
-
-    <div class="submit-form">
-      <h3>Request a Course Review</h3>
-      <form action="https://formspree.io/f/mnndyzyo" method="POST">
-        <input type="text" name="name" placeholder="Course name" required />
-        <input type="text" name="creator" placeholder="Course creator" required />
-        <input type="text" name="niche" placeholder="Niche (e.g. SMMA, Mindset, Dropshipping)" required />
-        <textarea name="reason" placeholder="Why should we review this course?" rows="4" required></textarea>
-        <button type="submit">Submit Request</button>
-      </form>
-    </div>
-  </div>
+  </main>
 
   <script>
-  // Force dark mode on first load if no preference saved
-  if (!localStorage.getItem('credTheme')) {
-    document.body.classList.add('dark');
-  }
+    const data = [
+      {
+        title: "The $100M Offers Course",
+        creator: "Alex Hormozi",
+        rating: 93,
+        price: 0,
+        niches: ["Business", "Offers", "Marketing"],
+        image: "https://i.ytimg.com/vi/0giY9E1N3UU/hqdefault.jpg",
+        slug: "100m-offers"
+      },
+      {
+        title: "Agency Navigator",
+        creator: "Iman Gadzhi",
+        rating: 88,
+        price: 1497,
+        niches: ["SMMA", "Entrepreneurship"],
+        image: "https://i.ytimg.com/vi/E4kjqZStW2Y/hqdefault.jpg",
+        slug: "agency-navigator"
+      },
+      {
+        title: "The SMMA Blueprint",
+        creator: "Aiden Frazier",
+        rating: 92,
+        price: 497,
+        niches: ["SMMA", "Digital Marketing"],
+        image: "https://i.ytimg.com/vi/NBUEvMBfZfE/hqdefault.jpg",
+        slug: "smma-blueprint"
+      }
+    ];
 
-  let courses = [];
-  const guruGrid = document.getElementById('guruGrid');
-  const searchInput = document.getElementById('searchInput');
-  const nicheFilter = document.getElementById('nicheFilter');
+    const courseList = document.getElementById("courseList");
+    const searchBar = document.getElementById("searchBar");
+    const nicheFilter = document.getElementById("nicheFilter");
+    const sortPrice = document.getElementById("sortPrice");
 
-  const sortSelect = document.createElement('select');
-  sortSelect.innerHTML = `
-    <option value="default">Sort by Price</option>
-    <option value="low">Lowest to Highest</option>
-    <option value="high">Highest to Lowest</option>
-  `;
-  sortSelect.style.marginTop = '10px';
-  document.querySelector('.filter-bar').appendChild(sortSelect);
-
-  let currentFiltered = [];
-
-  async function fetchCourses() {
-    try {
-      const res = await fetch("/gurus/courses.json");
-      const data = await res.json();
-      courses = data;
-      currentFiltered = data;
-      renderCourses(data);
-    } catch (err) {
-      console.error("Failed to load courses:", err);
-      guruGrid.innerHTML = '<p style="color:red;">Failed to load courses.</p>';
+    function renderCourses(courses) {
+      courseList.innerHTML = "";
+      courses.forEach(c => {
+        const card = document.createElement("div");
+        card.className = "course-card";
+        card.innerHTML = `
+          <img src="${c.image}" class="course-thumb" />
+          <div class="course-info">
+            <h2>${c.title}</h2>
+            <p class="creator">by ${c.creator}</p>
+            <div class="tags">${c.niches.map(tag => `<span>${tag}</span>`).join(' ')}</div>
+            <div class="course-footer">
+              <span class="price">$${c.price}</span>
+              <a href="/profile.html?course=${c.slug}" class="btn">View</a>
+            </div>
+          </div>
+        `;
+        courseList.appendChild(card);
+      });
     }
-  }
 
-  function renderCourses(data) {
-  guruGrid.innerHTML = '';
-  data.forEach(course => {
-    const card = document.createElement('div');
-    card.className = 'course-card horizontal';
-    card.innerHTML = `
-      <img src="${course.image}" alt="${course.title} thumbnail" class="course-thumb-horizontal" />
-      <div class="course-info">
-        <div class="course-head">
-          <h3>${course.title}</h3>
-          <p class="price">$${course.price}</p>
-        </div>
-        <p class="creator">by ${course.creator}</p>
-        <div class="tags">
-          ${course.niches.map(tag => `<span>${tag}</span>`).join(' ')}
-        </div>
-        <p class="rating">⭐ ${course.rating}/100</p>
-        <a href="/profile.html?course=${course.slug}" class="view-btn">View Details</a>
-      </div>
-    `;
-    guruGrid.appendChild(card);
-  });
-}
+    function filterAndSort() {
+      let filtered = data;
 
+      const search = searchBar.value.toLowerCase();
+      const niche = nicheFilter.value;
+      const sort = sortPrice.value;
 
-  function toggleTheme() {
-    document.body.classList.toggle('dark');
-    localStorage.setItem('credTheme', document.body.classList.contains('dark') ? 'dark' : 'light');
-  }
+      if (search) {
+        filtered = filtered.filter(c =>
+          c.title.toLowerCase().includes(search) ||
+          c.creator.toLowerCase().includes(search)
+        );
+      }
 
-  function applySavedTheme() {
-    const saved = localStorage.getItem('credTheme');
-    if (saved === 'dark') document.body.classList.add('dark');
-    else if (saved === 'light') document.body.classList.remove('dark');
-  }
+      if (niche !== "all") {
+        filtered = filtered.filter(c => c.niches.includes(niche));
+      }
 
-  function filterCourses() {
-    const searchTerm = searchInput.value.toLowerCase();
-    const selectedNiche = nicheFilter.value;
-    currentFiltered = courses.filter(course => {
-      const matchesSearch = course.title.toLowerCase().includes(searchTerm) || course.creator.toLowerCase().includes(searchTerm);
-      const matchesNiche = selectedNiche === 'all' || course.niches.includes(selectedNiche);
-      return matchesSearch && matchesNiche;
-    });
-    applySort();
-  }
+      if (sort === "low") {
+        filtered.sort((a, b) => a.price - b.price);
+      } else if (sort === "high") {
+        filtered.sort((a, b) => b.price - a.price);
+      }
 
-  function applySort() {
-    const selectedSort = sortSelect.value;
-    let sorted = [...currentFiltered];
-    if (selectedSort === 'low') {
-      sorted.sort((a, b) => a.price - b.price);
-    } else if (selectedSort === 'high') {
-      sorted.sort((a, b) => b.price - a.price);
+      renderCourses(filtered);
     }
-    renderCourses(sorted);
-  }
 
-  searchInput.addEventListener('input', filterCourses);
-  nicheFilter.addEventListener('change', filterCourses);
-  sortSelect.addEventListener('change', applySort);
+    searchBar.addEventListener("input", filterAndSort);
+    nicheFilter.addEventListener("change", filterAndSort);
+    sortPrice.addEventListener("change", filterAndSort);
 
-  applySavedTheme();
-  fetchCourses();
-</script>
+    renderCourses(data);
+  </script>
 
 </body>
 </html>
