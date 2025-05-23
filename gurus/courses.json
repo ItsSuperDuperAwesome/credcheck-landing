@@ -1,21 +1,145 @@
-{
-  "slug": "agency-navigator",
-  "title": "Agency Navigator",
-  "creator": "Iman Gadzhi",
-  "niches": ["SMMA", "Digital Marketing"],
-  "price": 1497,
-  "rating": 58,
-  "verified": false,
-  "image": "https://yt3.googleusercontent.com/....jpg",
-  "link": "https://credcheck.io/out/agency-navigator",
-  "description": "Flagship SMMA course focused on client acquisition, outreach, and scaling.",
-  "refund_policy": "14-day conditional refund",
-  "tags": ["video lessons", "templates", "community"],
-  "breakdown": {
-    "results": 15,
-    "sentiment": 12,
-    "transparency": 10,
-    "practices": 8,
-    "quality": 8
+**Project Summary: CredCheck Course Directory**
+
+---
+
+**Objective:**
+CredCheck is a course directory website where users can browse, filter, and review online courses. Courses are rated with a score and tagged by niche, and display relevant creator information. The project focuses on transparency, community input, and elegant design.
+
+---
+
+**Features Implemented:**
+
+1. **Dark Mode Toggle**
+
+   * Persistent dark mode preference with `localStorage`
+   * CSS variables for easy theming
+
+2. **Course Cards (from `courses.json`)**
+
+   * Title, creator, description, rating, price
+   * Tag-style niches
+   * Verified badge support
+
+3. **Filtering & Sorting**
+
+   * Search by course name
+   * Filter by niche
+   * Sort by rating (high to low / low to high)
+
+4. **Submit Form**
+
+   * Embedded Formspree form for suggesting new courses
+   * Fields: course name, niche, reason for request
+
+5. **Loading Animation**
+
+   * Spinner while fetching JSON
+
+6. **Modern UI Enhancements**
+
+   * Responsive layout using grid
+   * Hover/fade animations for cards
+   * Animated navigation bar
+
+---
+
+**Data Format: `courses.json`**
+
+```json
+[
+  {
+    "title": "The $100M Offers Course",
+    "creator": "Alex Hormozi",
+    "slug": "100m-offers-course",
+    "rating": 93,
+    "niches": ["Business", "Offers", "Marketing"],
+    "description": "A breakdown of Alex Hormozi's $100M Offers framework to build irresistible products.",
+    "price": 0,
+    "verified": true,
+    "link": "https://www.acquisition.com/training",
+    "image": "https://i.ytimg.com/vi/pkq2A0rZJ6o/maxresdefault.jpg"
+  },
+  {
+    "title": "Agency Navigator",
+    "creator": "Iman Gadzhi",
+    "slug": "agency-navigator",
+    "rating": 88,
+    "niches": ["SMMA", "Entrepreneurship"],
+    "description": "A complete roadmap to starting and scaling your own digital marketing agency.",
+    "price": 1497,
+    "verified": true,
+    "link": "https://www.agencynavigator.com/",
+    "image": "https://www.trustpilot.com/images/company/logo/iman-gadzhi.svg"
+  },
+  {
+    "title": "The SMMA Blueprint",
+    "creator": "Aiden Frazier",
+    "slug": "the-smma-blueprint",
+    "rating": 92,
+    "niches": ["SMMA", "Digital Marketing"],
+    "description": "Comprehensive guide to building and scaling a social media marketing agency.",
+    "price": 497,
+    "verified": true,
+    "link": "https://go.thesmmablueprint.com",
+    "image": "https://example.com/smma-blueprint.jpg"
+  },
+  {
+    "title": "Proven Amazon Course",
+    "creator": "Jim Cockrum",
+    "slug": "proven-amazon-course",
+    "rating": 90,
+    "niches": ["Amazon FBA", "Ecommerce"],
+    "description": "A comprehensive series covering every Amazon FBA topic imaginable.",
+    "price": 499,
+    "verified": true,
+    "link": "https://www.dreamgrow.com/best-amazon-fba-courses/",
+    "image": "https://example.com/proven-amazon-course.jpg"
+  },
+  {
+    "title": "Copy School",
+    "creator": "Copyhackers Team",
+    "slug": "copy-school",
+    "rating": 95,
+    "niches": ["Copywriting", "Content Marketing"],
+    "description": "Comprehensive copywriting training for intermediate and advanced levels.",
+    "price": 2997,
+    "verified": true,
+    "link": "https://copyhackers.com/copy-school/",
+    "image": "https://example.com/copy-school.jpg"
+  },
+  {
+    "title": "Hustlers University",
+    "creator": "Andrew Tate",
+    "slug": "hustlers-university",
+    "rating": 81,
+    "niches": ["Mindset", "Entrepreneurship", "Finance"],
+    "description": "A controversial but popular program claiming to teach modern money-making strategies.",
+    "price": 49,
+    "verified": false,
+    "link": "https://www.hustlersuniversity.live/",
+    "image": "https://uploads-ssl.webflow.com/6275532125bb6e62fcff7c5e/62fe839fdd07e0fa64a3b893_HU2%20logo-p-500.png"
   }
-}
+]
+```
+
+---
+
+**Next Steps (Suggested):**
+
+1. Add more courses to `courses.json`
+2. Create individual `profile.html` pages for deeper reviews (optional)
+3. Add affiliate link tracking or price comparison logic
+4. Improve mobile responsiveness
+5. Add user review/comments per course (long-term)
+
+---
+
+To continue in another chat:
+
+> "I’m building a course directory using HTML, CSS, and JSON. Help me edit and improve my CredCheck project."
+
+Then share this summary or your `index.html` and `courses.json` files.
+
+---
+
+Maintained in ChatGPT Canvas under: **CredCheck Course Directory**
