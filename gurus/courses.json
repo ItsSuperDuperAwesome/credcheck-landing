@@ -136,10 +136,26 @@ CredCheck is a course directory website where users can browse, filter, and revi
 
 To continue in another chat:
 
-> "I’m building a course directory using HTML, CSS, and JSON. Help me edit and improve my CredCheck project."
+> "Im building a course directory using HTML, CSS, and JSON. Help me edit and improve my CredCheck project."
 
 Then share this summary or your `index.html` and `courses.json` files.
 
 ---
 
 Maintained in ChatGPT Canvas under: **CredCheck Course Directory**
+
+---
+
+**Update:** In your `directory.html`, update the fetch call:
+
+```javascript
+fetch("/gurus/courses.json")
+```
+
+to
+
+```javascript
+fetch("courses.json")
+```
+
+This ensures your frontend loads the course data correctly from the root folder. If you're testing locally, make sure to run a local server (e.g. Live Server or `python3 -m http.server`) to avoid CORS issues.
