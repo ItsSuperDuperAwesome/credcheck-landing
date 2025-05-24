@@ -173,24 +173,60 @@
 
   <div class="main">
     <aside class="sidebar">
-      <div>
-        <label><strong>FILTER</strong></label><br />
-        <select id="nicheFilter">
-          <option value="all">All Niches</option>
-          <option value="SMMA">SMMA</option>
-          <option value="Marketing">Marketing</option>
-          <option value="Dropshipping">Dropshipping</option>
-        </select>
-      </div>
-      <div>
-        <label><strong>SORT</strong></label><br />
-        <select id="sortSelect">
-          <option value="default">Sort by Price</option>
-          <option value="low">Lowest to Highest</option>
-          <option value="high">Highest to Lowest</option>
-        </select>
-      </div>
-    </aside>
+  <details open>
+    <summary>💼 Business</summary>
+    <ul>
+      <li onclick="filterByNiche('Entrepreneurship')">Entrepreneurship</li>
+      <li onclick="filterByNiche('Marketing')">Marketing</li>
+      <li onclick="filterByNiche('SMMA')">SMMA</li>
+      <li onclick="filterByNiche('Dropshipping')">Dropshipping</li>
+      <li onclick="filterByNiche('Amazon FBA')">Amazon FBA</li>
+      <li onclick="filterByNiche('Copywriting')">Copywriting</li>
+      <li onclick="filterByNiche('Sales & Funnels')">Sales & Funnels</li>
+      <li onclick="filterByNiche('Finance & Investing')">Finance & Investing</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>📈 Growth & Strategy</summary>
+    <ul>
+      <li onclick="filterByNiche('Business Strategy')">Business Strategy</li>
+      <li onclick="filterByNiche('Startup & Venture Capital')">Startup & VC</li>
+      <li onclick="filterByNiche('Agency Building')">Agency Building</li>
+      <li onclick="filterByNiche('Freelancing & Consulting')">Freelancing & Consulting</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>🛠️ Tech & Tools</summary>
+    <ul>
+      <li onclick="filterByNiche('No-Code Tools')">No-Code Tools</li>
+      <li onclick="filterByNiche('Automation')">Automation</li>
+      <li onclick="filterByNiche('AI & Machine Learning')">AI & ML</li>
+      <li onclick="filterByNiche('Web Development')">Web Development</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>🎨 Creative & Content</summary>
+    <ul>
+      <li onclick="filterByNiche('Content Marketing')">Content Marketing</li>
+      <li onclick="filterByNiche('Video Editing')">Video Editing</li>
+      <li onclick="filterByNiche('UI/UX Design')">UI/UX Design</li>
+      <li onclick="filterByNiche('SEO')">SEO</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>🧠 Personal Development</summary>
+    <ul>
+      <li onclick="filterByNiche('Mindset')">Mindset</li>
+      <li onclick="filterByNiche('Productivity')">Productivity</li>
+      <li onclick="filterByNiche('Time Management')">Time Management</li>
+    </ul>
+  </details>
+</aside>
+
 
     <section class="main-content">
       <div class="carousel-wrapper">
