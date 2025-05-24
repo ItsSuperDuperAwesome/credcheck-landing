@@ -16,6 +16,10 @@
       --accent-color: #3b82f6;
     }
 
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       background: var(--bg-color);
@@ -24,6 +28,7 @@
       display: flex;
       flex-direction: column;
       height: 100vh;
+      overflow: hidden;
     }
 
     nav {
@@ -71,50 +76,23 @@
       border: 1px solid #444;
       border-radius: 6px;
       padding: 0.5rem;
+      width: 100%;
     }
 
     .main-content {
       flex: 1;
       padding: 2rem;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .carousel-wrapper {
       position: relative;
     }
 
     .carousel {
       display: flex;
-      gap: 1rem;
       overflow: hidden;
-      scroll-behavior: smooth;
-    }
-
-    .carousel-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: var(--accent-color);
-      color: white;
-      border: none;
-      padding: 0.5rem 0.75rem;
-      font-size: 1.5rem;
-      cursor: pointer;
-      z-index: 1;
-      border-radius: 6px;
-    }
-
-    .carousel-btn.left {
-      left: -1rem;
-    }
-
-    .carousel-btn.right {
-      right: -1rem;
+      gap: 1rem;
     }
 
     .course-card {
-      flex: 0 0 calc(33.333% - 1rem);
+      flex: 0 0 30%;
       background: var(--card-bg);
       border-radius: 12px;
       padding: 1rem;
@@ -154,6 +132,28 @@
       cursor: pointer;
       font-weight: 600;
     }
+
+    .carousel-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--accent-color);
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .carousel-left {
+      left: -1rem;
+    }
+
+    .carousel-right {
+      right: -1rem;
+    }
   </style>
 </head>
 <body>
@@ -188,26 +188,60 @@
     </aside>
 
     <section class="main-content">
-      <div class="carousel-wrapper">
-        <button class="carousel-btn left" onclick="scrollCarousel(-1)">‹</button>
-        <div class="carousel" id="carousel"></div>
-        <button class="carousel-btn right" onclick="scrollCarousel(1)">›</button>
-      </div>
+      <button class="carousel-nav carousel-left" onclick="scrollCarousel(-1)">❮</button>
+      <div class="carousel" id="carousel"></div>
+      <button class="carousel-nav carousel-right" onclick="scrollCarousel(1)">❯</button>
     </section>
   </div>
 
   <script>
-    let courses = [];
-
-    fetch("/courses.json")
-      .then(res => res.json())
-      .then(data => {
-        courses = data;
-        renderCourses(courses);
-      })
-      .catch(err => {
-        console.error("Failed to load courses.json", err);
-      });
+    const courses = [
+      {
+        title: "The $100M Offers Course",
+        creator: "Alex Hormozi",
+        image: "https://via.placeholder.com/600x340.png?text=Course+Image",
+        niches: ["Business", "Offers", "Marketing"],
+        rating: 93,
+        price: 0,
+        link: "https://www.acquisition.com/training"
+      },
+      {
+        title: "Agency Navigator",
+        creator: "Iman Gadzhi",
+        image: "https://via.placeholder.com/600x340.png?text=Course+Image",
+        niches: ["SMMA", "Entrepreneurship"],
+        rating: 88,
+        price: 1497,
+        link: "https://www.agencynavigator.com/"
+      },
+      {
+        title: "The SMMA Blueprint",
+        creator: "Aiden Frazier",
+        image: "https://via.placeholder.com/600x340.png?text=Course+Image",
+        niches: ["SMMA", "Digital Marketing"],
+        rating: 92,
+        price: 497,
+        link: "https://go.thesmmablueprint.com"
+      },
+      {
+        title: "Proven Amazon Course",
+        creator: "Jim Cockrum",
+        image: "https://via.placeholder.com/600x340.png?text=Course+Image",
+        niches: ["Amazon FBA", "Ecommerce"],
+        rating: 90,
+        price: 499,
+        link: "https://www.dreamgrow.com/best-amazon-fba-courses/"
+      },
+      {
+        title: "Copy School",
+        creator: "Copyhackers Team",
+        image: "https://via.placeholder.com/600x340.png?text=Course+Image",
+        niches: ["Copywriting", "Content Marketing"],
+        rating: 95,
+        price: 2997,
+        link: "https://copyhackers.com/copy-school/"
+      }
+    ];
 
     const carousel = document.getElementById("carousel");
 
@@ -217,20 +251,23 @@
         const card = document.createElement("div");
         card.className = "course-card";
         card.innerHTML = `
-          <img src="${course.image}" alt="Course Thumbnail" />
+          <img src="${course.image}" alt="Course" />
           <h4>${course.title}</h4>
           <p>by ${course.creator}</p>
           <div class="tags">${course.niches.map(n => `<span>${n}</span>`).join('')}</div>
           <p>$${course.price}</p>
-          <button class="view-btn" onclick="window.open('${course.link}', '_blank')">View</button>
+          <a href="${course.link}" target="_blank" class="view-btn">View</a>
         `;
         carousel.appendChild(card);
       });
     }
 
     function scrollCarousel(direction) {
-      const cardWidth = carousel.querySelector('.course-card')?.offsetWidth || 300;
-      carousel.scrollBy({ left: direction * (cardWidth + 16), behavior: 'smooth' });
+      const card = document.querySelector(".course-card");
+      if (card) {
+        const scrollAmount = card.offsetWidth + 16; // 16px = gap
+        carousel.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+      }
     }
 
     document.getElementById("sortSelect").addEventListener("change", () => {
@@ -243,20 +280,19 @@
 
     document.getElementById("nicheFilter").addEventListener("change", () => {
       const niche = document.getElementById("nicheFilter").value;
-      const filtered = niche === "all"
-        ? courses
-        : courses.filter(c => c.niches.includes(niche));
+      const filtered = niche === "all" ? courses : courses.filter(c => c.niches.includes(niche));
       renderCourses(filtered);
     });
 
     document.getElementById("searchBar").addEventListener("input", (e) => {
       const term = e.target.value.toLowerCase();
       const filtered = courses.filter(course =>
-        course.title.toLowerCase().includes(term) ||
-        course.creator.toLowerCase().includes(term)
+        course.title.toLowerCase().includes(term) || course.creator.toLowerCase().includes(term)
       );
       renderCourses(filtered);
     });
+
+    renderCourses(courses);
   </script>
 </body>
 </html>
