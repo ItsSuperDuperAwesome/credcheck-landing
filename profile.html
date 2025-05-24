@@ -139,5 +139,33 @@
 
     loadGuru();
   </script>
+  <script>
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get("course");
+
+  async function fetchReviews() {
+    const res = await fetch(`http://localhost:3001/reviews/${slug}`);
+    const reviews = await res.json();
+
+    const container = document.getElementById("reviews");
+    if (!reviews.length) {
+      container.innerHTML = "<p>No reviews yet. Be the first!</p>";
+      return;
+    }
+
+    container.innerHTML = reviews.map(r => `
+      <div class="review">
+        <strong>${r.name}</strong> – ⭐ ${r.rating}/5<br />
+        ${r.text}
+        <hr />
+      </div>
+    `).join("");
+  }
+
+  fetchReviews();
+</script>
+
+<div id="reviews"></div>
+
 </body>
 </html>
