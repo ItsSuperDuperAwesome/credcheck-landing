@@ -22,13 +22,12 @@
 
     body {
       margin: 0;
-      font-family: 'Inter', sans-serif;
       background: var(--bg-color);
+      font-family: 'Inter', sans-serif;
       color: var(--text-color);
       display: flex;
       flex-direction: column;
       height: 100vh;
-      overflow-x: hidden;
     }
 
     nav {
@@ -58,65 +57,78 @@
     .main {
       display: flex;
       flex: 1;
+      height: calc(100vh - 64px);
     }
 
     .sidebar {
-      width: 220px;
+      width: 250px;
       background: var(--sidebar-bg);
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
+      padding: 1rem;
+      overflow-y: auto;
     }
 
-    .sidebar select {
-      background: var(--sidebar-bg);
-      color: var(--text-color);
-      border: 1px solid #444;
-      border-radius: 6px;
-      padding: 0.5rem;
-      width: 100%;
+    .sidebar details {
+      margin-bottom: 1rem;
+    }
+
+    .sidebar summary {
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding-left: 1rem;
+      margin: 0.5rem 0;
+    }
+
+    .sidebar li {
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin: 0.3rem 0;
     }
 
     .main-content {
       flex: 1;
       padding: 2rem;
-      position: relative;
+      display: flex;
+      flex-direction: column;
     }
 
     .carousel-wrapper {
       position: relative;
-      overflow: hidden;
     }
 
     .carousel {
       display: flex;
-      transition: transform 0.3s ease;
+      gap: 1rem;
+      overflow: hidden;
     }
 
     .course-card {
+      flex: 0 0 calc(33.333% - 1rem);
       background: var(--card-bg);
       border-radius: 12px;
       padding: 1rem;
-      margin-right: 1rem;
-      flex: 0 0 calc(33.333% - 1rem);
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
-      transition: transform 0.3s ease;
     }
 
     .course-card img {
       width: 100%;
-      height: 120px;
+      height: 160px;
       object-fit: cover;
       border-radius: 8px;
+      margin-bottom: 0.5rem;
     }
 
     .tags {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
+      margin: 0.3rem 0;
     }
 
     .tags span {
@@ -129,7 +141,7 @@
 
     .view-btn {
       margin-top: auto;
-      padding: 0.4rem 1rem;
+      padding: 0.5rem 1rem;
       background: var(--accent-color);
       color: white;
       border: none;
@@ -144,20 +156,20 @@
       transform: translateY(-50%);
       background: var(--accent-color);
       color: white;
+      font-size: 1.25rem;
       border: none;
       border-radius: 50%;
-      width: 36px;
-      height: 36px;
-      font-size: 1.2rem;
+      width: 40px;
+      height: 40px;
       cursor: pointer;
     }
 
     .arrow.left {
-      left: -18px;
+      left: -20px;
     }
 
     .arrow.right {
-      right: -18px;
+      right: -20px;
     }
   </style>
 </head>
@@ -173,60 +185,41 @@
 
   <div class="main">
     <aside class="sidebar">
-  <details open>
-    <summary>💼 Business</summary>
-    <ul>
-      <li onclick="filterByNiche('Entrepreneurship')">Entrepreneurship</li>
-      <li onclick="filterByNiche('Marketing')">Marketing</li>
-      <li onclick="filterByNiche('SMMA')">SMMA</li>
-      <li onclick="filterByNiche('Dropshipping')">Dropshipping</li>
-      <li onclick="filterByNiche('Amazon FBA')">Amazon FBA</li>
-      <li onclick="filterByNiche('Copywriting')">Copywriting</li>
-      <li onclick="filterByNiche('Sales & Funnels')">Sales & Funnels</li>
-      <li onclick="filterByNiche('Finance & Investing')">Finance & Investing</li>
-    </ul>
-  </details>
-
-  <details>
-    <summary>📈 Growth & Strategy</summary>
-    <ul>
-      <li onclick="filterByNiche('Business Strategy')">Business Strategy</li>
-      <li onclick="filterByNiche('Startup & Venture Capital')">Startup & VC</li>
-      <li onclick="filterByNiche('Agency Building')">Agency Building</li>
-      <li onclick="filterByNiche('Freelancing & Consulting')">Freelancing & Consulting</li>
-    </ul>
-  </details>
-
-  <details>
-    <summary>🛠️ Tech & Tools</summary>
-    <ul>
-      <li onclick="filterByNiche('No-Code Tools')">No-Code Tools</li>
-      <li onclick="filterByNiche('Automation')">Automation</li>
-      <li onclick="filterByNiche('AI & Machine Learning')">AI & ML</li>
-      <li onclick="filterByNiche('Web Development')">Web Development</li>
-    </ul>
-  </details>
-
-  <details>
-    <summary>🎨 Creative & Content</summary>
-    <ul>
-      <li onclick="filterByNiche('Content Marketing')">Content Marketing</li>
-      <li onclick="filterByNiche('Video Editing')">Video Editing</li>
-      <li onclick="filterByNiche('UI/UX Design')">UI/UX Design</li>
-      <li onclick="filterByNiche('SEO')">SEO</li>
-    </ul>
-  </details>
-
-  <details>
-    <summary>🧠 Personal Development</summary>
-    <ul>
-      <li onclick="filterByNiche('Mindset')">Mindset</li>
-      <li onclick="filterByNiche('Productivity')">Productivity</li>
-      <li onclick="filterByNiche('Time Management')">Time Management</li>
-    </ul>
-  </details>
-</aside>
-
+      <details open>
+        <summary>📦 Business</summary>
+        <ul>
+          <li onclick="filterByNiche('Entrepreneurship')">Entrepreneurship</li>
+          <li onclick="filterByNiche('Marketing')">Marketing</li>
+          <li onclick="filterByNiche('SMMA')">SMMA</li>
+          <li onclick="filterByNiche('Dropshipping')">Dropshipping</li>
+          <li onclick="filterByNiche('Amazon FBA')">Amazon FBA</li>
+          <li onclick="filterByNiche('Copywriting')">Copywriting</li>
+          <li onclick="filterByNiche('Sales & Funnels')">Sales & Funnels</li>
+          <li onclick="filterByNiche('Finance')">Finance</li>
+        </ul>
+      </details>
+      <details>
+        <summary>📈 Growth</summary>
+        <ul>
+          <li onclick="filterByNiche('Mindset')">Mindset</li>
+          <li onclick="filterByNiche('Productivity')">Productivity</li>
+        </ul>
+      </details>
+      <details>
+        <summary>🛠️ Tools</summary>
+        <ul>
+          <li onclick="filterByNiche('Automation')">Automation</li>
+          <li onclick="filterByNiche('AI')">AI</li>
+        </ul>
+      </details>
+      <details>
+        <summary>🎨 Creative</summary>
+        <ul>
+          <li onclick="filterByNiche('Design')">Design</li>
+          <li onclick="filterByNiche('Content Creation')">Content Creation</li>
+        </ul>
+      </details>
+    </aside>
 
     <section class="main-content">
       <div class="carousel-wrapper">
@@ -238,103 +231,64 @@
   </div>
 
   <script>
-    const courses = [
-      {
-        title: "The $100M Offers Course",
-        creator: "Alex Hormozi",
-        image: "https://i.ytimg.com/vi_webp/5WsxxTXz9FQ/maxresdefault.webp",
-        niches: ["Business", "Offers", "Marketing"],
-        rating: 93,
-        price: 0
-      },
-      {
-        title: "Agency Navigator",
-        creator: "Iman Gadzhi",
-        image: "https://i.ytimg.com/vi/_U7FzR3hTTg/maxresdefault.jpg",
-        niches: ["SMMA", "Entrepreneurship"],
-        rating: 88,
-        price: 1497
-      },
-      {
-        title: "The SMMA Blueprint",
-        creator: "Aiden Frazier",
-        image: "https://i.ytimg.com/vi_webp/QfRUU91gN1Y/maxresdefault.webp",
-        niches: ["SMMA", "Digital Marketing"],
-        rating: 92,
-        price: 497
-      },
-      {
-        title: "Copy School",
-        creator: "Copyhackers Team",
-        image: "https://via.placeholder.com/600x340.png?text=Copy+School",
-        niches: ["Copywriting", "Content Marketing"],
-        rating: 95,
-        price: 2997
-      },
-      {
-        title: "Hustlers University",
-        creator: "Andrew Tate",
-        image: "https://via.placeholder.com/600x340.png?text=Hustlers+University",
-        niches: ["Mindset", "Entrepreneurship", "Finance"],
-        rating: 81,
-        price: 49
-      }
-    ];
+    let courses = [];
+    let currentIndex = 0;
 
-    const carousel = document.getElementById("carousel");
-    let startIndex = 0;
-    const perPage = 3;
+    async function fetchCourses() {
+      const res = await fetch('/gurus/courses.json');
+      courses = await res.json();
+      renderCourses();
+    }
 
     function renderCourses() {
+      const carousel = document.getElementById('carousel');
       carousel.innerHTML = '';
-      const visibleCourses = courses.slice(startIndex, startIndex + perPage);
-      visibleCourses.forEach(course => {
-        const card = document.createElement("div");
-        card.className = "course-card";
+      const visible = courses.slice(currentIndex, currentIndex + 3);
+      visible.forEach(course => {
+        const card = document.createElement('div');
+        card.className = 'course-card';
         card.innerHTML = `
-          <img src="${course.image}" alt="Course" />
+          <img src="${course.image}" alt="Course Thumbnail" />
           <h4>${course.title}</h4>
           <p>by ${course.creator}</p>
           <div class="tags">${course.niches.map(n => `<span>${n}</span>`).join('')}</div>
+          <p>⭐ ${course.rating}/100</p>
           <p>$${course.price}</p>
-          <button class="view-btn">View</button>
+          <a href="${course.link}" class="view-btn">View</a>
         `;
         carousel.appendChild(card);
       });
     }
 
-function filterByNiche(niche) {
-  const filtered = courses.filter(course =>
-    course.niches.some(n => n.toLowerCase() === niche.toLowerCase())
-  );
-  renderCourses(filtered);
-}
-
     function scrollCarousel(direction) {
-      const newIndex = startIndex + direction * perPage;
-      if (newIndex >= 0 && newIndex <= courses.length - perPage) {
-        startIndex = newIndex;
+      const newIndex = currentIndex + direction * 3;
+      if (newIndex >= 0 && newIndex < courses.length) {
+        currentIndex = newIndex;
         renderCourses();
       }
     }
 
-    document.getElementById("sortSelect").addEventListener("change", () => {
-      const value = document.getElementById("sortSelect").value;
-      if (value === "low") courses.sort((a, b) => a.price - b.price);
-      if (value === "high") courses.sort((a, b) => b.price - a.price);
-      startIndex = 0;
+    function filterByNiche(niche) {
+      currentIndex = 0;
+      courses = courses.filter(course =>
+        course.niches.some(n => n.toLowerCase() === niche.toLowerCase())
+      );
       renderCourses();
+    }
+
+    document.getElementById('searchBar').addEventListener('input', (e) => {
+      const term = e.target.value.toLowerCase();
+      currentIndex = 0;
+      fetchCourses().then(() => {
+        courses = courses.filter(course =>
+          course.title.toLowerCase().includes(term) ||
+          course.creator.toLowerCase().includes(term)
+        );
+        renderCourses();
+      });
     });
 
-    document.getElementById("nicheFilter").addEventListener("change", () => {
-      // Optional: Implement niche filter here
-    });
-
-    document.getElementById("searchBar").addEventListener("input", (e) => {
-      // Optional: Implement search functionality here
-    });
-
-    renderCourses();
+    fetchCourses();
   </script>
 </body>
 </html>
