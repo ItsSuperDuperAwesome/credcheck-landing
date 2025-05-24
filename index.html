@@ -76,16 +76,41 @@
     .main-content {
       flex: 1;
       padding: 2rem;
-      overflow-x: hidden;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .carousel-wrapper {
+      position: relative;
     }
 
     .carousel {
       display: flex;
       gap: 1rem;
-      flex-wrap: nowrap;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      padding-bottom: 1rem;
+      overflow: hidden;
+      scroll-behavior: smooth;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--accent-color);
+      color: white;
+      border: none;
+      padding: 0.5rem 0.75rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: 1;
+      border-radius: 6px;
+    }
+
+    .carousel-btn.left {
+      left: -1rem;
+    }
+
+    .carousel-btn.right {
+      right: -1rem;
     }
 
     .course-card {
@@ -96,7 +121,6 @@
       display: flex;
       flex-direction: column;
       gap: 0.75rem;
-      scroll-snap-align: start;
     }
 
     .course-card img {
@@ -164,14 +188,18 @@
     </aside>
 
     <section class="main-content">
-      <div class="carousel" id="carousel"></div>
+      <div class="carousel-wrapper">
+        <button class="carousel-btn left" onclick="scrollCarousel(-1)">‹</button>
+        <div class="carousel" id="carousel"></div>
+        <button class="carousel-btn right" onclick="scrollCarousel(1)">›</button>
+      </div>
     </section>
   </div>
 
   <script>
     let courses = [];
 
-    fetch("/gurus/courses.json")
+    fetch("/courses.json")
       .then(res => res.json())
       .then(data => {
         courses = data;
@@ -198,6 +226,11 @@
         `;
         carousel.appendChild(card);
       });
+    }
+
+    function scrollCarousel(direction) {
+      const cardWidth = carousel.querySelector('.course-card')?.offsetWidth || 300;
+      carousel.scrollBy({ left: direction * (cardWidth + 16), behavior: 'smooth' });
     }
 
     document.getElementById("sortSelect").addEventListener("change", () => {
