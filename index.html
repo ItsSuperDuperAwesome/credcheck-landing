@@ -14,6 +14,7 @@
       --tag-bg: #2e2e2e;
       --tag-text: #f5f5f5;
       --accent-color: #3b82f6;
+      --arrow-disabled: #555;
     }
 
     * {
@@ -114,6 +115,12 @@
       padding: 1rem;
       display: flex;
       flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .course-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
     }
 
     .course-card img {
@@ -156,12 +163,15 @@
       transform: translateY(-50%);
       background: var(--accent-color);
       color: white;
-      font-size: 1.25rem;
+      font-size: 1.5rem;
       border: none;
       border-radius: 50%;
       width: 40px;
       height: 40px;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .arrow.left {
@@ -170,6 +180,11 @@
 
     .arrow.right {
       right: -20px;
+    }
+
+    .arrow.disabled {
+      background: var(--arrow-disabled);
+      cursor: not-allowed;
     }
   </style>
 </head>
@@ -197,34 +212,13 @@
           <li onclick="filterByNiche('Finance')">Finance</li>
         </ul>
       </details>
-      <details>
-        <summary>Growth</summary>
-        <ul>
-          <li onclick="filterByNiche('Mindset')">Mindset</li>
-          <li onclick="filterByNiche('Productivity')">Productivity</li>
-        </ul>
-      </details>
-      <details>
-        <summary>Tools</summary>
-        <ul>
-          <li onclick="filterByNiche('Automation')">Automation</li>
-          <li onclick="filterByNiche('AI')">AI</li>
-        </ul>
-      </details>
-      <details>
-        <summary>Creative</summary>
-        <ul>
-          <li onclick="filterByNiche('Content Creation')">Content Creation</li>
-          <li onclick="filterByNiche('Design')">Design</li>
-        </ul>
-      </details>
     </aside>
 
     <section class="main-content">
       <div class="carousel-wrapper">
-        <button class="arrow left" onclick="scrollCarousel(-1)">‹</button>
+        <button id="arrowLeft" class="arrow left" onclick="scrollCarousel(-1)">‹</button>
         <div class="carousel" id="carousel"></div>
-        <button class="arrow right" onclick="scrollCarousel(1)">›</button>
+        <button id="arrowRight" class="arrow right" onclick="scrollCarousel(1)">›</button>
       </div>
     </section>
   </div>
@@ -246,6 +240,7 @@
       const carousel = document.getElementById('carousel');
       carousel.innerHTML = '';
       const visible = courses.slice(currentIndex, currentIndex + 3);
+
       visible.forEach(course => {
         const card = document.createElement('div');
         card.className = 'course-card';
@@ -260,11 +255,15 @@
         `;
         carousel.appendChild(card);
       });
+
+      // Update arrow state
+      document.getElementById('arrowLeft').classList.toggle('disabled', currentIndex === 0);
+      document.getElementById('arrowRight').classList.toggle('disabled', currentIndex + 3 >= courses.length);
     }
 
     function scrollCarousel(direction) {
       const newIndex = currentIndex + direction * 3;
-      if (newIndex >= 0 && newIndex < courses.length) {
+      if (newIndex >= 0 && newIndex <= courses.length - 3) {
         currentIndex = newIndex;
         renderCourses();
       }
