@@ -8,24 +8,22 @@
   <style>
     :root {
       --bg-color: #121212;
+      --card-bg: #1e1e1e;
       --sidebar-bg: #1a1a1a;
-      --card-bg: #1f1f1f;
       --text-color: #f5f5f5;
       --tag-bg: #2e2e2e;
       --tag-text: #f5f5f5;
       --accent-color: #3b82f6;
-      --arrow-disabled: #555;
+      --arrow-disabled: #444;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
       background: var(--bg-color);
-      font-family: 'Inter', sans-serif;
       color: var(--text-color);
+      font-family: 'Inter', sans-serif;
       display: flex;
       flex-direction: column;
       height: 100vh;
@@ -58,11 +56,10 @@
     .main {
       display: flex;
       flex: 1;
-      height: calc(100vh - 64px);
     }
 
     .sidebar {
-      width: 250px;
+      width: 240px;
       background: var(--sidebar-bg);
       padding: 1rem;
       overflow-y: auto;
@@ -74,38 +71,31 @@
 
     .sidebar summary {
       font-weight: bold;
-      font-size: 1rem;
       cursor: pointer;
-      list-style: none;
-    }
-
-    .sidebar ul {
-      list-style: none;
-      padding-left: 1rem;
-      margin: 0.5rem 0;
     }
 
     .sidebar li {
-      cursor: pointer;
-      font-size: 0.9rem;
       margin: 0.3rem 0;
+      font-size: 0.9rem;
+      cursor: pointer;
+      padding-left: 1rem;
     }
 
     .main-content {
       flex: 1;
       padding: 2rem;
-      display: flex;
-      flex-direction: column;
+      position: relative;
     }
 
     .carousel-wrapper {
       position: relative;
+      overflow: hidden;
     }
 
     .carousel {
       display: flex;
+      transition: transform 0.5s ease;
       gap: 1rem;
-      overflow: hidden;
     }
 
     .course-card {
@@ -128,14 +118,13 @@
       height: 160px;
       object-fit: cover;
       border-radius: 8px;
-      margin-bottom: 0.5rem;
     }
 
     .tags {
       display: flex;
-      flex-wrap: wrap;
       gap: 6px;
-      margin: 0.3rem 0;
+      flex-wrap: wrap;
+      margin: 0.5rem 0;
     }
 
     .tags span {
@@ -158,41 +147,35 @@
     }
 
     .arrow {
-  position: absolute;
-  top: 40%;
-  transform: translateY(-50%);
-  background: #444; /* dark grey */
-  color: white;
-  font-size: 1.5rem;
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.3s ease, transform 0.2s ease;
-}
+      position: absolute;
+      top: 40%;
+      transform: translateY(-50%);
+      background: #444;
+      color: white;
+      font-size: 1.5rem;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
 
-.arrow:hover:not(.disabled) {
-  background: #666; /* lighter on hover */
-  transform: translateY(-50%) scale(1.1);
-}
+    .arrow:hover:not(.disabled) {
+      background: #666;
+      transform: translateY(-50%) scale(1.1);
+    }
 
-.arrow.disabled {
-  background: #2a2a2a; /* lighter when disabled */
-  cursor: not-allowed;
-}
+    .arrow.disabled {
+      background: var(--arrow-disabled);
+      cursor: not-allowed;
+    }
 
-.arrow.left {
-  left: -20px;
-}
-
-.arrow.right {
-  right: -20px;
-}
-
+    .arrow.left { left: -20px; }
+    .arrow.right { right: -20px; }
   </style>
 </head>
 <body>
@@ -210,7 +193,6 @@
       <details open>
         <summary>Business</summary>
         <ul>
-          <li onclick="filterByNiche('Entrepreneurship')">Entrepreneurship</li>
           <li onclick="filterByNiche('Marketing')">Marketing</li>
           <li onclick="filterByNiche('SMMA')">SMMA</li>
           <li onclick="filterByNiche('Dropshipping')">Dropshipping</li>
@@ -252,18 +234,17 @@
         const card = document.createElement('div');
         card.className = 'course-card';
         card.innerHTML = `
-          <img src="${course.image}" alt="Course Thumbnail" />
+          <img src="${course.image}" alt="Course Image" />
           <h4>${course.title}</h4>
           <p>by ${course.creator}</p>
-          <div class="tags">${course.niches.map(n => `<span>${n}</span>`).join('')}</div>
           <p>⭐ ${course.rating}/100</p>
+          <div class="tags">${course.niches.map(n => `<span>${n}</span>`).join('')}</div>
           <p>$${course.price}</p>
           <a href="${course.link}" class="view-btn">View</a>
         `;
         carousel.appendChild(card);
       });
 
-      // Update arrow state
       document.getElementById('arrowLeft').classList.toggle('disabled', currentIndex === 0);
       document.getElementById('arrowRight').classList.toggle('disabled', currentIndex + 3 >= courses.length);
     }
