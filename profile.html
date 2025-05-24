@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Loading... | CredCheck</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg-color: #F2F2F2;
@@ -87,6 +87,46 @@
       text-decoration: none;
       font-weight: 600;
     }
+    .review {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: var(--card-bg);
+      border-left: 4px solid var(--accent-color);
+      border-radius: 8px;
+    }
+    .review-form {
+      margin-top: 2rem;
+      background: var(--card-bg);
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    .review-form input, .review-form textarea {
+      width: 100%;
+      margin-bottom: 0.75rem;
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 1rem;
+      background: white;
+      color: black;
+    }
+    body.dark .review-form input,
+    body.dark .review-form textarea {
+      background: #111;
+      color: #f5f5f5;
+      border-color: #444;
+    }
+    .review-form button {
+      background: var(--accent-color);
+      color: white;
+      padding: 0.5rem 1.2rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -98,6 +138,7 @@
       <a href="/profile.html?guru=alex-hormozi">Profile</a>
     </div>
   </nav>
+
   <script>
     const theme = localStorage.getItem('theme');
     if (
@@ -109,6 +150,64 @@
   </script>
 
   <div class="container" id="profile"></div>
+  <div class="container">
+    <h2>Reviews</h2>
+    <div id="reviews"></div>
+    <div class="review-form">
+      <h3>Leave a Review</h3>
+      <form id="reviewForm">
+        <input type="text" name="name" placeholder="Your Name" required />
+        <input type="number" name="rating" placeholder="Rating (1–5)" min="1" max="5" required />
+        <textarea name="text" placeholder="Your honest thoughts..." rows="4" required></textarea>
+        <button type="submit">Submit Review</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get("course");
+
+    async function fetchReviews() {
+      const res = await fetch(`http://localhost:3001/reviews/${slug}`);
+      const reviews = await res.json();
+      const container = document.getElementById("reviews");
+
+      if (!reviews.length) {
+        container.innerHTML = "<p>No reviews yet. Be the first!</p>";
+        return;
+      }
+
+      container.innerHTML = reviews.map(r => `
+        <div class="review">
+          <strong>${r.name}</strong> – ⭐ ${r.rating}/5<br />
+          ${r.text}
+        </div>
+      `).join("");
+    }
+
+    fetchReviews();
+
+    document.getElementById("reviewForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const data = {
+        course: slug,
+        name: form.name.value,
+        rating: parseInt(form.rating.value),
+        text: form.text.value
+      };
+
+      await fetch("http://localhost:3001/reviews", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+
+      form.reset();
+      fetchReviews();
+    });
+  </script>
 
   <script>
     async function loadGuru() {
@@ -139,33 +238,6 @@
 
     loadGuru();
   </script>
-  <script>
-  const params = new URLSearchParams(window.location.search);
-  const slug = params.get("course");
-
-  async function fetchReviews() {
-    const res = await fetch(`http://localhost:3001/reviews/${slug}`);
-    const reviews = await res.json();
-
-    const container = document.getElementById("reviews");
-    if (!reviews.length) {
-      container.innerHTML = "<p>No reviews yet. Be the first!</p>";
-      return;
-    }
-
-    container.innerHTML = reviews.map(r => `
-      <div class="review">
-        <strong>${r.name}</strong> – ⭐ ${r.rating}/5<br />
-        ${r.text}
-        <hr />
-      </div>
-    `).join("");
-  }
-
-  fetchReviews();
-</script>
-
-<div id="reviews"></div>
-
 </body>
 </html>
+
