@@ -303,6 +303,13 @@
       });
     }
 
+function filterByNiche(niche) {
+  const filtered = courses.filter(course =>
+    course.niches.some(n => n.toLowerCase() === niche.toLowerCase())
+  );
+  renderCourses(filtered);
+}
+
     function scrollCarousel(direction) {
       const newIndex = startIndex + direction * perPage;
       if (newIndex >= 0 && newIndex <= courses.length - perPage) {
