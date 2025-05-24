@@ -22,13 +22,13 @@
 
     body {
       margin: 0;
-      background: var(--bg-color);
       font-family: 'Inter', sans-serif;
+      background: var(--bg-color);
       color: var(--text-color);
       display: flex;
       flex-direction: column;
       height: 100vh;
-      overflow: hidden;
+      overflow-x: hidden;
     }
 
     nav {
@@ -58,7 +58,6 @@
     .main {
       display: flex;
       flex: 1;
-      height: calc(100vh - 64px);
     }
 
     .sidebar {
@@ -85,25 +84,31 @@
       position: relative;
     }
 
+    .carousel-wrapper {
+      position: relative;
+      overflow: hidden;
+    }
+
     .carousel {
       display: flex;
-      overflow: hidden;
-      gap: 1rem;
+      transition: transform 0.3s ease;
     }
 
     .course-card {
-      flex: 0 0 30%;
       background: var(--card-bg);
       border-radius: 12px;
       padding: 1rem;
+      margin-right: 1rem;
+      flex: 0 0 calc(33.333% - 1rem);
       display: flex;
       flex-direction: column;
       gap: 0.75rem;
+      transition: transform 0.3s ease;
     }
 
     .course-card img {
       width: 100%;
-      height: 160px;
+      height: 120px;
       object-fit: cover;
       border-radius: 8px;
     }
@@ -124,7 +129,7 @@
 
     .view-btn {
       margin-top: auto;
-      padding: 0.5rem 1rem;
+      padding: 0.4rem 1rem;
       background: var(--accent-color);
       color: white;
       border: none;
@@ -133,26 +138,26 @@
       font-weight: 600;
     }
 
-    .carousel-nav {
+    .arrow {
       position: absolute;
-      top: 50%;
+      top: 40%;
       transform: translateY(-50%);
       background: var(--accent-color);
-      border: none;
       color: white;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
       font-size: 1.2rem;
-      padding: 0.5rem 0.75rem;
-      border-radius: 6px;
       cursor: pointer;
-      z-index: 10;
     }
 
-    .carousel-left {
-      left: -1rem;
+    .arrow.left {
+      left: -18px;
     }
 
-    .carousel-right {
-      right: -1rem;
+    .arrow.right {
+      right: -18px;
     }
   </style>
 </head>
@@ -188,9 +193,11 @@
     </aside>
 
     <section class="main-content">
-      <button class="carousel-nav carousel-left" onclick="scrollCarousel(-1)">❮</button>
-      <div class="carousel" id="carousel"></div>
-      <button class="carousel-nav carousel-right" onclick="scrollCarousel(1)">❯</button>
+      <div class="carousel-wrapper">
+        <button class="arrow left" onclick="scrollCarousel(-1)">‹</button>
+        <div class="carousel" id="carousel"></div>
+        <button class="arrow right" onclick="scrollCarousel(1)">›</button>
+      </div>
     </section>
   </div>
 
@@ -199,55 +206,53 @@
       {
         title: "The $100M Offers Course",
         creator: "Alex Hormozi",
-        image: "https://via.placeholder.com/600x340.png?text=Course+Image",
+        image: "https://i.ytimg.com/vi_webp/5WsxxTXz9FQ/maxresdefault.webp",
         niches: ["Business", "Offers", "Marketing"],
         rating: 93,
-        price: 0,
-        link: "https://www.acquisition.com/training"
+        price: 0
       },
       {
         title: "Agency Navigator",
         creator: "Iman Gadzhi",
-        image: "https://via.placeholder.com/600x340.png?text=Course+Image",
+        image: "https://i.ytimg.com/vi/_U7FzR3hTTg/maxresdefault.jpg",
         niches: ["SMMA", "Entrepreneurship"],
         rating: 88,
-        price: 1497,
-        link: "https://www.agencynavigator.com/"
+        price: 1497
       },
       {
         title: "The SMMA Blueprint",
         creator: "Aiden Frazier",
-        image: "https://via.placeholder.com/600x340.png?text=Course+Image",
+        image: "https://i.ytimg.com/vi_webp/QfRUU91gN1Y/maxresdefault.webp",
         niches: ["SMMA", "Digital Marketing"],
         rating: 92,
-        price: 497,
-        link: "https://go.thesmmablueprint.com"
-      },
-      {
-        title: "Proven Amazon Course",
-        creator: "Jim Cockrum",
-        image: "https://via.placeholder.com/600x340.png?text=Course+Image",
-        niches: ["Amazon FBA", "Ecommerce"],
-        rating: 90,
-        price: 499,
-        link: "https://www.dreamgrow.com/best-amazon-fba-courses/"
+        price: 497
       },
       {
         title: "Copy School",
         creator: "Copyhackers Team",
-        image: "https://via.placeholder.com/600x340.png?text=Course+Image",
+        image: "https://via.placeholder.com/600x340.png?text=Copy+School",
         niches: ["Copywriting", "Content Marketing"],
         rating: 95,
-        price: 2997,
-        link: "https://copyhackers.com/copy-school/"
+        price: 2997
+      },
+      {
+        title: "Hustlers University",
+        creator: "Andrew Tate",
+        image: "https://via.placeholder.com/600x340.png?text=Hustlers+University",
+        niches: ["Mindset", "Entrepreneurship", "Finance"],
+        rating: 81,
+        price: 49
       }
     ];
 
     const carousel = document.getElementById("carousel");
+    let startIndex = 0;
+    const perPage = 3;
 
-    function renderCourses(courseList) {
+    function renderCourses() {
       carousel.innerHTML = '';
-      courseList.forEach(course => {
+      const visibleCourses = courses.slice(startIndex, startIndex + perPage);
+      visibleCourses.forEach(course => {
         const card = document.createElement("div");
         card.className = "course-card";
         card.innerHTML = `
@@ -256,43 +261,37 @@
           <p>by ${course.creator}</p>
           <div class="tags">${course.niches.map(n => `<span>${n}</span>`).join('')}</div>
           <p>$${course.price}</p>
-          <a href="${course.link}" target="_blank" class="view-btn">View</a>
+          <button class="view-btn">View</button>
         `;
         carousel.appendChild(card);
       });
     }
 
     function scrollCarousel(direction) {
-      const card = document.querySelector(".course-card");
-      if (card) {
-        const scrollAmount = card.offsetWidth + 16; // 16px = gap
-        carousel.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+      const newIndex = startIndex + direction * perPage;
+      if (newIndex >= 0 && newIndex <= courses.length - perPage) {
+        startIndex = newIndex;
+        renderCourses();
       }
     }
 
     document.getElementById("sortSelect").addEventListener("change", () => {
       const value = document.getElementById("sortSelect").value;
-      let sorted = [...courses];
-      if (value === "low") sorted.sort((a, b) => a.price - b.price);
-      if (value === "high") sorted.sort((a, b) => b.price - a.price);
-      renderCourses(sorted);
+      if (value === "low") courses.sort((a, b) => a.price - b.price);
+      if (value === "high") courses.sort((a, b) => b.price - a.price);
+      startIndex = 0;
+      renderCourses();
     });
 
     document.getElementById("nicheFilter").addEventListener("change", () => {
-      const niche = document.getElementById("nicheFilter").value;
-      const filtered = niche === "all" ? courses : courses.filter(c => c.niches.includes(niche));
-      renderCourses(filtered);
+      // Optional: Implement niche filter here
     });
 
     document.getElementById("searchBar").addEventListener("input", (e) => {
-      const term = e.target.value.toLowerCase();
-      const filtered = courses.filter(course =>
-        course.title.toLowerCase().includes(term) || course.creator.toLowerCase().includes(term)
-      );
-      renderCourses(filtered);
+      // Optional: Implement search functionality here
     });
 
-    renderCourses(courses);
+    renderCourses();
   </script>
 </body>
 </html>
