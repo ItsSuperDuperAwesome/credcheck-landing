@@ -186,7 +186,7 @@
   <div class="main">
     <aside class="sidebar">
       <details open>
-        <summary>📦 Business</summary>
+        <summary>Business</summary>
         <ul>
           <li onclick="filterByNiche('Entrepreneurship')">Entrepreneurship</li>
           <li onclick="filterByNiche('Marketing')">Marketing</li>
@@ -194,29 +194,28 @@
           <li onclick="filterByNiche('Dropshipping')">Dropshipping</li>
           <li onclick="filterByNiche('Amazon FBA')">Amazon FBA</li>
           <li onclick="filterByNiche('Copywriting')">Copywriting</li>
-          <li onclick="filterByNiche('Sales & Funnels')">Sales & Funnels</li>
           <li onclick="filterByNiche('Finance')">Finance</li>
         </ul>
       </details>
       <details>
-        <summary>📈 Growth</summary>
+        <summary>Growth</summary>
         <ul>
           <li onclick="filterByNiche('Mindset')">Mindset</li>
           <li onclick="filterByNiche('Productivity')">Productivity</li>
         </ul>
       </details>
       <details>
-        <summary>🛠️ Tools</summary>
+        <summary>Tools</summary>
         <ul>
           <li onclick="filterByNiche('Automation')">Automation</li>
           <li onclick="filterByNiche('AI')">AI</li>
         </ul>
       </details>
       <details>
-        <summary>🎨 Creative</summary>
+        <summary>Creative</summary>
         <ul>
-          <li onclick="filterByNiche('Design')">Design</li>
           <li onclick="filterByNiche('Content Creation')">Content Creation</li>
+          <li onclick="filterByNiche('Design')">Design</li>
         </ul>
       </details>
     </aside>
@@ -232,11 +231,14 @@
 
   <script>
     let courses = [];
+    let allCourses = [];
     let currentIndex = 0;
 
     async function fetchCourses() {
       const res = await fetch('/gurus/courses.json');
-      courses = await res.json();
+      const data = await res.json();
+      allCourses = data;
+      courses = [...allCourses];
       renderCourses();
     }
 
@@ -269,23 +271,21 @@
     }
 
     function filterByNiche(niche) {
-      currentIndex = 0;
-      courses = courses.filter(course =>
+      courses = allCourses.filter(course =>
         course.niches.some(n => n.toLowerCase() === niche.toLowerCase())
       );
+      currentIndex = 0;
       renderCourses();
     }
 
     document.getElementById('searchBar').addEventListener('input', (e) => {
       const term = e.target.value.toLowerCase();
+      courses = allCourses.filter(course =>
+        course.title.toLowerCase().includes(term) ||
+        course.creator.toLowerCase().includes(term)
+      );
       currentIndex = 0;
-      fetchCourses().then(() => {
-        courses = courses.filter(course =>
-          course.title.toLowerCase().includes(term) ||
-          course.creator.toLowerCase().includes(term)
-        );
-        renderCourses();
-      });
+      renderCourses();
     });
 
     fetchCourses();
