@@ -130,26 +130,36 @@
       align-items: center;
     }
 
-    .carousel-wrapper {
-      position: relative;
-      width: 100%;
-      max-width: 1100px;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+    /* --- Carousel Container --- */
+.carousel-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 1150px;
+  overflow: visible; /* ensures arrows aren't clipped */
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-    .carousel {
-      display: flex;
-      transition: transform 0.45s ease, opacity 0.3s ease;
-      gap: 1.5rem;
-      opacity: 1;
-    }
+/* --- Carousel Track --- */
+.carousel {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  align-items: stretch;
+  transition: transform 0.45s ease, opacity 0.3s ease;
+  opacity: 1;
+}
 
-    .carousel.fade-out {
-      opacity: 0;
-    }
+.carousel.fade-out {
+  opacity: 0;
+}
+/* Make sure arrows sit on top of everything */
+.arrow {
+  z-index: 10;
+}
+
 
     /* ─── COURSE CARDS ───────────────────── */
     .course-card {
@@ -240,52 +250,51 @@
 }
 
     /* ─── ARROWS ─────────────────────────── */
-    .arrow {
-      position: absolute;
-      top: 42%;
-      transform: translateY(-50%);
-      background: #2a2a2a;
-      color: white;
-      font-size: 1.6rem;
-      border: none;
-      border-radius: 50%;
-      width: 42px;
-      height: 42px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s ease, transform 0.2s ease;
-      z-index: 5;
-    }
+  /* --- Carousel Arrows (clean + reliable) --- */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(45, 45, 45, 0.9);
+  color: white;
+  font-size: 1.6rem;
+  border: none;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease, transform 0.25s ease, background 0.25s ease;
+  z-index: 5;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+}
 
-    .arrow:hover:not(.disabled) {
-      background: #444;
-      transform: translateY(-50%) scale(1.08);
-    }
+.arrow:hover:not(.disabled) {
+  background: var(--accent-color);
+  transform: translateY(-50%) scale(1.08);
+}
 
-    .arrow.disabled {
-      background: var(--arrow-disabled);
-      cursor: not-allowed;
-      opacity: 0.6;
-    }
+.arrow.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
 
-    .arrow.left { left: -20px; }
-    .arrow.right { right: -20px; }
+.arrow.left { left: -55px; }
+.arrow.right { right: -55px; }
 
-    /* ─── RESPONSIVE ─────────────────────── */
-    @media (max-width: 1000px) {
-      .course-card { flex: 0 0 calc(50% - 1rem); }
-      .arrow.left { left: 5px; }
-      .arrow.right { right: 5px; }
-    }
+@media (max-width: 1200px) {
+  .arrow.left { left: -35px; }
+  .arrow.right { right: -35px; }
+}
 
-    @media (max-width: 650px) {
-      .sidebar { display: none; }
-      .course-card { flex: 0 0 100%; }
-      nav input[type="text"] { width: 160px; }
-      .main-content { padding: 1.5rem; }
-    }
+@media (max-width: 900px) {
+  .arrow.left { left: 5px; }
+  .arrow.right { right: 5px; }
+}
+
+
     /* Force consistent 3-column layout when enough courses exist */
 .carousel.has-many {
   flex-wrap: nowrap;
@@ -348,6 +357,36 @@
   font-size: 0.9rem;
   opacity: 0.85;
 }
+/* --- Star hover glow --- */
+.course-card:hover .star {
+  color: var(--accent-color);
+  text-shadow: 0 0 6px var(--accent-color);
+  transition: all 0.2s ease;
+}
+/* --- Image hover zoom & depth --- */
+.course-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.4s ease, box-shadow 0.3s ease;
+}
+
+.course-card:hover img {
+  transform: scale(1.05);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5);
+}
+/* Smooth arrow fade animation */
+.arrow {
+  opacity: 1;
+  transition: opacity 0.3s ease, transform 0.25s ease;
+}
+
+.arrow.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
 
   </style>
 </head>
@@ -447,12 +486,29 @@
     }
 
     function scrollCarousel(direction) {
-      const newIndex = currentIndex + direction * 3;
-      if (newIndex >= 0 && newIndex <= courses.length - 3) {
-        currentIndex = newIndex;
-        renderCourses();
-      }
-    }
+  const newIndex = currentIndex + direction * 3;
+  if (newIndex >= 0 && newIndex <= courses.length - 3) {
+    currentIndex = newIndex;
+    renderCourses();
+  }
+
+  // Recheck arrow visibility after scrolling
+  const leftArrow = document.getElementById('arrowLeft');
+  const rightArrow = document.getElementById('arrowRight');
+
+  if (currentIndex <= 0) {
+    leftArrow.classList.add('hidden');
+  } else {
+    leftArrow.classList.remove('hidden');
+  }
+
+  if (currentIndex + 3 >= courses.length) {
+    rightArrow.classList.add('hidden');
+  } else {
+    rightArrow.classList.remove('hidden');
+  }
+}
+
 
     function filterByNiche(niche) {
       courses = allCourses.filter(course =>
