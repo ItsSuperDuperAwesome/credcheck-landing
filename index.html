@@ -7,17 +7,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg-color: #121212;
-      --card-bg: #1e1e1e;
-      --sidebar-bg: #1a1a1a;
+      --bg-color: #0f0f0f;
+      --card-bg: #1a1a1a;
+      --sidebar-bg: #161616;
       --text-color: #f5f5f5;
-      --tag-bg: #2e2e2e;
+      --tag-bg: #2a2a2a;
       --tag-text: #f5f5f5;
       --accent-color: #3b82f6;
-      --arrow-disabled: #444;
+      --accent-hover: #2563eb;
+      --arrow-disabled: #333;
+      --border-color: #2a2a2a;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -26,24 +30,43 @@
       font-family: 'Inter', sans-serif;
       display: flex;
       flex-direction: column;
-      height: 100vh;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
 
+    /* ─── NAVBAR ─────────────────────────── */
     nav {
       background: var(--card-bg);
       padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.4rem;
+      letter-spacing: 0.3px;
     }
 
     nav input[type="text"] {
       background: var(--sidebar-bg);
-      border: 1px solid #444;
+      border: 1px solid var(--border-color);
       color: var(--text-color);
-      padding: 0.5rem 1rem;
+      padding: 0.55rem 1rem;
       border-radius: 6px;
-      width: 300px;
+      width: 280px;
+      transition: all 0.2s ease;
+    }
+
+    nav input[type="text"]:focus {
+      outline: none;
+      border-color: var(--accent-color);
+      box-shadow: 0 0 6px var(--accent-color);
     }
 
     nav a {
@@ -51,66 +74,99 @@
       text-decoration: none;
       margin-left: 1.5rem;
       font-weight: 500;
+      transition: color 0.2s ease;
     }
 
+    nav a:hover {
+      color: var(--accent-color);
+    }
+
+    /* ─── LAYOUT ─────────────────────────── */
     .main {
       display: flex;
       flex: 1;
+      width: 100%;
+      overflow: hidden;
     }
 
+    /* SIDEBAR */
     .sidebar {
       width: 240px;
       background: var(--sidebar-bg);
-      padding: 1rem;
+      padding: 1.5rem;
+      border-right: 1px solid var(--border-color);
       overflow-y: auto;
     }
 
-    .sidebar details {
-      margin-bottom: 1rem;
-    }
-
     .sidebar summary {
-      font-weight: bold;
+      font-weight: 600;
       cursor: pointer;
+      padding: 0.4rem 0;
+      letter-spacing: 0.3px;
     }
 
     .sidebar li {
-      margin: 0.3rem 0;
+      list-style: none;
+      margin: 0.35rem 0;
       font-size: 0.9rem;
+      opacity: 0.85;
       cursor: pointer;
       padding-left: 1rem;
+      transition: color 0.2s ease, opacity 0.2s ease;
     }
 
+    .sidebar li:hover {
+      color: var(--accent-color);
+      opacity: 1;
+    }
+
+    /* ─── MAIN CONTENT ───────────────────── */
     .main-content {
       flex: 1;
       padding: 2rem;
       position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .carousel-wrapper {
       position: relative;
+      width: 100%;
+      max-width: 1100px;
       overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .carousel {
       display: flex;
-      transition: transform 0.5s ease;
-      gap: 1rem;
+      transition: transform 0.45s ease, opacity 0.3s ease;
+      gap: 1.5rem;
+      opacity: 1;
     }
 
+    .carousel.fade-out {
+      opacity: 0;
+    }
+
+    /* ─── COURSE CARDS ───────────────────── */
     .course-card {
       flex: 0 0 calc(33.333% - 1rem);
       background: var(--card-bg);
+      border: 1px solid var(--border-color);
       border-radius: 12px;
       padding: 1rem;
       display: flex;
       flex-direction: column;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
 
     .course-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      transform: translateY(-6px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
     }
 
     .course-card img {
@@ -120,11 +176,23 @@
       border-radius: 8px;
     }
 
+    .course-card h4 {
+      margin: 0.9rem 0 0.2rem 0;
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .course-card p {
+      margin: 0.15rem 0;
+      font-size: 0.9rem;
+      opacity: 0.85;
+    }
+
     .tags {
       display: flex;
       gap: 6px;
       flex-wrap: wrap;
-      margin: 0.5rem 0;
+      margin: 0.5rem 0 0.8rem 0;
     }
 
     .tags span {
@@ -133,58 +201,163 @@
       font-size: 0.75rem;
       padding: 4px 10px;
       border-radius: 999px;
+      letter-spacing: 0.2px;
     }
 
     .view-btn {
       margin-top: auto;
-      padding: 0.5rem 1rem;
+      padding: 0.55rem 1rem;
       background: var(--accent-color);
       color: white;
       border: none;
       border-radius: 6px;
       cursor: pointer;
       font-weight: 600;
+      font-size: 0.9rem;
+      text-align: center;
+      text-decoration: none;
+      transition: background 0.2s ease, transform 0.2s ease;
     }
 
+    .view-btn:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+    }
+
+/* Fix card sizing when there are fewer than 3 results */
+.carousel {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.course-card {
+  flex: 1 1 300px; /* auto width up to 3 cards per row */
+  max-width: 320px;
+  min-width: 260px;
+}
+
+    /* ─── ARROWS ─────────────────────────── */
     .arrow {
       position: absolute;
-      top: 40%;
+      top: 42%;
       transform: translateY(-50%);
-      background: #444;
+      background: #2a2a2a;
       color: white;
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       border: none;
       border-radius: 50%;
-      width: 40px;
-      height: 40px;
+      width: 42px;
+      height: 42px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.3s ease, transform 0.2s ease;
+      transition: background 0.2s ease, transform 0.2s ease;
+      z-index: 5;
     }
 
     .arrow:hover:not(.disabled) {
-      background: #666;
-      transform: translateY(-50%) scale(1.1);
+      background: #444;
+      transform: translateY(-50%) scale(1.08);
     }
 
     .arrow.disabled {
       background: var(--arrow-disabled);
       cursor: not-allowed;
+      opacity: 0.6;
     }
 
     .arrow.left { left: -20px; }
     .arrow.right { right: -20px; }
+
+    /* ─── RESPONSIVE ─────────────────────── */
+    @media (max-width: 1000px) {
+      .course-card { flex: 0 0 calc(50% - 1rem); }
+      .arrow.left { left: 5px; }
+      .arrow.right { right: 5px; }
+    }
+
+    @media (max-width: 650px) {
+      .sidebar { display: none; }
+      .course-card { flex: 0 0 100%; }
+      nav input[type="text"] { width: 160px; }
+      .main-content { padding: 1.5rem; }
+    }
+    /* Force consistent 3-column layout when enough courses exist */
+.carousel.has-many {
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+/* Use wrapped layout only for smaller sets */
+.carousel.has-few {
+  flex-wrap: wrap;
+  justify-content: center;
+}
+/* Maintain consistent card heights and layout */
+.carousel {
+  align-items: stretch; /* makes all cards equal height */
+}
+
+/* Uniform card sizing */
+.course-card {
+  flex: 1 1 320px;
+  max-width: 340px;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Ensure all images align consistently */
+.course-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Keep course text area consistent height */
+.course-card h4,
+.course-card p,
+.tags {
+  flex-shrink: 0;
+}
+
+/* Fix uneven button alignment */
+.view-btn {
+  margin-top: auto;
+}
+/* --- Rating stars --- */
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0.3rem 0;
+}
+
+.star {
+  color: gold;
+  font-size: 1rem;
+}
+
+.rating span {
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
   </style>
 </head>
 <body>
   <nav>
-    <div style="font-weight: bold; font-size: 1.3rem;">CredCheck</div>
+    <div class="logo">CredCheck</div>
     <input type="text" id="searchBar" placeholder="Search courses..." />
     <div>
-      <a href="/index.html">Home</a>
-      <a href="/about.html">About</a>
+      <a href="#">Directory</a>
+      <a href="#">Submit</a>
     </div>
   </nav>
 
@@ -218,35 +391,59 @@
     let currentIndex = 0;
 
     async function fetchCourses() {
-      const res = await fetch('/gurus/courses.json');
-      const data = await res.json();
-      allCourses = data;
-      courses = [...allCourses];
-      renderCourses();
+      try {
+        const res = await fetch('./gurus/courses.json');
+        const data = await res.json();
+        allCourses = data;
+        courses = [...allCourses];
+        renderCourses();
+      } catch (err) {
+        console.error("Error loading courses.json:", err);
+      }
     }
 
-    function renderCourses() {
-      const carousel = document.getElementById('carousel');
-      carousel.innerHTML = '';
-      const visible = courses.slice(currentIndex, currentIndex + 3);
+  function renderCourses() {
+  const carousel = document.getElementById('carousel');
+  carousel.classList.add('fade-out');
 
-      visible.forEach(course => {
-        const card = document.createElement('div');
-        card.className = 'course-card';
-        card.innerHTML = `
-          <img src="${course.image}" alt="Course Image" />
-          <h4>${course.title}</h4>
-          <p>by ${course.creator}</p>
-          <p>⭐ ${course.rating}/100</p>
-          <div class="tags">${course.niches.map(n => `<span>${n}</span>`).join('')}</div>
-          <p>$${course.price}</p>
-          <a href="${course.link}" class="view-btn">View</a>
-        `;
-        carousel.appendChild(card);
-      });
+  // Adjust layout class based on number of courses
+  if (courses.length <= 3) {
+    carousel.classList.remove('has-many');
+    carousel.classList.add('has-few');
+  } else {
+    carousel.classList.remove('has-few');
+    carousel.classList.add('has-many');
+  }
 
-      document.getElementById('arrowLeft').classList.toggle('disabled', currentIndex === 0);
-      document.getElementById('arrowRight').classList.toggle('disabled', currentIndex + 3 >= courses.length);
+
+      setTimeout(() => {
+        carousel.innerHTML = '';
+        const visible = courses.slice(currentIndex, currentIndex + 3);
+
+        visible.forEach(course => {
+          const card = document.createElement('div');
+          card.className = 'course-card';
+          card.innerHTML = `
+            <img src="${course.image}" alt="Course Image" />
+            <h4>${course.title}</h4>
+            <p>by ${course.creator}</p>
+            <div class="rating">
+  ${renderStars(course.rating)}
+  <span>${course.rating.toFixed(1)}</span>
+</div>
+
+            <div class="tags">${course.niches.map(n => `<span>${n}</span>`).join('')}</div>
+            <p>$${course.price}</p>
+            <a href="${course.link}" class="view-btn" target="_blank">View</a>
+          `;
+          carousel.appendChild(card);
+        });
+
+        document.getElementById('arrowLeft').classList.toggle('disabled', currentIndex === 0);
+        document.getElementById('arrowRight').classList.toggle('disabled', currentIndex + 3 >= courses.length);
+
+        carousel.classList.remove('fade-out');
+      }, 200);
     }
 
     function scrollCarousel(direction) {
@@ -274,8 +471,21 @@
       currentIndex = 0;
       renderCourses();
     });
+function renderStars(rating) {
+  const fullStars = Math.floor(rating);
+  const halfStar = rating % 1 >= 0.5 ? 1 : 0;
+  const emptyStars = 5 - fullStars - halfStar;
+  let stars = '';
+
+  for (let i = 0; i < fullStars; i++) stars += '<span class="star">★</span>';
+  if (halfStar) stars += '<span class="star">☆</span>';
+  for (let i = 0; i < emptyStars; i++) stars += '<span class="star" style="opacity:0.4;">★</span>';
+
+  return stars;
+}
 
     fetchCourses();
   </script>
 </body>
 </html>
+

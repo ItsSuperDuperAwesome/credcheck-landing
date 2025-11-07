@@ -1,75 +1,84 @@
 [
   {
-    "title": "The $100M Offers Course",
-    "creator": "Alex Hormozi",
-    "slug": "100m-offers-course",
-    "rating": 93,
-    "niches": ["Business", "Offers", "Marketing"],
-    "description": "A breakdown of Alex Hormozi's $100M Offers framework to build irresistible products.",
-    "price": 0,
-    "verified": true,
-    "link": "https://www.acquisition.com/training",
-    "image": "https://via.placeholder.com/600x340.png?text=Course+Image"
+    "title": "6-Figure SMMA Blueprint",
+    "creator": "Ethan Cole",
+    "rating": 4.8,
+    "price": 297,
+    "image": "https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=900&q=60",
+    "link": "#",
+    "niches": ["SMMA", "Marketing", "Business"]
   },
   {
-    "title": "Agency Navigator",
-    "creator": "Iman Gadzhi",
-    "slug": "agency-navigator",
-    "rating": 88,
-    "niches": ["SMMA", "Entrepreneurship"],
-    "description": "A complete roadmap to starting and scaling your own digital marketing agency.",
-    "price": 1497,
-    "verified": true,
-    "link": "https://www.agencynavigator.com/",
-    "image": "https://via.placeholder.com/600x340.png?text=Course+Image"
+    "title": "Amazon FBA Mastery 2025",
+    "creator": "Lara Nguyen",
+    "rating": 4.6,
+    "price": 349,
+    "image": "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=900&q=60",
+    "link": "#",
+    "niches": ["Amazon FBA", "E-Commerce", "Business"]
   },
   {
-    "title": "The SMMA Blueprint",
-    "creator": "Aiden Frazier",
-    "slug": "the-smma-blueprint",
-    "rating": 92,
-    "niches": ["SMMA", "Digital Marketing"],
-    "description": "Comprehensive guide to building and scaling a social media marketing agency.",
-    "price": 497,
-    "verified": true,
-    "link": "https://go.thesmmablueprint.com",
-    "image": "https://via.placeholder.com/600x340.png?text=Course+Image"
+    "title": "Copywriting Crash Course",
+    "creator": "James Thornton",
+    "rating": 4.9,
+    "price": 149,
+    "image": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=60",
+    "link": "#",
+    "niches": ["Copywriting", "Marketing", "Freelancing"]
   },
   {
-    "title": "Proven Amazon Course",
-    "creator": "Jim Cockrum",
-    "slug": "proven-amazon-course",
-    "rating": 90,
-    "niches": ["Amazon FBA", "Ecommerce"],
-    "description": "A comprehensive series covering every Amazon FBA topic imaginable.",
-    "price": 499,
-    "verified": true,
-    "link": "https://www.dreamgrow.com/best-amazon-fba-courses/",
-    "image": "https://via.placeholder.com/600x340.png?text=Course+Image"
+    "title": "Dropshipping Simplified",
+    "creator": "Maya Hassan",
+    "rating": 4.3,
+    "price": 179,
+    "image": "https://images.unsplash.com/photo-1581091012184-7aa3c1f1d3e9?auto=format&fit=crop&w=900&q=60",
+    "link": "#",
+    "niches": ["Dropshipping", "E-Commerce", "Marketing"]
   },
   {
-    "title": "Copy School",
-    "creator": "Copyhackers Team",
-    "slug": "copy-school",
-    "rating": 95,
-    "niches": ["Copywriting", "Content Marketing"],
-    "description": "Comprehensive copywriting training for intermediate and advanced levels.",
-    "price": 2997,
-    "verified": true,
-    "link": "https://copyhackers.com/copy-school/",
-    "image": "https://via.placeholder.com/600x340.png?text=Course+Image"
+    "title": "Finance Freedom Formula",
+    "creator": "Noah Patel",
+    "rating": 4.7,
+    "price": 199,
+    "image": "https://images.unsplash.com/photo-1542223616-0d90ef62e77e?auto=format&fit=crop&w=900&q=60",
+    "link": "#",
+    "niches": ["Finance", "Investing", "Business"]
   },
   {
-    "title": "Hustlers University",
-    "creator": "Andrew Tate",
-    "slug": "hustlers-university",
-    "rating": 81,
-    "niches": ["Mindset", "Entrepreneurship", "Finance"],
-    "description": "A controversial but popular program claiming to teach modern money-making strategies.",
-    "price": 49,
-    "verified": false,
-    "link": "https://www.hustlersuniversity.live/",
-    "image": "https://via.placeholder.com/600x340.png?text=Course+Image"
-
+    "title": "Ultimate Marketing Funnels",
+    "creator": "Sophia Williams",
+    "rating": 4.8,
+    "price": 279,
+    "image": "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=60",
+    "link": "#",
+    "niches": ["Marketing", "SMMA", "Sales"]
+  },
+  {
+    "title": "AI Tools for Entrepreneurs",
+    "creator": "Daniel Rivera",
+    "rating": 4.5,
+    "price": 249,
+    "image": "https://images.unsplash.com/photo-1664575198781-996bdfd60c67?auto=format&fit=crop&w=900&q=60",
+    "link": "#",
+    "niches": ["Business", "Automation", "Marketing"]
+  },
+  {
+    "title": "Personal Branding Accelerator",
+    "creator": "Amelia Grant",
+    "rating": 4.4,
+    "price": 219,
+    "image": "https://images.unsplash.com/photo-1544725176-7c40e5a2c9f9?auto=format&fit=crop&w=900&q=60",
+    "link": "#",
+    "niches": ["Marketing", "Business", "Freelancing"]
+  },
+  {
+    "title": "E-Commerce Conversion Secrets",
+    "creator": "Leo Brooks",
+    "rating": 4.9,
+    "price": 299,
+    "image": "https://images.unsplash.com/photo-1607082349566-187342175e2d?auto=format&fit=crop&w=900&q=60",
+    "link": "#",
+    "niches": ["E-Commerce", "Dropshipping", "Marketing"]
   }
 ]
+
