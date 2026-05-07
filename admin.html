@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Internal Admin | CredCheck</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <script src="config.js"></script>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --panel: #171717;
+      --text: #f5f5f5;
+      --muted: #a0a0a0;
+      --border: #2a2a2a;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --error: #f97316;
+      --success: #22c55e;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Inter", sans-serif;
+    }
+
+    nav {
+      align-items: center;
+      background: #151515;
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+    }
+
+    nav a {
+      color: var(--text);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    main {
+      margin: 0 auto;
+      max-width: 760px;
+      padding: 3rem 1.5rem;
+    }
+
+    .header {
+      margin-bottom: 1.5rem;
+    }
+
+    .eyebrow {
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0;
+      margin: 0 0 0.45rem;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      line-height: 1;
+      margin: 0;
+    }
+
+    .note {
+      color: var(--muted);
+      line-height: 1.6;
+      margin: 0.9rem 0 0;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+    }
+
+    form {
+      display: grid;
+      gap: 1rem;
+    }
+
+    label {
+      display: grid;
+      gap: 0.45rem;
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 600;
+    }
+
+    input,
+    textarea {
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 8px;
+      color: var(--text);
+      font: inherit;
+      padding: 0.8rem 0.9rem;
+      width: 100%;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.16);
+      outline: none;
+    }
+
+    textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    button {
+      background: var(--accent);
+      border: 0;
+      border-radius: 999px;
+      color: white;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 800;
+      padding: 0.85rem 1.2rem;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    button:disabled {
+      cursor: wait;
+      opacity: 0.65;
+      transform: none;
+    }
+
+    .message {
+      border-radius: 8px;
+      display: none;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-top: 1rem;
+      padding: 0.85rem 1rem;
+    }
+
+    .message.success {
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.35);
+      color: var(--success);
+      display: block;
+    }
+
+    .message.error {
+      background: rgba(249, 115, 22, 0.1);
+      border: 1px solid rgba(249, 115, 22, 0.35);
+      color: var(--error);
+      display: block;
+    }
+
+    @media (max-width: 640px) {
+      nav {
+        padding: 1rem;
+      }
+
+      main {
+        padding: 2rem 1rem;
+      }
+
+      .panel {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div style="font-size: 1.25rem; font-weight: 800;">CredCheck</div>
+    <a href="index.html">Directory</a>
+  </nav>
+
+  <main>
+    <section class="header">
+      <p class="eyebrow">Internal MVP</p>
+      <h1>Add a course or guru.</h1>
+      <p class="note">This page is internal only for now. No auth has been added yet, so keep it off public navigation.</p>
+    </section>
+
+    <section class="panel">
+      <form id="courseForm">
+        <label>
+          Title
+          <input type="text" id="title" name="title" placeholder="Agency Launchpad" required />
+        </label>
+
+        <label>
+          Creator name
+          <input type="text" id="creator_name" name="creator_name" placeholder="Marcus Reed" />
+        </label>
+
+        <label>
+          Niche
+          <input type="text" id="niche" name="niche" placeholder="SMMA, Marketing" />
+        </label>
+
+        <label>
+          Description
+          <textarea id="description" name="description" placeholder="Short, honest description of what this program teaches."></textarea>
+        </label>
+
+        <label>
+          Thumbnail URL
+          <input type="url" id="thumbnail_url" name="thumbnail_url" placeholder="https://images.unsplash.com/..." />
+        </label>
+
+        <button type="submit" id="submitButton">Add course</button>
+      </form>
+
+      <div id="message" class="message" role="status"></div>
+    </section>
+  </main>
+
+  <script>
+    const API_BASE = window.CREDCHECK_API_BASE;
+    const form = document.getElementById("courseForm");
+    const message = document.getElementById("message");
+    const submitButton = document.getElementById("submitButton");
+
+    function setMessage(type, text) {
+      message.className = `message ${type}`;
+      message.textContent = text;
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      message.className = "message";
+      message.textContent = "";
+      submitButton.disabled = true;
+      submitButton.textContent = "Adding...";
+
+      const payload = {
+        title: form.title.value.trim(),
+        creator_name: form.creator_name.value.trim() || null,
+        niche: form.niche.value.trim() || null,
+        description: form.description.value.trim() || null,
+        thumbnail_url: form.thumbnail_url.value.trim() || null,
+      };
+
+      try {
+        const res = await fetch(`${API_BASE}/api/courses`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.error || "Could not add course.");
+        }
+
+        form.reset();
+        setMessage("success", "Course added successfully.");
+      } catch (err) {
+        console.error(err);
+        setMessage("error", err.message || "Something went wrong. Try again.");
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = "Add course";
+      }
+    });
+  </script>
+</body>
+</html>
