@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CredCheck Course Directory</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script src="config.js"></script>
   <style>
     :root {
       --bg-color: #0f0f0f;
@@ -15,8 +16,10 @@
       --tag-text: #f5f5f5;
       --accent-color: #3b82f6;
       --accent-hover: #2563eb;
-      --arrow-disabled: #333;
       --border-color: #2a2a2a;
+      --review-panel-width: 360px;
+      --review-panel-gap: 2rem;
+      --muted-color: #a0a0a0;
     }
 
     * {
@@ -45,6 +48,7 @@
       top: 0;
       z-index: 10;
       border-bottom: 1px solid var(--border-color);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
     }
 
     .logo {
@@ -60,7 +64,7 @@
       padding: 0.55rem 1rem;
       border-radius: 6px;
       width: 280px;
-      transition: all 0.2s ease;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
     nav input[type="text"]:focus {
@@ -81,17 +85,44 @@
       color: var(--accent-color);
     }
 
+    .hero {
+      border-bottom: 1px solid var(--border-color);
+      background: #101010;
+      padding: 3rem calc(var(--review-panel-width) + var(--review-panel-gap) + 2rem) 2.4rem 2rem;
+    }
+
+    .hero-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      margin: 0;
+      max-width: 780px;
+      font-size: clamp(2rem, 4vw, 4.2rem);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      max-width: 620px;
+      margin: 1rem 0 0;
+      color: var(--muted-color);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
     /* ─── LAYOUT ─────────────────────────── */
     .main {
       display: flex;
       flex: 1;
       width: 100%;
-      overflow: hidden;
     }
 
     /* SIDEBAR */
     .sidebar {
       width: 240px;
+      flex: 0 0 240px;
       background: var(--sidebar-bg);
       padding: 1.5rem;
       border-right: 1px solid var(--border-color);
@@ -123,47 +154,32 @@
     /* ─── MAIN CONTENT ───────────────────── */
     .main-content {
       flex: 1;
-      padding: 2rem;
+      padding: 2rem calc(var(--review-panel-width) + var(--review-panel-gap) + 2rem) 2rem 2rem;
       position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      min-width: 0;
     }
 
-    /* --- Carousel Container --- */
-.carousel-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 1150px;
-  overflow: visible; /* ensures arrows aren't clipped */
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+    .course-grid-wrapper {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+    }
 
-/* --- Carousel Track --- */
-.carousel {
-  display: flex;
-  gap: 1.5rem;
-  justify-content: center;
-  align-items: stretch;
-  transition: transform 0.45s ease, opacity 0.3s ease;
-  opacity: 1;
-}
+    .course-grid {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      align-items: stretch;
+      transition: opacity 0.3s ease;
+      opacity: 1;
+    }
 
-.carousel.fade-out {
-  opacity: 0;
-}
-/* Make sure arrows sit on top of everything */
-.arrow {
-  z-index: 10;
-}
-
+    .course-grid.fade-out {
+      opacity: 0;
+    }
 
     /* ─── COURSE CARDS ───────────────────── */
     .course-card {
-      flex: 0 0 calc(33.333% - 1rem);
       background: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: 12px;
@@ -171,19 +187,32 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      transition: border-color 0.2s ease, transform 0.25s ease, box-shadow 0.25s ease;
+      justify-content: space-between;
     }
 
     .course-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      border-color: #3a3a3a;
+      transform: translateY(-4px);
+      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.42);
+    }
+
+    .course-card.selected {
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.35);
     }
 
     .course-card img {
       width: 100%;
-      height: 160px;
+      height: 180px;
       object-fit: cover;
       border-radius: 8px;
+      transition: transform 0.35s ease, box-shadow 0.3s ease;
+    }
+
+    .course-card:hover img {
+      transform: scale(1.035);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5);
     }
 
     .course-card h4 {
@@ -234,160 +263,261 @@
       transform: translateY(-2px);
     }
 
-/* Fix card sizing when there are fewer than 3 results */
-.carousel {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 1.5rem;
-}
+    /* --- Rating stars --- */
+    .rating {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin: 0.3rem 0;
+    }
 
-.course-card {
-  flex: 1 1 300px; /* auto width up to 3 cards per row */
-  max-width: 320px;
-  min-width: 260px;
-}
+    .star {
+      color: gold;
+      font-size: 1rem;
+    }
 
-    /* ─── ARROWS ─────────────────────────── */
-  /* --- Carousel Arrows (clean + reliable) --- */
-.arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(45, 45, 45, 0.9);
-  color: white;
-  font-size: 1.6rem;
-  border: none;
-  border-radius: 50%;
-  width: 42px;
-  height: 42px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.3s ease, transform 0.25s ease, background 0.25s ease;
-  z-index: 5;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
-}
+    .rating span {
+      font-size: 0.9rem;
+      opacity: 0.85;
+    }
 
-.arrow:hover:not(.disabled) {
-  background: var(--accent-color);
-  transform: translateY(-50%) scale(1.08);
-}
+    .course-card:hover .star {
+      color: var(--accent-color);
+      text-shadow: 0 0 6px var(--accent-color);
+      transition: all 0.2s ease;
+    }
 
-.arrow.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
+    .reviews-panel {
+      position: fixed;
+      right: var(--review-panel-gap);
+      bottom: 2rem;
+      width: var(--review-panel-width);
+      max-width: 90vw;
+      background: #111;
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.7);
+      color: #f5f5f5;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      z-index: 50;
+    }
 
-.arrow.left { left: -55px; }
-.arrow.right { right: -55px; }
+    .reviews-header h3 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 600;
+    }
 
-@media (max-width: 1200px) {
-  .arrow.left { left: -35px; }
-  .arrow.right { right: -35px; }
-}
+    .reviews-subtitle {
+      margin: 2px 0 10px;
+      font-size: 0.8rem;
+      color: var(--muted-color);
+    }
 
-@media (max-width: 900px) {
-  .arrow.left { left: 5px; }
-  .arrow.right { right: 5px; }
-}
+    .reviews-list {
+      max-height: 180px;
+      overflow-y: auto;
+      margin-bottom: 14px;
+      padding-right: 4px;
+    }
 
+    .review-item {
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 0.8rem;
+    }
 
-    /* Force consistent 3-column layout when enough courses exist */
-.carousel.has-many {
-  flex-wrap: nowrap;
-  justify-content: center;
-}
+    .review-item:last-child {
+      border-bottom: none;
+    }
 
-/* Use wrapped layout only for smaller sets */
-.carousel.has-few {
-  flex-wrap: wrap;
-  justify-content: center;
-}
-/* Maintain consistent card heights and layout */
-.carousel {
-  align-items: stretch; /* makes all cards equal height */
-}
+    .review-item-title {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2px;
+      font-weight: 500;
+    }
 
-/* Uniform card sizing */
-.course-card {
-  flex: 1 1 320px;
-  max-width: 340px;
-  min-width: 280px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
+    .review-item-course {
+      font-size: 0.82rem;
+    }
 
-/* Ensure all images align consistently */
-.course-card img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 8px;
-}
+    .review-item-rating {
+      font-size: 0.78rem;
+      opacity: 0.9;
+    }
 
-/* Keep course text area consistent height */
-.course-card h4,
-.course-card p,
-.tags {
-  flex-shrink: 0;
-}
+    .review-item-comment {
+      font-size: 0.78rem;
+      color: #c2c2c2;
+    }
 
-/* Fix uneven button alignment */
-.view-btn {
-  margin-top: auto;
-}
-/* --- Rating stars --- */
-.rating {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  margin: 0.3rem 0;
-}
+    .review-form {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 8px;
+    }
 
-.star {
-  color: gold;
-  font-size: 1rem;
-}
+    .review-form input,
+    .review-form textarea {
+      background: #181818;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 8px 9px;
+      font-size: 0.78rem;
+      color: #f5f5f5;
+    }
 
-.rating span {
-  font-size: 0.9rem;
-  opacity: 0.85;
-}
-/* --- Star hover glow --- */
-.course-card:hover .star {
-  color: var(--accent-color);
-  text-shadow: 0 0 6px var(--accent-color);
-  transition: all 0.2s ease;
-}
-/* --- Image hover zoom & depth --- */
-.course-card img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 8px;
-  transition: transform 0.4s ease, box-shadow 0.3s ease;
-}
+    .review-form input::placeholder,
+    .review-form textarea::placeholder {
+      color: #7a7a7a;
+    }
 
-.course-card:hover img {
-  transform: scale(1.05);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5);
-}
-/* Smooth arrow fade animation */
-.arrow {
-  opacity: 1;
-  transition: opacity 0.3s ease, transform 0.25s ease;
-}
+    .review-form-row {
+      display: flex;
+      gap: 6px;
+    }
 
-.arrow.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
+    .review-form-row input {
+      flex: 1;
+    }
 
+    .review-form-row input#rating {
+      max-width: 80px;
+    }
 
+    .review-form button {
+      margin-top: 2px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: none;
+      background: #f97316;
+      color: #111;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .review-form button:hover {
+      filter: brightness(1.1);
+    }
+
+    .status-message {
+      color: #a0a0a0;
+      font-size: 0.82rem;
+      line-height: 1.4;
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      width: min(560px, 100%);
+      background: #151515;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+    }
+
+    .empty-state h2 {
+      margin: 0 0 0.5rem;
+      font-size: 1.15rem;
+    }
+
+    .empty-state p {
+      margin: 0;
+      color: #a0a0a0;
+      line-height: 1.5;
+    }
+
+    .footer {
+      border-top: 1px solid var(--border-color);
+      padding: 1.4rem calc(var(--review-panel-width) + var(--review-panel-gap) + 2rem) 1.4rem 2rem;
+      color: var(--muted-color);
+      background: #101010;
+      font-size: 0.9rem;
+    }
+
+    .footer-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .footer strong {
+      color: var(--text-color);
+    }
+
+    @media (max-width: 1320px) {
+      .main-content {
+        padding-right: 2rem;
+        padding-bottom: 460px;
+      }
+
+      .hero,
+      .footer {
+        padding-right: 2rem;
+      }
+
+      .course-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 900px) {
+      nav {
+        align-items: flex-start;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      nav input[type="text"] {
+        order: 3;
+        width: 100%;
+      }
+
+      .main {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        flex-basis: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .main-content {
+        padding: 1rem 1rem 460px;
+      }
+
+      .hero {
+        padding: 2rem 1rem 1.6rem;
+      }
+
+      .course-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .reviews-panel {
+        right: 1rem;
+        bottom: 1rem;
+        width: calc(100vw - 2rem);
+      }
+
+      .footer {
+        padding: 1.2rem 1rem;
+      }
+
+      .footer-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
   </style>
 </head>
 <body>
@@ -400,6 +530,13 @@
     </div>
   </nav>
 
+  <header class="hero">
+    <div class="hero-inner">
+      <h1>Find honest reviews before buying online courses.</h1>
+      <p>Browse course and guru reviews, compare credibility signals, and see what real learners are saying before you pay.</p>
+    </div>
+  </header>
+
   <div class="main">
     <aside class="sidebar">
       <details open>
@@ -411,137 +548,397 @@
           <li onclick="filterByNiche('Amazon FBA')">Amazon FBA</li>
           <li onclick="filterByNiche('Copywriting')">Copywriting</li>
           <li onclick="filterByNiche('Finance')">Finance</li>
+          <li onclick="filterByNiche('AI Tools')">AI Tools</li>
         </ul>
       </details>
     </aside>
 
     <section class="main-content">
-      <div class="carousel-wrapper">
-        <button id="arrowLeft" class="arrow left" onclick="scrollCarousel(-1)">‹</button>
-        <div class="carousel" id="carousel"></div>
-        <button id="arrowRight" class="arrow right" onclick="scrollCarousel(1)">›</button>
+      <div class="course-grid-wrapper">
+        <div class="course-grid" id="courseGrid">
+          <p class="status-message">Loading courses...</p>
+        </div>
       </div>
     </section>
   </div>
 
+  <footer class="footer">
+    <div class="footer-inner">
+      <strong>CredCheck</strong>
+      <span>Built to bring transparency to online education.</span>
+    </div>
+  </footer>
+
+  <!-- Floating reviews panel -->
+  <section id="reviews-section" class="reviews-panel">
+    <div class="reviews-header">
+      <h3>Reviews</h3>
+      <p class="reviews-subtitle">Select a course to see reviews</p>
+    </div>
+
+    <div id="reviews-list" class="reviews-list">
+      <p style="font-size:0.8rem; opacity:0.8;">No course selected yet.</p>
+    </div>
+
+    <form id="review-form" class="review-form">
+      <input type="hidden" id="course_id" />
+      <input
+        type="text"
+        id="course_name"
+        placeholder="Course name"
+        required
+        readonly
+      />
+      <div class="review-form-row">
+        <input
+          type="text"
+          id="reviewer_name"
+          placeholder="Your name (optional)"
+        />
+        <input
+          type="number"
+          id="rating"
+          min="1"
+          max="5"
+          placeholder="Rating"
+          required
+        />
+      </div>
+      <textarea
+        id="comment"
+        placeholder="Your thoughts..."
+        rows="3"
+      ></textarea>
+      <button type="submit">Submit review</button>
+    </form>
+  </section>
+
   <script>
+    const API_BASE = window.CREDCHECK_API_BASE;
+    const FALLBACK_IMAGE =
+      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='500' viewBox='0 0 800 500'%3E%3Crect width='800' height='500' fill='%23151515'/%3E%3Crect x='40' y='40' width='720' height='420' rx='20' fill='%231f1f1f' stroke='%23333333'/%3E%3Ctext x='50%25' y='50%25' fill='%23f5f5f5' font-family='Inter,Arial,sans-serif' font-size='40' font-weight='700' text-anchor='middle' dominant-baseline='middle'%3ECredCheck%3C/text%3E%3C/svg%3E";
+
     let courses = [];
     let allCourses = [];
-    let currentIndex = 0;
+    let selectedCourse = null;
+
+    function escapeHTML(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function normalizeCourse(course) {
+      return {
+        id: course.id,
+        title: course.title || "Untitled course",
+        creator_name: course.creator_name || "Unknown creator",
+        niche: Array.isArray(course.niche)
+          ? course.niche.join(", ")
+          : Array.isArray(course.niches)
+            ? course.niches.join(", ")
+            : course.niche || "",
+        description: course.description || "",
+        thumbnail_url: course.thumbnail_url || "",
+        average_rating: course.average_rating ?? null,
+        review_count: Number(course.review_count || 0),
+      };
+    }
+
+    function applySearchFromURL() {
+      const params = new URLSearchParams(window.location.search);
+      const query = params.get("q");
+      if (!query) return;
+
+      const searchBar = document.getElementById("searchBar");
+      searchBar.value = query;
+      filterBySearchTerm(query);
+    }
+
+    function renderDirectoryMessage(title, message) {
+      const courseGrid = document.getElementById("courseGrid");
+
+      courseGrid.innerHTML = `
+        <div class="empty-state">
+          <h2>${escapeHTML(title)}</h2>
+          <p>${escapeHTML(message)}</p>
+        </div>
+      `;
+    }
+
+    // Convert numeric rating to star icons
+    function renderStars(rating) {
+      const value = Number(rating) || 0;
+      if (!value) return "";
+      const fullStars = Math.floor(value);
+      const halfStar = value % 1 >= 0.5 ? 1 : 0;
+      const emptyStars = 5 - fullStars - halfStar;
+      let stars = "";
+
+      for (let i = 0; i < fullStars; i++) stars += '<span class="star">★</span>';
+      if (halfStar) stars += '<span class="star">☆</span>';
+      for (let i = 0; i < emptyStars; i++)
+        stars += '<span class="star" style="opacity:0.4;">★</span>';
+
+      return stars;
+    }
 
     async function fetchCourses() {
       try {
-        const res = await fetch('./gurus/courses.json');
+        const res = await fetch(`${API_BASE}/api/courses`);
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.error || "Could not load courses.");
+        }
+
         const data = await res.json();
-        allCourses = data;
+        allCourses = data.map(normalizeCourse);
         courses = [...allCourses];
+        applySearchFromURL();
         renderCourses();
       } catch (err) {
-        console.error("Error loading courses.json:", err);
+        console.error("Error fetching courses:", err);
+        renderDirectoryMessage(
+          "Could not load courses.",
+          "Make sure the backend is running on port 4000."
+        );
       }
     }
 
-  function renderCourses() {
-  const carousel = document.getElementById('carousel');
-  carousel.classList.add('fade-out');
+    function renderCourses() {
+      const courseGrid = document.getElementById("courseGrid");
 
-  // Adjust layout class based on number of courses
-  if (courses.length <= 3) {
-    carousel.classList.remove('has-many');
-    carousel.classList.add('has-few');
-  } else {
-    carousel.classList.remove('has-few');
-    carousel.classList.add('has-many');
-  }
-
+      courseGrid.classList.add("fade-out");
 
       setTimeout(() => {
-        carousel.innerHTML = '';
-        const visible = courses.slice(currentIndex, currentIndex + 3);
+        courseGrid.innerHTML = "";
 
-        visible.forEach(course => {
-          const card = document.createElement('div');
-          card.className = 'course-card';
+        if (!courses.length) {
+          const isEmptyDatabase = allCourses.length === 0;
+          renderDirectoryMessage(
+            isEmptyDatabase
+              ? "No courses yet."
+              : "No courses match this search.",
+            isEmptyDatabase
+              ? "Add your first course in Supabase."
+              : "Try another search or category."
+          );
+          courseGrid.classList.remove("fade-out");
+          return;
+        }
+
+        courses.forEach((course) => {
+          const card = document.createElement("div");
+          card.className = "course-card";
+          if (selectedCourse?.id === course.id) card.classList.add("selected");
+
+          const imgSrc = course.thumbnail_url || FALLBACK_IMAGE;
+          const creator = course.creator_name || "Unknown creator";
+
+          const tags = (course.niche || "")
+              .split(",")
+              .map((t) => t.trim())
+              .filter(Boolean);
+
+          const ratingVal = Number(course.average_rating || 0);
+          const ratingText = ratingVal ? ratingVal.toFixed(1) : "New";
+          const starsHTML = ratingVal ? renderStars(ratingVal) : "";
+          const reviewText = course.review_count
+            ? `${course.review_count} review${course.review_count === 1 ? "" : "s"}`
+            : "No reviews yet";
+          const profileLink = `profile.html?course_id=${encodeURIComponent(course.id)}`;
+
           card.innerHTML = `
-            <img src="${course.image}" alt="Course Image" />
-            <h4>${course.title}</h4>
-            <p>by ${course.creator}</p>
+            <img src="${escapeHTML(imgSrc)}" alt="${escapeHTML(course.title)}" />
+            <h4>${escapeHTML(course.title)}</h4>
+            <p>by ${escapeHTML(creator)}</p>
             <div class="rating">
-  ${renderStars(course.rating)}
-  <span>${course.rating.toFixed(1)}</span>
-</div>
-
-            <div class="tags">${course.niches.map(n => `<span>${n}</span>`).join('')}</div>
-            <p>$${course.price}</p>
-            <a href="${course.link}" class="view-btn" target="_blank">View</a>
+              ${starsHTML}
+              <span>${escapeHTML(ratingText)} · ${escapeHTML(reviewText)}</span>
+            </div>
+            <div class="tags">
+              ${tags.map((n) => `<span>${escapeHTML(n)}</span>`).join("")}
+            </div>
+            <a href="${profileLink}" class="view-btn">Profile</a>
           `;
-          carousel.appendChild(card);
+
+          card.querySelector(".view-btn").addEventListener("click", (event) => {
+            event.stopPropagation();
+          });
+
+          // When you click a course card → select course for reviews
+          card.addEventListener("click", () => selectCourse(course));
+
+          courseGrid.appendChild(card);
         });
 
-        document.getElementById('arrowLeft').classList.toggle('disabled', currentIndex === 0);
-        document.getElementById('arrowRight').classList.toggle('disabled', currentIndex + 3 >= courses.length);
-
-        carousel.classList.remove('fade-out');
-      }, 200);
+        courseGrid.classList.remove("fade-out");
+      }, 150);
     }
-
-    function scrollCarousel(direction) {
-  const newIndex = currentIndex + direction * 3;
-  if (newIndex >= 0 && newIndex <= courses.length - 3) {
-    currentIndex = newIndex;
-    renderCourses();
-  }
-
-  // Recheck arrow visibility after scrolling
-  const leftArrow = document.getElementById('arrowLeft');
-  const rightArrow = document.getElementById('arrowRight');
-
-  if (currentIndex <= 0) {
-    leftArrow.classList.add('hidden');
-  } else {
-    leftArrow.classList.remove('hidden');
-  }
-
-  if (currentIndex + 3 >= courses.length) {
-    rightArrow.classList.add('hidden');
-  } else {
-    rightArrow.classList.remove('hidden');
-  }
-}
-
 
     function filterByNiche(niche) {
-      courses = allCourses.filter(course =>
-        course.niches.some(n => n.toLowerCase() === niche.toLowerCase())
-      );
-      currentIndex = 0;
+      courses = allCourses.filter((course) => {
+        const tags = (course.niche || "")
+              .split(",")
+              .map((t) => t.trim().toLowerCase());
+        return tags.includes(niche.toLowerCase());
+      });
       renderCourses();
     }
 
-    document.getElementById('searchBar').addEventListener('input', (e) => {
-      const term = e.target.value.toLowerCase();
-      courses = allCourses.filter(course =>
-        course.title.toLowerCase().includes(term) ||
-        course.creator.toLowerCase().includes(term)
+    function filterBySearchTerm(term) {
+      const cleanTerm = term.toLowerCase();
+      courses = allCourses.filter(
+        (course) =>
+          (course.title || "").toLowerCase().includes(cleanTerm) ||
+          (course.creator_name || "").toLowerCase().includes(cleanTerm) ||
+          (course.niche || "").toLowerCase().includes(cleanTerm)
       );
-      currentIndex = 0;
+    }
+
+    document.getElementById("searchBar").addEventListener("input", (e) => {
+      filterBySearchTerm(e.target.value);
       renderCourses();
     });
-function renderStars(rating) {
-  const fullStars = Math.floor(rating);
-  const halfStar = rating % 1 >= 0.5 ? 1 : 0;
-  const emptyStars = 5 - fullStars - halfStar;
-  let stars = '';
 
-  for (let i = 0; i < fullStars; i++) stars += '<span class="star">★</span>';
-  if (halfStar) stars += '<span class="star">☆</span>';
-  for (let i = 0; i < emptyStars; i++) stars += '<span class="star" style="opacity:0.4;">★</span>';
+    // ===== Reviews logic, tied to selected course =====
+    async function loadReviewsForCourse(courseId) {
+      const container = document.getElementById("reviews-list");
+      if (!courseId) {
+        container.innerHTML =
+          '<p style="font-size:0.8rem; opacity:0.8;">Select a course to see reviews.</p>';
+        return;
+      }
 
-  return stars;
-}
+      try {
+        const res = await fetch(
+          `${API_BASE}/api/reviews?course_id=${courseId}`
+        );
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.error || "Could not load reviews.");
+        }
 
+        const data = await res.json();
+
+        container.innerHTML = "";
+        if (!data.length) {
+          container.innerHTML =
+            '<p style="font-size:0.8rem; opacity:0.8;">No reviews yet. Be the first to review.</p>';
+          return;
+        }
+
+        data.forEach((r) => {
+          const div = document.createElement("div");
+          div.className = "review-item";
+
+          const titleRow = document.createElement("div");
+          titleRow.className = "review-item-title";
+
+          const left = document.createElement("span");
+          left.className = "review-item-course";
+          left.textContent = r.reviewer_name || "Anonymous";
+
+          const right = document.createElement("span");
+          right.className = "review-item-rating";
+          right.textContent = `${r.rating ?? "–"}/5`;
+
+          titleRow.appendChild(left);
+          titleRow.appendChild(right);
+
+          const comment = document.createElement("div");
+          comment.className = "review-item-comment";
+          comment.textContent = r.comment || "No comment provided.";
+
+          div.appendChild(titleRow);
+          div.appendChild(comment);
+
+          container.appendChild(div);
+        });
+      } catch (err) {
+        console.error("Failed to load reviews", err);
+        container.innerHTML =
+          '<p style="font-size:0.8rem; color:#f97316;">Error loading reviews.</p>';
+      }
+    }
+
+    function selectCourse(course) {
+      selectedCourse = course;
+      const headerTitle = document.querySelector(".reviews-header h3");
+      const subtitle = document.querySelector(".reviews-subtitle");
+      const nameInput = document.getElementById("course_name");
+      const idInput = document.getElementById("course_id");
+
+      headerTitle.textContent = `Reviews for ${course.title || "this course"}`;
+      subtitle.textContent = course.creator_name
+        ? `by ${course.creator_name}`
+        : "What people are saying";
+      nameInput.value = course.title || "";
+      idInput.value = course.id || "";
+
+      renderCourses();
+      loadReviewsForCourse(course.id);
+    }
+
+    document
+      .getElementById("review-form")
+      .addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const course_id = document.getElementById("course_id").value;
+        const reviewer_name =
+          document.getElementById("reviewer_name").value || null;
+        const rating = Number(document.getElementById("rating").value);
+        const comment = document.getElementById("comment").value || null;
+
+        if (!course_id) {
+          alert("Please select a course first by clicking a card.");
+          return;
+        }
+
+        if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
+          alert("Please enter a rating from 1 to 5.");
+          return;
+        }
+
+        try {
+          const res = await fetch(`${API_BASE}/api/reviews`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              course_id,
+              reviewer_name,
+              rating,
+              comment,
+            }),
+          });
+
+          if (!res.ok) {
+            const err = await res.json().catch(() => ({}));
+            console.error("Failed to submit review:", err);
+            alert("Failed to submit review.");
+            return;
+          }
+
+          (e.target).reset();
+          // keep course info in the panel
+          document.getElementById("course_id").value = course_id;
+          document.getElementById("course_name").value =
+            selectedCourse?.title || "";
+
+          await loadReviewsForCourse(course_id);
+          await fetchCourses();
+        } catch (err) {
+          console.error("Failed to submit review", err);
+          alert("Error submitting review.");
+        }
+      });
+
+    // Kick things off
     fetchCourses();
   </script>
 </body>
 </html>
-
