@@ -8,13 +8,14 @@
   <script src="config.js"></script>
   <style>
     :root {
-      --bg: #0f0f0f;
-      --panel: #171717;
+      --bg: #0b0b0c;
+      --panel: #151517;
       --text: #f5f5f5;
       --muted: #a0a0a0;
-      --border: #2a2a2a;
-      --accent: #3b82f6;
-      --accent-hover: #2563eb;
+      --border: rgba(255, 255, 255, 0.09);
+      --strong-border: rgba(255, 255, 255, 0.16);
+      --accent: #f4f4f5;
+      --accent-hover: #ffffff;
       --error: #f97316;
       --success: #22c55e;
     }
@@ -33,17 +34,19 @@
 
     nav {
       align-items: center;
-      background: #151515;
+      background: rgba(13, 13, 14, 0.92);
+      backdrop-filter: blur(18px);
       border-bottom: 1px solid var(--border);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.24);
       display: flex;
       justify-content: space-between;
-      padding: 1rem 2rem;
+      padding: 0.85rem 2rem;
     }
 
     nav a {
       color: var(--text);
-      font-weight: 600;
+      font-size: 0.9rem;
+      font-weight: 750;
       text-decoration: none;
     }
 
@@ -53,8 +56,8 @@
 
     main {
       margin: 0 auto;
-      max-width: 760px;
-      padding: 3rem 1.5rem;
+      max-width: 740px;
+      padding: 2.35rem 1.5rem;
     }
 
     .header {
@@ -63,7 +66,7 @@
 
     .eyebrow {
       color: var(--muted);
-      font-size: 0.8rem;
+      font-size: 0.74rem;
       font-weight: 700;
       letter-spacing: 0;
       margin: 0 0 0.45rem;
@@ -71,8 +74,8 @@
     }
 
     h1 {
-      font-size: clamp(2rem, 5vw, 3.25rem);
-      line-height: 1;
+      font-size: clamp(1.8rem, 4vw, 2.65rem);
+      line-height: 1.06;
       margin: 0;
     }
 
@@ -85,9 +88,9 @@
     .panel {
       background: var(--panel);
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 16px;
       padding: 1.5rem;
-      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
     }
 
     form {
@@ -106,8 +109,8 @@
     input,
     textarea {
       background: #111;
-      border: 1px solid #333;
-      border-radius: 8px;
+      border: 1px solid var(--strong-border);
+      border-radius: 10px;
       color: var(--text);
       font: inherit;
       padding: 0.8rem 0.9rem;
@@ -118,7 +121,7 @@
     input:focus,
     textarea:focus {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.16);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08);
       outline: none;
     }
 
@@ -127,11 +130,74 @@
       resize: vertical;
     }
 
+    .field-group {
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .field-label {
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 600;
+    }
+
+    .niche-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .niche-chip {
+      background: #111;
+      border: 1px solid var(--strong-border);
+      border-radius: 999px;
+      color: var(--text);
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 0.45rem 0.75rem;
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .niche-chip:hover {
+      border-color: rgba(255, 255, 255, 0.28);
+      transform: translateY(-1px);
+    }
+
+    .niche-chip.active {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
+    .custom-niche-row {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .custom-niche-row input {
+      flex: 1;
+    }
+
+    .custom-niche-row button {
+      flex: 0 0 auto;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    .selected-niches {
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.5;
+      min-height: 1.25rem;
+    }
+
     button {
       background: var(--accent);
       border: 0;
       border-radius: 999px;
-      color: white;
+      color: #111113;
       cursor: pointer;
       font: inherit;
       font-weight: 800;
@@ -175,7 +241,7 @@
 
     @media (max-width: 640px) {
       nav {
-        padding: 1rem;
+        padding: 0.95rem 1rem;
       }
 
       main {
@@ -184,6 +250,10 @@
 
       .panel {
         padding: 1rem;
+      }
+
+      .custom-niche-row {
+        flex-direction: column;
       }
     }
   </style>
@@ -213,10 +283,15 @@
           <input type="text" id="creator_name" name="creator_name" placeholder="Marcus Reed" />
         </label>
 
-        <label>
-          Niche
-          <input type="text" id="niche" name="niche" placeholder="SMMA, Marketing" />
-        </label>
+        <div class="field-group">
+          <div class="field-label">Niche</div>
+          <div class="niche-grid" id="nicheGrid" aria-label="Common niches"></div>
+          <div class="custom-niche-row">
+            <input type="text" id="customNiche" placeholder="Other niche" />
+            <button type="button" id="addCustomNiche">Add other</button>
+          </div>
+          <div class="selected-niches" id="selectedNiches">No niches selected yet.</div>
+        </div>
 
         <label>
           Description
@@ -240,11 +315,89 @@
     const form = document.getElementById("courseForm");
     const message = document.getElementById("message");
     const submitButton = document.getElementById("submitButton");
+    const nicheGrid = document.getElementById("nicheGrid");
+    const customNiche = document.getElementById("customNiche");
+    const addCustomNiche = document.getElementById("addCustomNiche");
+    const selectedNiches = document.getElementById("selectedNiches");
+    const commonNiches = [
+      "SMMA",
+      "Marketing",
+      "Online Business",
+      "Amazon FBA",
+      "E-Commerce",
+      "Dropshipping",
+      "Copywriting",
+      "Finance",
+      "Investing",
+      "AI Tools",
+      "Creator Business",
+      "Sales",
+      "Mindset",
+      "Coaching",
+      "Productivity",
+    ];
+    const nicheSet = new Set();
 
     function setMessage(type, text) {
       message.className = `message ${type}`;
       message.textContent = text;
     }
+
+    function renderSelectedNiches() {
+      selectedNiches.textContent = nicheSet.size
+        ? `Selected: ${Array.from(nicheSet).join(", ")}`
+        : "No niches selected yet.";
+    }
+
+    function addNiche(niche) {
+      const cleanNiche = niche.trim();
+      if (!cleanNiche) return;
+      nicheSet.add(cleanNiche);
+      syncNicheButtons();
+      renderSelectedNiches();
+    }
+
+    function toggleNiche(niche) {
+      if (nicheSet.has(niche)) {
+        nicheSet.delete(niche);
+      } else {
+        nicheSet.add(niche);
+      }
+      syncNicheButtons();
+      renderSelectedNiches();
+    }
+
+    function syncNicheButtons() {
+      document.querySelectorAll(".niche-chip").forEach((button) => {
+        const isActive = nicheSet.has(button.dataset.niche);
+        button.classList.toggle("active", isActive);
+        button.setAttribute("aria-pressed", String(isActive));
+      });
+    }
+
+    commonNiches.forEach((niche) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "niche-chip";
+      button.dataset.niche = niche;
+      button.textContent = niche;
+      button.setAttribute("aria-pressed", "false");
+      button.addEventListener("click", () => toggleNiche(niche));
+      nicheGrid.appendChild(button);
+    });
+
+    addCustomNiche.addEventListener("click", () => {
+      addNiche(customNiche.value);
+      customNiche.value = "";
+      customNiche.focus();
+    });
+
+    customNiche.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        addCustomNiche.click();
+      }
+    });
 
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -256,7 +409,7 @@
       const payload = {
         title: form.title.value.trim(),
         creator_name: form.creator_name.value.trim() || null,
-        niche: form.niche.value.trim() || null,
+        niche: Array.from(nicheSet).join(", ") || null,
         description: form.description.value.trim() || null,
         thumbnail_url: form.thumbnail_url.value.trim() || null,
       };
@@ -274,6 +427,9 @@
         }
 
         form.reset();
+        nicheSet.clear();
+        syncNicheButtons();
+        renderSelectedNiches();
         setMessage("success", "Course added successfully.");
       } catch (err) {
         console.error(err);
@@ -283,6 +439,8 @@
         submitButton.textContent = "Add course";
       }
     });
+
+    renderSelectedNiches();
   </script>
 </body>
 </html>
