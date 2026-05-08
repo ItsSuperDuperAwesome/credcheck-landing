@@ -239,12 +239,22 @@
       padding: 1.45rem calc(var(--review-panel-width) + var(--review-panel-gap) + 2rem) 2rem 1.45rem;
       position: relative;
       min-width: 0;
+      transition: padding-right 0.25s ease;
+    }
+
+    body.reviews-collapsed .main-content {
+      padding-right: 1.45rem;
     }
 
     .course-grid-wrapper {
       width: 100%;
       max-width: 1040px;
       margin: 0 auto;
+      transition: max-width 0.25s ease;
+    }
+
+    body.reviews-collapsed .course-grid-wrapper {
+      max-width: 1180px;
     }
 
     .directory-toolbar {
@@ -322,16 +332,25 @@
       box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.14), 0 18px 36px rgba(0, 0, 0, 0.34);
     }
 
-    .course-card img {
-      width: 100%;
-      height: 142px;
-      object-fit: cover;
+    .course-thumb {
+      aspect-ratio: 16 / 9;
+      background: var(--surface);
+      border: 1px solid rgba(255, 255, 255, 0.07);
       border-radius: 10px;
-      transition: transform 0.35s ease, box-shadow 0.3s ease;
+      overflow: hidden;
+      width: 100%;
     }
 
-    .course-card:hover img {
-      transform: scale(1.025);
+    .course-thumb img {
+      display: block;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.35s ease;
+      width: 100%;
+    }
+
+    .course-card:hover .course-thumb img {
+      transform: scale(1.035);
     }
 
     .course-card h4 {
@@ -428,6 +447,64 @@
       color: #f5f5f5;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       z-index: 50;
+      transition: border-radius 0.2s ease, padding 0.2s ease, width 0.25s ease;
+    }
+
+    body.reviews-collapsed .reviews-panel {
+      display: none;
+    }
+
+    .reviews-tab {
+      align-items: center;
+      background: #f4f4f5;
+      border: 1px solid #f4f4f5;
+      border-radius: 999px;
+      bottom: 1.5rem;
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.44);
+      color: #111113;
+      cursor: pointer;
+      display: none;
+      font: inherit;
+      font-size: 0.82rem;
+      font-weight: 850;
+      justify-content: center;
+      padding: 0.72rem 1rem;
+      position: fixed;
+      right: var(--review-panel-gap);
+      z-index: 50;
+    }
+
+    body.reviews-collapsed .reviews-tab {
+      display: inline-flex;
+    }
+
+    .reviews-panel-top {
+      align-items: flex-start;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .reviews-toggle {
+      align-items: center;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-color);
+      border-radius: 999px;
+      color: var(--text-color);
+      cursor: pointer;
+      display: inline-flex;
+      font: inherit;
+      font-size: 0.78rem;
+      font-weight: 800;
+      justify-content: center;
+      min-height: 2rem;
+      padding: 0.35rem 0.65rem;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .reviews-toggle:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--strong-border);
     }
 
     .reviews-header h3 {
@@ -588,6 +665,10 @@
         padding-bottom: 460px;
       }
 
+      body.reviews-collapsed .main-content {
+        padding-bottom: 7rem;
+      }
+
       .hero,
       .footer {
         padding-right: 1.25rem;
@@ -652,6 +733,11 @@
         right: 1rem;
         bottom: 1rem;
         width: calc(100vw - 2rem);
+      }
+
+      .reviews-tab {
+        bottom: 1rem;
+        right: 1rem;
       }
 
       .footer {
@@ -776,9 +862,12 @@
 
   <!-- Floating reviews panel -->
   <section id="reviews-section" class="reviews-panel">
-    <div class="reviews-header">
-      <h3>Reviews</h3>
-      <p class="reviews-subtitle">Select a course to see reviews</p>
+    <div class="reviews-panel-top">
+      <div class="reviews-header">
+        <h3>Reviews</h3>
+        <p class="reviews-subtitle">Select a course to see reviews</p>
+      </div>
+      <button id="reviewsCollapse" class="reviews-toggle" type="button" aria-expanded="true">Collapse</button>
     </div>
 
     <div id="reviews-list" class="reviews-list">
@@ -818,17 +907,25 @@
     </form>
   </section>
 
+  <button id="reviewsTab" class="reviews-tab" type="button" aria-label="Open reviews panel">Reviews</button>
+
   <script>
-    const API_BASE = window.CREDCHECK_API_BASE;
-    const FALLBACK_IMAGE =
-      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='500' viewBox='0 0 800 500'%3E%3Crect width='800' height='500' fill='%23151515'/%3E%3Crect x='40' y='40' width='720' height='420' rx='20' fill='%231f1f1f' stroke='%23333333'/%3E%3Ctext x='50%25' y='50%25' fill='%23f5f5f5' font-family='Inter,Arial,sans-serif' font-size='40' font-weight='700' text-anchor='middle' dominant-baseline='middle'%3ECredCheck%3C/text%3E%3C/svg%3E";
+    const API_BASE = (window.CREDCHECK_API_BASE || "http://localhost:4000").replace(/\/$/, "");
+    console.log("[CredCheck Index] API base:", API_BASE);
+    const FALLBACK_IMAGE = "/images/fallback-course.svg";
 
     let courses = [];
     let allCourses = [];
     let selectedCourse = null;
+    let isReviewsCollapsed = localStorage.getItem("credcheckReviewsCollapsed") === "true";
     let activeNiche = null;
     let searchTerm = "";
     let sortMode = "newest";
+
+    function applyReviewsPanelState() {
+      document.body.classList.toggle("reviews-collapsed", isReviewsCollapsed);
+      document.getElementById("reviewsCollapse").setAttribute("aria-expanded", String(!isReviewsCollapsed));
+    }
 
     function escapeHTML(value) {
       return String(value ?? "")
@@ -838,6 +935,27 @@
         .replaceAll('"', "&quot;")
         .replaceAll("'", "&#039;");
     }
+    function getCourseImage(course) {
+      const imageUrl = String(
+        course.image_url || course.thumbnail_url || course.thumbnail || course.image || ""
+      ).trim();
+      return imageUrl || FALLBACK_IMAGE;
+    }
+
+    function getCourseAltText(course) {
+      const title = String(course.title || course.name || "").trim();
+      const creator = String(course.creator_name || course.creator || "").trim();
+      if (title && creator) return `Thumbnail for ${title} by ${creator}`;
+      if (title) return `Thumbnail for ${title}`;
+      return "Course thumbnail";
+    }
+
+    function handleImageError(image) {
+      if (image.dataset.fallbackApplied === "true") return;
+      image.dataset.fallbackApplied = "true";
+      image.src = FALLBACK_IMAGE;
+    }
+
 
     function normalizeCourse(course) {
       return {
@@ -850,7 +968,9 @@
             ? course.niches.join(", ")
             : course.niche || "",
         description: course.description || "",
-        thumbnail_url: course.thumbnail_url || "",
+        thumbnail_url: String(
+          course.image_url || course.thumbnail_url || course.thumbnail || course.image || ""
+        ).trim(),
         average_rating: course.average_rating ?? null,
         review_count: Number(course.review_count || 0),
         created_at: course.created_at || "",
@@ -956,7 +1076,8 @@
 
     async function fetchCourses() {
       try {
-        const res = await fetch(`${API_BASE}/api/courses`);
+        console.log("[CredCheck Index] GET courses URL:", `${API_BASE}/api/courses`);
+        const res = await fetch(`${API_BASE}/api/courses`, { cache: "no-store" });
         if (!res.ok) {
           const err = await res.json().catch(() => ({}));
           throw new Error(err.error || "Could not load courses.");
@@ -965,6 +1086,7 @@
         const data = await res.json();
         allCourses = data.map(normalizeCourse);
         courses = [...allCourses];
+        console.log("[CredCheck Index] Refreshed course count:", allCourses.length);
         applySearchFromURL();
         applyDirectoryControls();
       } catch (err) {
@@ -1012,8 +1134,9 @@
           card.className = "course-card";
           if (selectedCourse?.id === course.id) card.classList.add("selected");
 
-          const imgSrc = course.thumbnail_url || FALLBACK_IMAGE;
+          const imgSrc = getCourseImage(course);
           const creator = course.creator_name || "Unknown creator";
+          const imageAlt = getCourseAltText(course);
 
           const tags = getCourseTags(course);
 
@@ -1026,7 +1149,9 @@
           const profileLink = `profile.html?course_id=${encodeURIComponent(course.id)}`;
 
           card.innerHTML = `
-            <img src="${escapeHTML(imgSrc)}" alt="${escapeHTML(course.title)}" />
+            <div class="course-thumb">
+              <img src="${escapeHTML(imgSrc)}" alt="${escapeHTML(imageAlt)}" loading="lazy" />
+            </div>
             <h4>${escapeHTML(course.title)}</h4>
             <p>by ${escapeHTML(creator)}</p>
             <div class="rating">
@@ -1038,6 +1163,9 @@
             </div>
             <a href="${profileLink}" class="view-btn">Profile</a>
           `;
+
+          const cardImage = card.querySelector(".course-thumb img");
+          cardImage.addEventListener("error", () => handleImageError(cardImage));
 
           card.querySelector(".view-btn").addEventListener("click", (event) => {
             event.stopPropagation();
@@ -1084,6 +1212,22 @@
       document.getElementById("searchBar").value = "";
       applyDirectoryControls();
     });
+
+    function setReviewsCollapsed(collapsed) {
+      isReviewsCollapsed = collapsed;
+      localStorage.setItem("credcheckReviewsCollapsed", String(isReviewsCollapsed));
+      applyReviewsPanelState();
+    }
+
+    document.getElementById("reviewsCollapse").addEventListener("click", () => {
+      setReviewsCollapsed(true);
+    });
+
+    document.getElementById("reviewsTab").addEventListener("click", () => {
+      setReviewsCollapsed(false);
+    });
+
+    applyReviewsPanelState();
 
     // ===== Reviews logic, tied to selected course =====
     async function loadReviewsForCourse(courseId) {

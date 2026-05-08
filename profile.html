@@ -77,7 +77,9 @@
     .course-image {
       aspect-ratio: 16 / 9;
       background: var(--panel-soft);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 12px;
+      display: block;
       margin-bottom: 1.25rem;
       object-fit: cover;
       width: 100%;
@@ -221,9 +223,8 @@
   </main>
 
   <script>
-    const API_BASE = window.CREDCHECK_API_BASE;
-    const FALLBACK_IMAGE =
-      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='500' viewBox='0 0 800 500'%3E%3Crect width='800' height='500' fill='%23151515'/%3E%3Crect x='40' y='40' width='720' height='420' rx='20' fill='%231f1f1f' stroke='%23333333'/%3E%3Ctext x='50%25' y='50%25' fill='%23f5f5f5' font-family='Inter,Arial,sans-serif' font-size='40' font-weight='700' text-anchor='middle' dominant-baseline='middle'%3ECredCheck%3C/text%3E%3C/svg%3E";
+    const API_BASE = (window.CREDCHECK_API_BASE || "http://localhost:4000").replace(/\/$/, "");
+    const FALLBACK_IMAGE = "/images/fallback-course.svg";
 
     const params = new URLSearchParams(window.location.search);
     const courseId = params.get("course_id") || params.get("course");
@@ -237,6 +238,35 @@
         .replaceAll('"', "&quot;")
         .replaceAll("'", "&#039;");
     }
+    function getCourseTitle(course) {
+      return String(course.title || course.name || "").trim();
+    }
+
+    function getCourseCreator(course) {
+      return String(course.creator_name || course.creator || "").trim();
+    }
+
+    function getCourseImage(course) {
+      const imageUrl = String(
+        course.image_url || course.thumbnail_url || course.thumbnail || course.image || ""
+      ).trim();
+      return imageUrl || FALLBACK_IMAGE;
+    }
+
+    function getCourseAltText(course) {
+      const title = getCourseTitle(course);
+      const creator = getCourseCreator(course);
+      if (title && creator) return `Thumbnail for ${title} by ${creator}`;
+      if (title) return `Thumbnail for ${title}`;
+      return "Course thumbnail";
+    }
+
+    function handleImageError(image) {
+      if (image.dataset.fallbackApplied === "true") return;
+      image.dataset.fallbackApplied = "true";
+      image.src = FALLBACK_IMAGE;
+    }
+
 
     function renderTags(niche) {
       return String(niche || "")
@@ -259,7 +289,7 @@
       }
 
       try {
-        const res = await fetch(`${API_BASE}/api/courses`);
+        const res = await fetch(`${API_BASE}/api/courses`, { cache: "no-store" });
         if (!res.ok) {
           const err = await res.json().catch(() => ({}));
           throw new Error(err.error || "Could not load courses.");
@@ -278,12 +308,14 @@
         const rating = Number(currentCourse.average_rating || 0);
         const ratingText = rating ? rating.toFixed(1) : "New";
         const reviewCount = Number(currentCourse.review_count || 0);
-        document.title = `${currentCourse.title} | CredCheck`;
+        const title = getCourseTitle(currentCourse) || "Untitled course";
+        const creator = getCourseCreator(currentCourse) || "Unknown creator";
+        document.title = `${title} | CredCheck`;
 
         profile.innerHTML = `
-          <img class="course-image" src="${escapeHTML(currentCourse.thumbnail_url || FALLBACK_IMAGE)}" alt="${escapeHTML(currentCourse.title)}" />
-          <h1>${escapeHTML(currentCourse.title)}</h1>
-          <p class="muted">by ${escapeHTML(currentCourse.creator_name || "Unknown creator")}</p>
+          <img class="course-image" src="${escapeHTML(getCourseImage(currentCourse))}" alt="${escapeHTML(getCourseAltText(currentCourse))}" />
+          <h1>${escapeHTML(title)}</h1>
+          <p class="muted">by ${escapeHTML(creator)}</p>
           <div class="score">
             <strong>${escapeHTML(ratingText)}</strong>
             <span class="muted">${reviewCount} review${reviewCount === 1 ? "" : "s"}</span>
@@ -291,6 +323,9 @@
           <div>${renderTags(currentCourse.niche)}</div>
           <p>${escapeHTML(currentCourse.description || "No description yet.")}</p>
         `;
+
+        const profileImage = profile.querySelector(".course-image");
+        profileImage.addEventListener("error", () => handleImageError(profileImage));
 
         await loadReviews();
       } catch (err) {

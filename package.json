@@ -1,0 +1,12 @@
+{
+  "name": "credcheck-landing",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "thumbs": "node scripts/process-thumbnails.js"
+  },
+  "dependencies": {
+    "sharp": "^0.33.5"
+  }
+}

@@ -193,6 +193,28 @@
       min-height: 1.25rem;
     }
 
+    .thumbnail-preview {
+      background: #0f0f11;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .thumbnail-preview img {
+      aspect-ratio: 16 / 9;
+      display: block;
+      object-fit: cover;
+      width: 100%;
+    }
+
+    .thumbnail-preview-caption {
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 650;
+      padding: 0.65rem 0.8rem;
+    }
+
     button {
       background: var(--accent);
       border: 0;
@@ -239,6 +261,113 @@
       display: block;
     }
 
+    .form-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+    }
+
+    .cancel-edit {
+      background: transparent;
+      border: 1px solid var(--strong-border);
+      color: var(--text);
+      display: none;
+    }
+
+    .cancel-edit.visible {
+      display: inline-flex;
+    }
+
+    .cancel-edit:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .admin-list-panel {
+      margin-top: 1.2rem;
+    }
+
+    .admin-list-header {
+      align-items: center;
+      display: flex;
+      gap: 1rem;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .admin-list-header h2 {
+      font-size: 1rem;
+      margin: 0 0 0.25rem;
+    }
+
+    .admin-list-header p,
+    .admin-empty {
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .course-admin-list {
+      display: grid;
+      gap: 0.7rem;
+    }
+
+    .course-admin-row {
+      align-items: center;
+      background: #111;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      display: grid;
+      gap: 0.85rem;
+      grid-template-columns: 64px minmax(0, 1fr) auto;
+      padding: 0.75rem;
+    }
+
+    .course-admin-row img {
+      aspect-ratio: 1 / 1;
+      border-radius: 10px;
+      display: block;
+      object-fit: cover;
+      width: 64px;
+    }
+
+    .course-admin-title {
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 0.25rem;
+    }
+
+    .course-admin-meta {
+      color: var(--muted);
+      font-size: 0.8rem;
+      line-height: 1.45;
+    }
+
+    .course-admin-actions {
+      display: flex;
+      gap: 0.45rem;
+    }
+
+    .course-admin-actions button {
+      border: 1px solid var(--strong-border);
+      font-size: 0.78rem;
+      padding: 0.55rem 0.75rem;
+    }
+
+    .edit-course {
+      background: var(--accent);
+      color: #111113;
+    }
+
+    .delete-course {
+      background: transparent;
+      color: var(--error);
+    }
+
+    .delete-course:hover {
+      background: rgba(249, 115, 22, 0.1);
+    }
+
     @media (max-width: 640px) {
       nav {
         padding: 0.95rem 1rem;
@@ -252,8 +381,21 @@
         padding: 1rem;
       }
 
-      .custom-niche-row {
+      .custom-niche-row,
+      .form-actions {
         flex-direction: column;
+      }
+
+      .course-admin-row {
+        grid-template-columns: 56px minmax(0, 1fr);
+      }
+
+      .course-admin-row img {
+        width: 56px;
+      }
+
+      .course-admin-actions {
+        grid-column: 1 / -1;
       }
     }
   </style>
@@ -300,25 +442,56 @@
 
         <label>
           Thumbnail URL
-          <input type="url" id="thumbnail_url" name="thumbnail_url" placeholder="https://images.unsplash.com/..." />
+          <input type="text" id="thumbnail_url" name="thumbnail_url" placeholder="/images/courses/example.webp or https://..." />
         </label>
 
-        <button type="submit" id="submitButton">Add course</button>
+        <div class="thumbnail-preview" aria-live="polite">
+          <img id="thumbnailPreview" src="" alt="Thumbnail preview" />
+          <div id="thumbnailPreviewCaption" class="thumbnail-preview-caption">Fallback preview shown until a valid image URL is added.</div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" id="submitButton">Add course</button>
+          <button type="button" id="cancelEditButton" class="cancel-edit">Cancel edit</button>
+        </div>
       </form>
 
       <div id="message" class="message" role="status"></div>
     </section>
+
+    <section class="panel admin-list-panel">
+      <div class="admin-list-header">
+        <div>
+          <h2>Existing courses</h2>
+          <p>Edit or delete courses already saved in Supabase.</p>
+        </div>
+      </div>
+      <div id="courseAdminList" class="course-admin-list">
+        <p class="admin-empty">Loading courses...</p>
+      </div>
+    </section>
   </main>
 
   <script>
-    const API_BASE = window.CREDCHECK_API_BASE;
+    const API_BASE = (window.CREDCHECK_API_BASE || "http://localhost:4000").replace(/\/$/, "");
+    const COURSES_API_URL = `${API_BASE}/api/courses`;
+    console.log("[CredCheck Admin] API base:", API_BASE);
     const form = document.getElementById("courseForm");
     const message = document.getElementById("message");
     const submitButton = document.getElementById("submitButton");
+    const cancelEditButton = document.getElementById("cancelEditButton");
+    const titleInput = document.getElementById("title");
+    const creatorInput = document.getElementById("creator_name");
+    const descriptionInput = document.getElementById("description");
+    const thumbnailInput = document.getElementById("thumbnail_url");
+    const thumbnailPreview = document.getElementById("thumbnailPreview");
+    const thumbnailPreviewCaption = document.getElementById("thumbnailPreviewCaption");
+    const courseAdminList = document.getElementById("courseAdminList");
     const nicheGrid = document.getElementById("nicheGrid");
     const customNiche = document.getElementById("customNiche");
     const addCustomNiche = document.getElementById("addCustomNiche");
     const selectedNiches = document.getElementById("selectedNiches");
+    const FALLBACK_IMAGE = "/images/fallback-course.svg";
     const commonNiches = [
       "SMMA",
       "Marketing",
@@ -337,16 +510,89 @@
       "Productivity",
     ];
     const nicheSet = new Set();
+    let courses = [];
+    let editingCourseId = null;
 
     function setMessage(type, text) {
       message.className = `message ${type}`;
       message.textContent = text;
     }
 
+    function clearMessage() {
+      message.className = "message";
+      message.textContent = "";
+    }
+    function getCourseTitle(course) {
+      return String(course.title || course.name || "").trim();
+    }
+
+    function getCourseCreator(course) {
+      return String(course.creator_name || course.creator || "").trim();
+    }
+
+    function getCourseImage(course) {
+      const imageUrl = String(
+        course.image_url || course.thumbnail_url || course.thumbnail || course.image || ""
+      ).trim();
+      return imageUrl || FALLBACK_IMAGE;
+    }
+
+    function getCourseAltText(course) {
+      const title = getCourseTitle(course);
+      const creator = getCourseCreator(course);
+      if (title && creator) return `Thumbnail for ${title} by ${creator}`;
+      if (title) return `Thumbnail for ${title}`;
+      return "Course thumbnail";
+    }
+
+    function handleImageError(image) {
+      if (image.dataset.fallbackApplied === "true") return;
+      image.dataset.fallbackApplied = "true";
+      image.src = FALLBACK_IMAGE;
+    }
+
+
+    function setFallbackPreview() {
+      thumbnailPreview.dataset.fallbackApplied = "true";
+      thumbnailPreview.src = FALLBACK_IMAGE;
+      thumbnailPreviewCaption.textContent = "Fallback preview shown. Add a valid image URL for a custom thumbnail.";
+    }
+
+    function updateThumbnailPreview() {
+      const url = thumbnailInput.value.trim();
+      if (!url) {
+        setFallbackPreview();
+        return;
+      }
+
+      thumbnailPreview.dataset.fallbackApplied = "false";
+      thumbnailPreviewCaption.textContent = "Loading thumbnail preview...";
+      thumbnailPreview.src = url;
+    }
+
     function renderSelectedNiches() {
       selectedNiches.textContent = nicheSet.size
         ? `Selected: ${Array.from(nicheSet).join(", ")}`
         : "No niches selected yet.";
+    }
+
+    function syncNicheButtons() {
+      document.querySelectorAll(".niche-chip").forEach((button) => {
+        const isActive = nicheSet.has(button.dataset.niche);
+        button.classList.toggle("active", isActive);
+        button.setAttribute("aria-pressed", String(isActive));
+      });
+    }
+
+    function setNichesFromString(nicheString) {
+      nicheSet.clear();
+      String(nicheString || "")
+        .split(",")
+        .map((niche) => niche.trim())
+        .filter(Boolean)
+        .forEach((niche) => nicheSet.add(niche));
+      syncNicheButtons();
+      renderSelectedNiches();
     }
 
     function addNiche(niche) {
@@ -367,12 +613,104 @@
       renderSelectedNiches();
     }
 
-    function syncNicheButtons() {
-      document.querySelectorAll(".niche-chip").forEach((button) => {
-        const isActive = nicheSet.has(button.dataset.niche);
-        button.classList.toggle("active", isActive);
-        button.setAttribute("aria-pressed", String(isActive));
+    function resetFormMode() {
+      editingCourseId = null;
+      form.reset();
+      setNichesFromString("");
+      setFallbackPreview();
+      submitButton.textContent = "Add course";
+      cancelEditButton.classList.remove("visible");
+      titleInput.focus();
+    }
+
+    function enterEditMode(course, courseId = course.id) {
+      editingCourseId = String(courseId ?? "");
+      console.log("Editing course id:", editingCourseId);
+      titleInput.value = course.title || "";
+      creatorInput.value = course.creator_name || "";
+      descriptionInput.value = course.description || "";
+      thumbnailInput.value = getCourseImage(course) === FALLBACK_IMAGE ? "" : getCourseImage(course);
+      setNichesFromString(course.niche || "");
+      updateThumbnailPreview();
+      submitButton.textContent = "Update course";
+      cancelEditButton.classList.add("visible");
+      clearMessage();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      titleInput.focus();
+    }
+
+    function renderCourseList() {
+      courseAdminList.innerHTML = "";
+
+      if (!courses.length) {
+        courseAdminList.innerHTML = '<p class="admin-empty">No courses yet. Add your first course above.</p>';
+        return;
+      }
+
+      courses.forEach((course) => {
+        const courseId = String(course.id ?? "");
+        const row = document.createElement("div");
+        row.className = "course-admin-row";
+        row.dataset.courseId = courseId;
+
+        const image = document.createElement("img");
+        image.src = getCourseImage(course);
+        image.alt = getCourseAltText(course);
+        image.loading = "lazy";
+        image.addEventListener("error", () => handleImageError(image));
+
+        const info = document.createElement("div");
+        const title = document.createElement("div");
+        title.className = "course-admin-title";
+        title.textContent = course.title || "Untitled course";
+        const meta = document.createElement("div");
+        meta.className = "course-admin-meta";
+        meta.textContent = `${course.creator_name || "Unknown creator"} • ${course.niche || "No niche"}`;
+        info.append(title, meta);
+
+        const actions = document.createElement("div");
+        actions.className = "course-admin-actions";
+
+        const editButton = document.createElement("button");
+        editButton.type = "button";
+        editButton.className = "edit-course";
+        editButton.dataset.action = "edit";
+        editButton.dataset.courseId = courseId;
+        editButton.textContent = "Edit";
+
+        const deleteButton = document.createElement("button");
+        deleteButton.type = "button";
+        deleteButton.className = "delete-course";
+        deleteButton.dataset.action = "delete";
+        deleteButton.dataset.courseId = courseId;
+        deleteButton.textContent = "Delete";
+
+        actions.append(editButton, deleteButton);
+        row.append(image, info, actions);
+        courseAdminList.appendChild(row);
       });
+    }
+
+    async function loadCourses() {
+      courseAdminList.innerHTML = '<p class="admin-empty">Loading courses...</p>';
+
+      try {
+        console.log("[CredCheck Admin] GET courses URL:", COURSES_API_URL);
+        const res = await fetch(COURSES_API_URL, { cache: "no-store" });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.error || "Could not load courses.");
+        }
+
+        courses = await res.json();
+        renderCourseList();
+        console.log("[CredCheck Admin] Refreshed course count:", courses.length);
+        return courses;
+      } catch (err) {
+        console.error(err);
+        courseAdminList.innerHTML = '<p class="admin-empty">Could not load courses. Check that the backend is running.</p>';
+        throw err;
+      }
     }
 
     commonNiches.forEach((niche) => {
@@ -385,6 +723,17 @@
       button.addEventListener("click", () => toggleNiche(niche));
       nicheGrid.appendChild(button);
     });
+
+    thumbnailPreview.addEventListener("load", () => {
+      if (thumbnailPreview.dataset.fallbackApplied === "true") return;
+      thumbnailPreviewCaption.textContent = "Thumbnail preview loaded.";
+    });
+
+    thumbnailPreview.addEventListener("error", () => {
+      setFallbackPreview();
+    });
+
+    thumbnailInput.addEventListener("input", updateThumbnailPreview);
 
     addCustomNiche.addEventListener("click", () => {
       addNiche(customNiche.value);
@@ -399,48 +748,143 @@
       }
     });
 
+    cancelEditButton.addEventListener("click", () => {
+      resetFormMode();
+      clearMessage();
+    });
+
+    courseAdminList.addEventListener("click", async (event) => {
+      const button = event.target.closest("button[data-action]");
+      if (!button) return;
+
+      const courseId = button.dataset.courseId;
+      const course = courses.find((item) => String(item.id) === String(courseId));
+      if (!courseId || !course) {
+        setMessage("error", "Could not find this course id. Reload the admin page and try again.");
+        return;
+      }
+
+      if (button.dataset.action === "edit") {
+        enterEditMode(course, courseId);
+        return;
+      }
+
+      if (button.dataset.action === "delete") {
+        console.log("Deleting course id:", courseId);
+        const confirmed = window.confirm(`Delete ${course.title || "this course"}? This cannot be undone.`);
+        if (!confirmed) return;
+
+        button.disabled = true;
+        button.textContent = "Deleting...";
+
+        try {
+          const deleteUrl = `${API_BASE}/api/courses/${courseId}`;
+          console.log("[CredCheck Admin] DELETE course URL:", deleteUrl);
+          const res = await fetch(deleteUrl, {
+            method: "DELETE",
+          });
+
+          const deleteResponse = await res.json().catch(() => null);
+          console.log("[CredCheck Admin] DELETE backend response:", deleteResponse);
+
+          if (!res.ok) {
+            throw new Error(deleteResponse?.error || "Could not delete course.");
+          }
+
+          await loadCourses();
+          const stillExists = courses.some((item) => String(item.id) === String(courseId));
+          console.log("[CredCheck Admin] After delete refreshed course count:", courses.length);
+
+          if (stillExists) {
+            throw new Error("Delete did not persist. Refreshed backend data still includes this course.");
+          }
+
+          if (String(editingCourseId) === String(courseId)) {
+            resetFormMode();
+          }
+
+          setMessage("success", "Course deleted successfully.");
+        } catch (err) {
+          console.error(err);
+          setMessage("error", err.message || "Something went wrong. Try again.");
+          button.disabled = false;
+          button.textContent = "Delete";
+        }
+      }
+    });
+
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
-      message.className = "message";
-      message.textContent = "";
+      clearMessage();
       submitButton.disabled = true;
-      submitButton.textContent = "Adding...";
+      submitButton.textContent = editingCourseId ? "Updating..." : "Adding...";
 
       const payload = {
-        title: form.title.value.trim(),
-        creator_name: form.creator_name.value.trim() || null,
+        title: titleInput.value.trim(),
+        creator_name: creatorInput.value.trim() || null,
         niche: Array.from(nicheSet).join(", ") || null,
-        description: form.description.value.trim() || null,
-        thumbnail_url: form.thumbnail_url.value.trim() || null,
+        description: descriptionInput.value.trim() || null,
+        thumbnail_url: thumbnailInput.value.trim() || null,
       };
 
+      const isEditing = Boolean(editingCourseId);
+      const editedCourseId = editingCourseId;
+      const courseUrl = isEditing
+        ? `${API_BASE}/api/courses/${editedCourseId}`
+        : COURSES_API_URL;
+
       try {
-        const res = await fetch(`${API_BASE}/api/courses`, {
-          method: "POST",
+        if (isEditing) {
+          console.log("Editing course id:", editingCourseId);
+        }
+        console.log(`[CredCheck Admin] ${isEditing ? "PUT" : "POST"} course URL:`, courseUrl);
+        const res = await fetch(courseUrl, {
+          method: isEditing ? "PUT" : "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
 
+        const savedCourse = await res.json().catch(() => null);
+        console.log(`[CredCheck Admin] ${isEditing ? "PUT" : "POST"} backend response:`, savedCourse);
+
         if (!res.ok) {
-          const err = await res.json().catch(() => ({}));
-          throw new Error(err.error || "Could not add course.");
+          throw new Error(savedCourse?.error || (isEditing ? "Could not update course." : "Could not add course."));
         }
 
-        form.reset();
-        nicheSet.clear();
-        syncNicheButtons();
-        renderSelectedNiches();
-        setMessage("success", "Course added successfully.");
+        await loadCourses();
+
+        if (isEditing) {
+          const refreshedCourse = courses.find((course) => String(course.id) === String(editedCourseId));
+          const persisted = refreshedCourse
+            && refreshedCourse.title === payload.title
+            && (refreshedCourse.creator_name || null) === payload.creator_name
+            && (refreshedCourse.niche || null) === payload.niche
+            && (refreshedCourse.description || null) === payload.description
+            && (refreshedCourse.thumbnail_url || null) === payload.thumbnail_url;
+
+          if (!persisted) {
+            throw new Error("Update did not persist. Refreshed backend data still shows the old course values.");
+          }
+        }
+
+        console.log(
+          `[CredCheck Admin] After ${isEditing ? "update" : "add"} refreshed course count:`,
+          courses.length
+        );
+        resetFormMode();
+        setMessage("success", isEditing ? "Course updated successfully." : "Course added successfully.");
       } catch (err) {
         console.error(err);
         setMessage("error", err.message || "Something went wrong. Try again.");
       } finally {
         submitButton.disabled = false;
-        submitButton.textContent = "Add course";
+        submitButton.textContent = editingCourseId ? "Update course" : "Add course";
       }
     });
 
     renderSelectedNiches();
+    setFallbackPreview();
+    loadCourses();
   </script>
 </body>
 </html>

@@ -32,7 +32,7 @@ function normalizeCoursePayload(body) {
         ? body.niches.join(", ")
         : (body.niche || body.niches || "").trim() || null,
     description: body.description?.trim() || null,
-    thumbnail_url: (body.thumbnail_url || body.image || "").trim() || null,
+    thumbnail_url: (body.thumbnail_url || body.image_url || body.thumbnail || body.image || "").trim() || null,
   };
 }
 
@@ -105,6 +105,7 @@ app.get("/api/courses", async (req, res) => {
 
 // Add new course (admin use)
 app.post("/api/courses", async (req, res) => {
+  console.log("POST /api/courses hit");
   try {
     const course = normalizeCoursePayload(req.body);
     console.log("[POST] /api/courses", { title: course.title });
@@ -122,6 +123,97 @@ app.post("/api/courses", async (req, res) => {
     res.status(201).json(data[0]);
   } catch (err) {
     console.error("[POST] /api/courses failed:", err);
+    res.status(500).json({ error: publicError(err) });
+  }
+});
+
+// Update course (admin use)
+app.put("/api/courses/:id", async (req, res) => {
+  console.log("PUT /api/courses/:id hit", req.params.id);
+  try {
+    const { id } = req.params;
+    const course = normalizeCoursePayload(req.body);
+    console.log("[PUT] /api/courses/:id", { id, title: course.title });
+
+    if (!id) {
+      return res.status(400).json({ error: "course id is required." });
+    }
+
+    if (!course.title) {
+      return res.status(400).json({ error: "title is required." });
+    }
+
+    const { data, error } = await supabase
+      .from("courses")
+      .update(course)
+      .eq("id", id)
+      .select();
+
+    if (error) throw error;
+
+    if (data?.[0]) {
+      return res.json(data[0]);
+    }
+
+    const { data: refreshedCourse, error: refreshError } = await supabase
+      .from("courses")
+      .select("*")
+      .eq("id", id)
+      .maybeSingle();
+
+    if (refreshError) throw refreshError;
+
+    if (!refreshedCourse) {
+      return res.status(404).json({ error: "Course not found." });
+    }
+
+    res.json(refreshedCourse);
+  } catch (err) {
+    console.error("[PUT] /api/courses/:id failed:", err);
+    res.status(500).json({ error: publicError(err) });
+  }
+});
+
+// Delete course (admin use)
+app.delete("/api/courses/:id", async (req, res) => {
+  console.log("DELETE /api/courses/:id hit", req.params.id);
+  try {
+    const { id } = req.params;
+    console.log("[DELETE] /api/courses/:id", { id });
+
+    if (!id) {
+      return res.status(400).json({ error: "course id is required." });
+    }
+
+    const { error: reviewsError } = await supabase
+      .from("reviews")
+      .delete()
+      .eq("course_id", id);
+
+    if (reviewsError) throw reviewsError;
+
+    const { error } = await supabase
+      .from("courses")
+      .delete()
+      .eq("id", id);
+
+    if (error) throw error;
+
+    const { data: remainingCourse, error: verifyError } = await supabase
+      .from("courses")
+      .select("id")
+      .eq("id", id)
+      .maybeSingle();
+
+    if (verifyError) throw verifyError;
+
+    if (remainingCourse) {
+      return res.status(500).json({ error: "Course delete did not persist." });
+    }
+
+    res.json({ ok: true });
+  } catch (err) {
+    console.error("[DELETE] /api/courses/:id failed:", err);
     res.status(500).json({ error: publicError(err) });
   }
 });
